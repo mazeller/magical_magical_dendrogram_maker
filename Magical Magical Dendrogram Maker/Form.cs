@@ -42,6 +42,7 @@ namespace Magical_Magical_Dendrogram_Maker
         }
 
         // --- Drag and Drop
+        string fastaPath = "";
         public System.Windows.Forms.DragDropEffects AllowedEffect { get; }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)
@@ -64,12 +65,14 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 // For example, load the first file
                 string filePath = paths[0];
+                fastaPath = filePath;
                 txtOldFasta.Text = File.ReadAllText(filePath);
 
                 MessageBox.Show($"Loaded file: {filePath}");
             }
         }
 
+        // --- Fasta editing ---
 
         // Append typed contents to the fasta contents and save new fasta
         private void btnAppend_Click(object sender, EventArgs e)
@@ -863,7 +866,6 @@ namespace Magical_Magical_Dendrogram_Maker
         private async void btnAllInOne_Click(object sender, EventArgs e)
         {
             // paths for pipelining
-            string fastaPath = "";
             string alnPath = "";
             string treePath = "";
             string dendrogramPath = "";
@@ -872,21 +874,93 @@ namespace Magical_Magical_Dendrogram_Maker
 
             // Create process
             //run mafft
-            /*if (string.IsNullOrWhiteSpace(txtOldFasta.Text))
-            { }*/
+            if (string.IsNullOrWhiteSpace(txtOldFasta.Text))
+            {
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
+                    Title = "Select a fasta file"
+                };
+                
+                using (ofd)
+                {
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
+                        string mafftStatus = "MAFFT failed to run.";
+                        fastaPath = ofd.FileName;
+                        await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
+                        {
+                            await Task.Run(() =>
+                            {
+                                alnPath = RunMafft(fastaPath, mafftPath);
+                                Invoke(new Action(() =>
+                                {
+                                    txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
+                                }));
+                            });
+                            mafftStatus = "Aligned file created at: " + alnPath;
+                            if (mafftStatus == "Aligned file created at: ")
+                            {
+                                mafftStatus = "MAFFT ran but failed to produce aligned fasta";
+                            }
+                        });
 
-            OpenFileDialog ofd = new OpenFileDialog
+                        //run iqtree
+                        string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
+                        string iqtreeStatus = "IQTREE failed to run.";
+                        await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
+                        {
+                            await Task.Run(() =>
+                            {
+                                treePath = RunSafeIqtree(alnPath, safeIqtreePath);
+                            });
+                            iqtreeStatus = "Treefile created at: " + treePath;
+                            if (iqtreeStatus == "Treefile created at: ")
+                            {
+                                iqtreeStatus = "IQTREE ran but failed to produce new treefile";
+                            }
+                        });
+
+                        //run treeview
+                        string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
+                        string treeViewerStatus = "TREEVIEWER failed to run.";
+                        await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
+                        {
+                            await Task.Run(() =>
+                            {
+                                dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
+                            });
+                            treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
+                            if (treeViewerStatus == "Dendrogram created at: ")
+                            {
+                                treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
+                            }
+                        });
+
+                        //run homology
+                        string homologyStatus = "Homology failed to run.";
+                        await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
+                        {
+                            await Task.Run(() =>
+                            {
+                                homologyPath = RunHomology(fastaPath);
+                            });
+                            homologyStatus = "Table created at: " + homologyPath;
+                            if (homologyStatus == "Table created at: ")
+                            {
+                                homologyStatus = "Homology ran but failed to produce new Table";
+                            }
+                        });
+                        MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
+                    }
+                }
+            } else 
             {
-                Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
-                Title = "Select a fasta file"
-            };
-            using (ofd)
-            {
-                if (ofd.ShowDialog() == DialogResult.OK)
+                if (fastaPath != "" || fastaPath != null)
                 {
                     string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
                     string mafftStatus = "MAFFT failed to run.";
-                    fastaPath = ofd.FileName;
                     await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
                     {
                         await Task.Run(() =>
@@ -903,7 +977,6 @@ namespace Magical_Magical_Dendrogram_Maker
                             mafftStatus = "MAFFT ran but failed to produce aligned fasta";
                         }
                     });
-                    //MessageBox.Show(mafftStatus);
 
                     //run iqtree
                     string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
@@ -920,7 +993,6 @@ namespace Magical_Magical_Dendrogram_Maker
                             iqtreeStatus = "IQTREE ran but failed to produce new treefile";
                         }
                     });
-                    //MessageBox.Show(iqtreeStatus);
 
                     //run treeview
                     string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
@@ -937,7 +1009,6 @@ namespace Magical_Magical_Dendrogram_Maker
                             treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
                         }
                     });
-                    //MessageBox.Show(treeViewerStatus);
 
                     //run homology
                     string homologyStatus = "Homology failed to run.";
@@ -953,10 +1024,11 @@ namespace Magical_Magical_Dendrogram_Maker
                             homologyStatus = "Homology ran but failed to produce new Table";
                         }
                     });
-                    //MessageBox.Show(homologyStatus);
                     MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
                 }
             }
+
+            
         }
 
 
