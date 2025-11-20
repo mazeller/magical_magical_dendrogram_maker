@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.MarkdownCanvas</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.MarkdownCanvas.MarkdownCanvasControl">
+            <summary>
+            A control to display a Markdown document in an Avalonia application.
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MaxRenderWidthProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MaxRenderWidth"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MaxRenderWidth">
+            <summary>
+            The maximum width for the rendered document. This will be used even if the control's client area is larger than this (the alignment of the document within the controll will depend on the control's <see cref="P:Avalonia.Controls.ContentControl.HorizontalContentAlignment"/>).
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinRenderWidthProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinRenderWidth"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinRenderWidth">
+            <summary>
+            The minimum width for the rendered document. If the control's client area is smaller than this, the horizontal scroll bar will be activated.
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinVariationProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinVariation"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.MinVariation">
+            <summary>
+            The minimum width variation that triggers a document reflow. If the control is resized, but the width changes by less than this amount, the document is not re-drawn.
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.DocumentSourceProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.DocumentSource"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.DocumentSource">
+            <summary>
+            Sets the currently displayed document from Markdown source.
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.DocumentProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.Document"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.Document">
+            <summary>
+            Gets or sets the currently displayed <see cref="T:Markdig.Syntax.MarkdownDocument"/>.
+            </summary>
+        </member>
+        <member name="F:VectSharp.MarkdownCanvas.MarkdownCanvasControl.TextConversionOptionsProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.TextConversionOption"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.TextConversionOption">
+            <summary>
+            Gets or sets the value that determines whether text items should be converted into paths when drawing.
+            Setting this to <see cref="F:VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions.NeverConvert"/> will improve performance if you are using custom fonts, but may cause unexpected results unless the font families being used are of type <see cref="T:VectSharp.ResourceFontFamily"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.Renderer">
+            <summary>
+            The <see cref="T:VectSharp.Markdown.MarkdownRenderer"/> used to render the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.Document"/>. You can use the properties of this object to customise the rendering. Note that setting the <see cref="P:Avalonia.Controls.Primitives.TemplatedControl.FontSize"/> of the <see cref="T:VectSharp.MarkdownCanvas.MarkdownCanvasControl"/> will propagate to the <see cref="P:VectSharp.MarkdownCanvas.MarkdownCanvasControl.Renderer"/>'s <see cref="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize"/>.
+            </summary>
+        </member>
+        <member name="M:VectSharp.MarkdownCanvas.MarkdownCanvasControl.#ctor">
+            <summary>
+            Initialises a new <see cref="T:VectSharp.MarkdownCanvas.MarkdownCanvasControl"/>.
+            </summary>
+        </member>
+        <member name="M:VectSharp.MarkdownCanvas.MarkdownCanvasControl.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.SVG</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.SVG.SVGContextInterpreter">
+            <summary>
+            Contains methods to render a <see cref="T:VectSharp.Page"/> as an SVG file.
+            </summary>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsSVG(VectSharp.Page,System.String,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption,System.Boolean)">
+            <summary>
+            Render the page to an SVG file.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="fileName">The full path to the file to save. If it exists, it will be overwritten.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <param name="useStyles">If this is <see langword="false"/>, presentation attributes are set as attributes on SVG elements. If this is <see langword="true"/>, CSS classes are used to set presentation attributes.</param>
+        </member>
+        <member name="T:VectSharp.SVG.SVGContextInterpreter.TextOptions">
+            <summary>
+            Defines whether the used fonts should be included in the file.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.TextOptions.EmbedFonts">
+            <summary>
+            Embeds the full font files.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.TextOptions.SubsetFonts">
+            <summary>
+            Embeds subsetted font files containing only the glyphs for the characters that have been used.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.TextOptions.ConvertIntoPaths">
+            <summary>
+            Does not embed any font file and converts all text items into paths.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.TextOptions.DoNotEmbed">
+            <summary>
+            Does not embed any font file, but still encodes text items as such.
+            </summary>
+        </member>
+        <member name="T:VectSharp.SVG.SVGContextInterpreter.FilterOption">
+            <summary>
+            Determines how and whether image filters are rasterised.
+            </summary>
+        </member>
+        <member name="T:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.RasteriseAll">
+            <summary>
+            Image filters will always be rasterised.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.RasteriseIfNecessary">
+            <summary>
+            Image filters will only be rasterised if they are not supported natively by the output file format.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.NeverRasteriseAndIgnore">
+            <summary>
+            Image filters will never be rasterised; for filters that are not supported, the filter will be ignored.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.NeverRasteriseAndSkip">
+            <summary>
+            Image filters will never be rasterised; if an image should be drawn with an unsupported filter, the image will not be drawn at all.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.IgnoreAll">
+            <summary>
+            All image filters (supported and unsupported) will be ignored.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations.SkipAll">
+            <summary>
+            All the images that should be drawn with a filter will be ignored.
+            </summary>
+        </member>
+        <member name="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.Operation">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolution">
+            <summary>
+            The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.
+            </summary>
+        </member>
+        <member name="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolutionRelative">
+            <summary>
+            Determines whether the value of <see cref="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.SVGContextInterpreter.FilterOption.Default">
+            <summary>
+            The default options for image filter rasterisation.
+            </summary>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.FilterOption.#ctor(VectSharp.SVG.SVGContextInterpreter.FilterOption.FilterOperations,System.Double,System.Boolean)">
+            <summary>
+            Create a new <see cref="T:VectSharp.SVG.SVGContextInterpreter.FilterOption"/> object.
+            </summary>
+            <param name="operation">Defines whether image filters should be rasterised or not.</param>
+            <param name="rasterisationResolution">The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.</param>
+            <param name="rasterisationResolutionRelative">Determines whether the value of <see cref="P:VectSharp.SVG.SVGContextInterpreter.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).</param>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsSVG(VectSharp.Page,System.IO.Stream,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption,System.Boolean)">
+            <summary>
+            Render the page to an SVG stream.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="stream">The stream to which the SVG data will be written.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <param name="useStyles">If this is <see langword="false"/>, presentation attributes are set as attributes on SVG elements. If this is <see langword="true"/>, CSS classes are used to set presentation attributes.</param>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsSVG(VectSharp.Page,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption,System.Boolean)">
+            <summary>
+            Render the page to an SVG document.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <param name="useStyles">If this is <see langword="false"/>, presentation attributes are set as attributes on SVG elements. If this is <see langword="true"/>, CSS classes are used to set presentation attributes.</param>
+            <returns>An <see cref="T:System.Xml.XmlDocument"/> containing the rendered SVG image.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVG(VectSharp.Animation,System.Boolean,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG document, using SVG animations.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:System.Xml.XmlDocument"/> containing the animated SVG image.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVG(VectSharp.Animation,System.IO.Stream,System.Boolean,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG stream, using SVG animations.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> on which the SVG document will be written.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVG(VectSharp.Animation,System.String,System.Boolean,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG file, using SVG animations.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="fileName">The output file that will be created.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVGWithFrames(VectSharp.Animation,System.Boolean,System.Double,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG document, encoding discrete frames.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps).</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:System.Xml.XmlDocument"/> containing the animated SVG image.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVGWithFrames(VectSharp.Animation,System.IO.Stream,System.Boolean,System.Double,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG stream, encoding discrete frames.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> on which the SVG document will be written.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps).</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+        <member name="M:VectSharp.SVG.SVGContextInterpreter.SaveAsAnimatedSVGWithFrames(VectSharp.Animation,System.String,System.Boolean,System.Double,System.Double,VectSharp.SVG.SVGContextInterpreter.TextOptions,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.SVG.SVGContextInterpreter.FilterOption)">
+            <summary>
+            Render the animation to an SVG file, encoding discrete frames.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="includeControls">If this is <see langword="true"/>, the generated SVG file will contain playback controls that use Javascript to play/pause the animation and change the current time.</param>
+            <param name="fileName">The output file that will be created.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps).</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+        <member name="T:VectSharp.SVG.Parser">
+            <summary>
+            Contains methods to read an SVG image file.
+            </summary>
+        </member>
+        <member name="F:VectSharp.SVG.Parser.ParseImageURI">
+            <summary>
+            A function that takes as input an image URI and a boolean value indicating whether the image should be interpolated, and returns a <see cref="T:VectSharp.Page"/> object containing the image.
+            By default, this is equal to <see cref="M:VectSharp.SVG.Parser.ParseSVGURI(System.String,System.Boolean)"/>, i.e. it is only able to parse SVG images. If you wish to enable the parsing of other formats, you should install the "VectSharp.MuPDFUtils" NuGet package
+            and enable the parser in your program by doing something like:
+            <code>VectSharp.SVG.Parser.ParseImageURI = VectSharp.MuPDFUtils.ImageURIParser.Parser(VectSharp.SVG.Parser.ParseSVGURI);</code>
+            </summary>
+        </member>
+        <member name="M:VectSharp.SVG.Parser.ParseSVGURI(System.String,System.Boolean)">
+            <summary>
+            Parses an SVG image URI.
+            </summary>
+            <param name="uri">The image URI to parse.</param>
+            <param name="ignored">This value is ignored and is only needed for compatibility.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing the parsed SVG image, or null.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.Parser.FromString(System.String)">
+            <summary>
+            Parses SVG source into a <see cref="T:VectSharp.Page"/> containing the image represented by the code.
+            </summary>
+            <param name="svgSource">The SVG source code.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing the image represented by the <paramref name="svgSource"/>.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.Parser.FromFile(System.String)">
+            <summary>
+            Parses an SVG image file into a <see cref="T:VectSharp.Page"/> containing the image.
+            </summary>
+            <param name="fileName">The path to the SVG image file.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing the image represented by the file.</returns>
+        </member>
+        <member name="M:VectSharp.SVG.Parser.FromStream(System.IO.Stream)">
+            <summary>
+            Parses an stream containing SVG source code into a <see cref="T:VectSharp.Page"/> containing the image represented by the code.
+            </summary>
+            <param name="svgSourceStream">The stream containing SVG source code.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing the image represented by the <paramref name="svgSourceStream"/>.</returns>
+        </member>
+    </members>
+</doc>

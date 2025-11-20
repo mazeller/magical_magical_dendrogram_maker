@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="bin\Homology\needleman_wunsch.h" />
     <EmbeddedResource Include="Form.resx">
       <DependentUpon>Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,7 +78,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="bin\Homology\matrix_builder.c" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,5 +92,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

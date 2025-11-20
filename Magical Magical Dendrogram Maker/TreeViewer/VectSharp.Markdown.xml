@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.Markdown</name>
+    </assembly>
+    <members>
+        <member name="M:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter.DrawDisplay(VectSharp.Markdown.CSharpMath.VectSharp.MathPainter,CSharpMath.Display.IDisplay{CSharpMath.Rendering.BackEnd.Fonts,CSharpMath.Rendering.BackEnd.Glyph},VectSharp.Page,System.Drawing.PointF)">
+            <summary>
+            Ignores the MathList and LaTeX of the <see cref="T:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter"/> provided.
+            Repositions the <paramref name="display"/>.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter.DrawDisplay(VectSharp.Markdown.CSharpMath.VectSharp.MathPainter,CSharpMath.Display.IDisplay{CSharpMath.Rendering.BackEnd.Fonts,CSharpMath.Rendering.BackEnd.Glyph},VectSharp.Page,VectSharp.Point)">
+            <summary>
+            Ignores the MathList and LaTeX of the <see cref="T:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter"/> provided.
+            Repositions the <paramref name="display"/>.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter.DrawDisplay(VectSharp.Markdown.CSharpMath.VectSharp.MathPainter,CSharpMath.Display.IDisplay{CSharpMath.Rendering.BackEnd.Fonts,CSharpMath.Rendering.BackEnd.Glyph},VectSharp.Page,System.Single,System.Single)">
+            <summary>
+            Ignores the MathList and LaTeX of the <see cref="T:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter"/> provided.
+            Repositions the <paramref name="display"/>.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter.DrawDisplay(VectSharp.Markdown.CSharpMath.VectSharp.MathPainter,CSharpMath.Display.IDisplay{CSharpMath.Rendering.BackEnd.Fonts,CSharpMath.Rendering.BackEnd.Glyph},VectSharp.Page,CSharpMath.Rendering.FrontEnd.TextAlignment,CSharpMath.Structures.Thickness,System.Single,System.Single)">
+            <summary>
+            Ignores the MathList and LaTeX of the <see cref="T:VectSharp.Markdown.CSharpMath.VectSharp.MathPainter"/> provided.
+            Repositions the <paramref name="display"/>.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Markdown.HTTPUtils">
+            <summary>
+            Contains utilities to resolve absolute and relative URIs.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.HTTPUtils.LogDownloads">
+            <summary>
+            Determines whether every file that is downloaded should be logged to the standard error stream.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.HTTPUtils.ResolveImageURI(System.String,System.String)">
+            <summary>
+            Resolves an image Uri, by downloading the image file if necessary. It also takes care of ensuring that the file extension matches the format of the file.
+            </summary>
+            <param name="uri">The address of the image.</param>
+            <param name="baseUriString">The base uri to use for relative uris.</param>
+            <returns>A tuple containing the local path of the image file (either the original image, or a local copy of a remote file) and a boolean value indicating whether the image was fetched from a remote location and should be deleted after the program is done with it.</returns>
+        </member>
+        <member name="T:VectSharp.Markdown.Margins">
+            <summary>
+            Represents the margins of a page.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.Margins.Left">
+            <summary>
+            The left margin.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.Margins.Right">
+            <summary>
+            The right margin.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.Margins.Top">
+            <summary>
+            The top margin.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.Margins.Bottom">
+            <summary>
+            The bottom margin.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.Margins.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Markdown.Margins"/> instance.
+            </summary>
+            <param name="left">The left margin.</param>
+            <param name="top">The top margin.</param>
+            <param name="right">The right margin.</param>
+            <param name="bottom">The bottom margin.</param>
+        </member>
+        <member name="T:VectSharp.Markdown.MarkdownRenderer">
+            <summary>
+            Renders Markdown documents into VectSharp graphics objects.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize">
+            <summary>
+            The base font size to use when rendering the document. This will be the size of regular elements, and the size of header elements will be expressed as a multiple of this.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.MathFontScalingFactor">
+            <summary>
+            Scaling factor for the font size to use when rendering math.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.HeaderFontSizeMultipliers">
+            <summary>
+            The font size for elements at each header level. The values in this array will be multiplied by the <see cref="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.HeaderLineThicknesses">
+            <summary>
+            The thickness of the separator line after a header of each level. A value of 0 disables the line after headers of that level.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ThematicBreakThickness">
+            <summary>
+            The thickness of thematic break lines.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.RegularFontFamily">
+            <summary>
+            The font family for regular text.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BoldFontFamily">
+            <summary>
+            The font family for bold text.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ItalicFontFamily">
+            <summary>
+            The font family for italic text.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BoldItalicFontFamily">
+            <summary>
+            The font family for bold italic text.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeFont">
+            <summary>
+            The font family for code elements.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeFontBold">
+            <summary>
+            The font family for bold code elements.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeFontItalic">
+            <summary>
+            The font family for italic code elements.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeFontBoldItalic">
+            <summary>
+            The font family for bold italic code elements.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.UnderlineThickness">
+            <summary>
+            The thickness of underlines. This value will be multiplied by the font size of the element being underlined.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BoldUnderlineThickness">
+            <summary>
+            The thickness of underlines for bold text. This value will be multiplied by the font size of the element being underlined.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.Margins">
+            <summary>
+            The margins of the page.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableCellMargins">
+            <summary>
+            The margins for table cells.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Markdown.MarkdownRenderer.VerticalAlignment">
+            <summary>
+            Defines the options for the vertical alignment of table cells.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Markdown.MarkdownRenderer.VerticalAlignment.Top">
+            <summary>
+            Table cells will be aligned at the top of their row.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Markdown.MarkdownRenderer.VerticalAlignment.Middle">
+            <summary>
+            Table cells will be aligned in the middle of their row.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Markdown.MarkdownRenderer.VerticalAlignment.Bottom">
+            <summary>
+            Table cells will be aligned at the bottom of their row.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableVAlign">
+            <summary>
+            The vertical alignment of table cells.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.PageSize">
+            <summary>
+            The size of the page.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SpaceBeforeParagaph">
+            <summary>
+            The space before each text paragraph. This value will be multiplied by the <see cref="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SpaceAfterParagraph">
+            <summary>
+            The space after each text paragraph. This value will be multiplied by the <see cref="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SpaceAfterLine">
+            <summary>
+            The space after each line of text. This value will be multiplied by the <see cref="P:VectSharp.Markdown.MarkdownRenderer.BaseFontSize"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SpaceBeforeHeading">
+            <summary>
+            The space before each heading. This value will be multiplied by the font size of the heading.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SpaceAfterHeading">
+            <summary>
+            The space after each heading. This value will be multiplied by the font size of the heading.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeInlineMargin">
+            <summary>
+            The margin at the left and right of code inlines. This value will be multiplied by the current font size.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.IndentWidth">
+            <summary>
+            The indentation width used for list items.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.QuoteBlockIndentWidth">
+            <summary>
+            The indentation width used for block quotes.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.QuoteBlockBarWidth">
+            <summary>
+            The thickness of the bar to the left of block quotes.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SubSuperscriptFontSize">
+            <summary>
+            The font size for subscripts and superscripts. This value will be multiplied by the current font size.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SuperscriptShift">
+            <summary>
+            The upwards shift in the baseline for superscript elements. This value will be multiplied by the current font size.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SubscriptShift">
+            <summary>
+            The downwards shift in the baseline for subscript elements. This value will be multiplied by the current font size.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BaseImageUri">
+            <summary>
+            The base uri for resolving relative image addresses.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ImageUriResolver">
+            <summary>
+            A method used to resolve (possibly remote) image uris into local file paths. The first argument of the method should be the image uri and the second argument the base uri used to resolve relative links. The method should return a tuple containing the path of the local file and a boolean value indicating whether the file has been fetched from a remote location and should be deleted after the program has finished using it.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BaseLinkUri">
+            <summary>
+            The base uri for resolving links.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.LinkUriResolver">
+            <summary>
+            A method used to resolve link addresses. The argument of the method should be the absolute link, and the method should return the resolved address. This can be used to "redirect" links to a different target.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.RasterImageLoader">
+            <summary>
+            A method used to a load raster image from a local file. The argument of the method should be the path of a local image file, and the method should return a RasterImage representing that file. For example, this can be achieved using the <c>RasterImageFile</c> class from the <c>VectSharp.MuPDFUtils</c> package. If this is <see langword="null" />, only SVG images will be included in the document.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ImageUnitMultiplier">
+            <summary>
+            The size of images (as defined in the image's width and height attributes) will be multiplied by this value to determine the actual size of the image on the page. This has no effect on images without a width or height attribute.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ImageMultiplier">
+            <summary>
+            The size of images will be multiplied by this value to determine the actual size of the image on the page. For images that have a width or height attribute, this will be applied in addition to the <see cref="P:VectSharp.Markdown.MarkdownRenderer.ImageUnitMultiplier"/>. For images without width and height, only this multiplier will be applied.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ImageSideMargin">
+            <summary>
+            The margin on the right of left-aligned images and on the left of right-aligned images.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ImageMarginTolerance">
+            <summary>
+            Images will be allowed to extend into the page bottom margin area by this amount before triggering a page break. This should be smaller than the bottom margin, otherwise images risk being cut off by the page boundary.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.SyntaxHighlighter">
+            <summary>
+            A method used for syntax highlighting. The first argument should be the source code to highlight, while the second parameter is the name of the language to use for the highlight. The method should return a list of lists of <see cref="T:VectSharp.Markdown.FormattedString"/>s, with each list of <see cref="T:VectSharp.Markdown.FormattedString"/>s representing a line. For each code block, if the method returns <see langword="null" />, no syntax highlighting is used.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.Bullets">
+            <summary>
+            Bullet points used for unordered lists. Each element of this list corresponds to the bullet for each level of list indentation. If the list indentation is greater than the number of elements in this list, the bullet points will be reused cyclically.
+            Each element of this list is a method taking two arguments: the first is the <see cref="T:VectSharp.Graphics"/> object on which the bullet point should be drawn, while the second is the colour in which it should be painted. The method should draw the bullet point centered around the origin. The size of the bullet point will be multiplied by the current font size.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ForegroundColour">
+            <summary>
+            The foreground colour for text elements.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.BackgroundColour">
+            <summary>
+            The background colour for the page.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.HeaderLineColour">
+            <summary>
+            The colour of the line below headers.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.ThematicBreakLineColour">
+            <summary>
+            The colour for thematic break lines.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.LinkColour">
+            <summary>
+            The colour for hypertext links-
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeInlineBackgroundColour">
+            <summary>
+            The background colour for code inlines.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.CodeBlockBackgroundColour">
+            <summary>
+            The background colour for code blocks.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.QuoteBlockBarColour">
+            <summary>
+            The colour for the bar to the left of block quotes.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.QuoteBlockBackgroundColour">
+            <summary>
+            The background colour for block quotes.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.InsertedColour">
+            <summary>
+            The colour for text that has been styled as "inserted".
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.MarkedColour">
+            <summary>
+            The colour for text that has been styled as "marked".
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableHeaderRowSeparatorColour">
+            <summary>
+            The colour for the line separating the table header row from normal rows.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableRowSeparatorColour">
+            <summary>
+            The colour for lines separating table rows from each other.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableHeaderRowSeparatorThickness">
+            <summary>
+            The thickness of the line separating the table header row from normal rows.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TableHeaderSeparatorThickness">
+            <summary>
+            The thickness of lines separating table rows from each other.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TaskListUncheckedBullet">
+            <summary>
+            The bullet used for unchecked task list items.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.TaskListCheckedBullet">
+            <summary>
+            The bullet used for checked task list items.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.MarkdownRenderer.AllowPageBreak">
+            <summary>
+            Determines whether page breaks should be treated as such in the source.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.MarkdownRenderer.RenderSinglePage(System.String,System.Double,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            Parses the supplied <paramref name="markdownSource"/> using all the supported extensions and renders the resulting document. Page breaks are disabled, and the document is rendered as a single page with the specified <paramref name="width"/>. The page will be cropped at the appropriate height to contain the entire document.
+            </summary>
+            <param name="markdownSource">The markdown source to parse.</param>
+            <param name="width">The width of the page.</param>
+            <param name="linkDestinations">When this method returns, this value will contain a dictionary used to associate graphic action tags to hyperlinks. This can be used to enable such links when rendering the <see cref="T:VectSharp.Page"/> to a file.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing a rendering of the supplied markdown document.</returns>
+        </member>
+        <member name="M:VectSharp.Markdown.MarkdownRenderer.RenderSinglePage(Markdig.Syntax.MarkdownDocument,System.Double,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            Renders the supplied <paramref name="markdownDocument"/>. Page breaks are disabled, and the document is rendered as a single page with the specified <paramref name="width"/>. The page will be cropped at the appropriate height to contain the entire document.
+            </summary>
+            <param name="markdownDocument">The markdown document to render.</param>
+            <param name="width">The width of the page.</param>
+            <param name="linkDestinations">When this method returns, this value will contain a dictionary used to associate graphic action tags to hyperlinks. This can be used to enable such links when rendering the <see cref="T:VectSharp.Page"/> to a file.</param>
+            <returns>A <see cref="T:VectSharp.Page"/> containing a rendering of the supplied markdown document.</returns>
+        </member>
+        <member name="M:VectSharp.Markdown.MarkdownRenderer.Render(System.String,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            Parses the supplied <paramref name="markdownSource"/> using all the supported extensions and renders the resulting document. The <see cref="T:VectSharp.Document"/> produced consists of one or more pages of the size specified in the <see cref="P:VectSharp.Markdown.MarkdownRenderer.PageSize"/> of the current instance.
+            </summary>
+            <param name="markdownSource">The markdown source to parse.</param>
+            <param name="linkDestinations">When this method returns, this value will contain a dictionary used to associate graphic action tags to hyperlinks. This can be used to enable such links when rendering the <see cref="T:VectSharp.Document"/> to a file.</param>
+            <returns>A <see cref="T:VectSharp.Document"/> containing a rendering of the supplied markdown document, consisting of one or more pages of the size specified in the <see cref="P:VectSharp.Markdown.MarkdownRenderer.PageSize"/> of the current instance.</returns>
+        </member>
+        <member name="M:VectSharp.Markdown.MarkdownRenderer.Render(Markdig.Syntax.MarkdownDocument,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            Renders the supplied <paramref name="mardownDocument"/>. The <see cref="T:VectSharp.Document"/> produced consists of one or more pages of the size specified in the <see cref="P:VectSharp.Markdown.MarkdownRenderer.PageSize"/> of the current instance.
+            </summary>
+            <param name="mardownDocument">The markdown document to render.</param>
+            <param name="linkDestinations">When this method returns, this value will contain a dictionary used to associate graphic action tags to hyperlinks. This can be used to enable such links when rendering the <see cref="T:VectSharp.Document"/> to a file.</param>
+            <returns>A <see cref="T:VectSharp.Document"/> containing a rendering of the supplied markdown document, consisting of one or more pages of the size specified in the <see cref="P:VectSharp.Markdown.MarkdownRenderer.PageSize"/> of the current instance.</returns>
+        </member>
+        <member name="T:VectSharp.Markdown.FormattedString">
+            <summary>
+            Represents a string with associated formatting information.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.FormattedString.Text">
+            <summary>
+            The text represented by this object.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.FormattedString.Colour">
+            <summary>
+            The colour of the text.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.FormattedString.IsBold">
+            <summary>
+            Whether the text should be rendered as bold or not.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Markdown.FormattedString.IsItalic">
+            <summary>
+            Whether the text should be rendered as italic or not.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.FormattedString.#ctor(System.String,VectSharp.Colour,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Markdown.FormattedString"/> instance.
+            </summary>
+            <param name="text">The text of the object.</param>
+            <param name="colour">The colour of the text.</param>
+            <param name="isBold">Whether the text should be rendered as bold or not.</param>
+            <param name="isItalic">Whether the text should be rendered as italic or not.</param>
+        </member>
+        <member name="T:VectSharp.Markdown.SyntaxHighlighter">
+            <summary>
+            Contains methods to perform syntax highlighting.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Markdown.SyntaxHighlighter.GetSyntaxHighlightedLines(System.String,System.String)">
+            <summary>
+            Performs syntax highlighting for a specified language on some source code.
+            </summary>
+            <param name="sourceCode">The source code to be highlighted.</param>
+            <param name="language">The name of the language to use for the highlighting.</param>
+            <returns>A list of lists of <see cref="T:VectSharp.Markdown.FormattedString"/>s. Each list of <see cref="T:VectSharp.Markdown.FormattedString"/>s represents a line.</returns>
+        </member>
+    </members>
+</doc>

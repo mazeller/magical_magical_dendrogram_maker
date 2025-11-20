@@ -1,0 +1,1876 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AvaloniaColorPicker</name>
+    </assembly>
+    <members>
+        <member name="T:AvaloniaColorPicker.ColorButton">
+            <summary>
+            A control that can be used to select a <see cref="T:Avalonia.Media.Color"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorButton`1">
+            <summary>
+            A control that can be used to select a <see cref="T:Avalonia.Media.Color"/>.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorButton`1.ColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorButton`1.Color"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorButton`1.Color">
+            <summary>
+            The <see cref="T:Avalonia.Media.Color"/> that is currently selected.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorButton`1.#ctor">
+            <summary>
+            Creates a new <see cref="T:AvaloniaColorPicker.ColorButton`1"/> instance.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorButton`1.OnLostFocus(Avalonia.Interactivity.RoutedEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorButton`1.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorPicker">
+            <summary>
+            A control that enables the user to select a <see cref="T:Avalonia.Media.Color"/>.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.TransitionsDisabled">
+            <summary>
+            Set this property to <see langword="true"/> before creating any object from this library to disable all transitions.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPicker.ResetDefaultPalettes">
+            <summary>
+            Resets the default palettes. This will restore any deleted palettes, and remove any custom colour from the default palettes. It will not affect any custom palette created by the user.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsPaletteVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsPaletteVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsPaletteVisible">
+            <summary>
+            Determines whether the palette selector is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsColourBlindnessSelectorVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsColourBlindnessSelectorVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsColourBlindnessSelectorVisible">
+            <summary>
+            Determines whether the colour blindness selector is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsHexVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsHexVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsHexVisible">
+            <summary>
+            Determines whether the hex value text box is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsAlphaVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsAlphaVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsAlphaVisible">
+            <summary>
+            Determines whether the alpha value text box and slider are visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsCIELABVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsCIELABVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsCIELABVisible">
+            <summary>
+            Determines whether the CIELAB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsHSBVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsHSBVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsHSBVisible">
+            <summary>
+            Determines whether the HSB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsRGBVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsRGBVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsRGBVisible">
+            <summary>
+            Determines whether RGB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsColourSpacePreviewVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsColourSpacePreviewVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsColourSpacePreviewVisible">
+            <summary>
+            Determines whether the colour space preview is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsColourSpaceSelectorVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsColourSpaceSelectorVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsColourSpaceSelectorVisible">
+            <summary>
+            Determines whether the colour space selector is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsCIELABSelectableProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsCIELABSelectable"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsCIELABSelectable">
+            <summary>
+            Determines whether the CIELAB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsHSBSelectableProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsHSBSelectable"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsHSBSelectable">
+            <summary>
+            Determines whether the HSB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.IsRGBSelectableProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.IsRGBSelectable"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.IsRGBSelectable">
+            <summary>
+            Determines whether the RGB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorPicker.ColorSpaces">
+            <summary>
+            Describes the possible colour spaces.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.ColorSpaces.RGB">
+            <summary>
+            The RGB colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.ColorSpaces.HSB">
+            <summary>
+            The HSB colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.ColorSpaces.LAB">
+            <summary>
+            The CIELAB colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.ColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.Color"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.Color">
+            <summary>
+            The <see cref="T:Avalonia.Media.Color"/> that is currently selected.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPicker.PreviousColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPicker.PreviousColor"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPicker.PreviousColor">
+            <summary>
+            Represents the previously selected <see cref="T:Avalonia.Media.Color"/> (e.g. if the <see cref="T:AvaloniaColorPicker.ColorPicker"/> is being used to change the colour of an object, it would represent the previous colour of the object). Set to <see langword="null" /> to hide the previous colour display.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPicker.#ctor">
+            <summary>
+            Creates a new <see cref="T:AvaloniaColorPicker.ColorPicker"/> instance.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPicker.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorPickerWindow">
+            <summary>
+            Interface describing a contract for a colour picker window. Note that, even though this is not enforced by the interface, a class implementing this interface MUST have a constructor which takes a single <see cref="P:AvaloniaColorPicker.IColorPickerWindow.Color"/>? parameter representing the previous colour in the colour picker.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorPickerWindow.Color">
+            <summary>
+            The color that is currently selected in the <see cref="T:AvaloniaColorPicker.ColorPicker"/>.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorPickerWindow.PreviousColor">
+            <summary>
+            Represents the previously selected <see cref="T:Avalonia.Media.Color"/> (e.g. if the <see cref="T:AvaloniaColorPicker.ColorPicker"/> is being used to change the colour of an object, it would represent the previous colour of the object. Set to <see langword="null" /> to hide the previous colour display.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.IColorPickerWindow.ShowDialog(Avalonia.Controls.Window)">
+            <summary>
+            Shows the <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/> as a dialog.
+            </summary>
+            <param name="parent">The <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/>'s owner window.</param>
+            <returns>The selected <see cref="T:Avalonia.Media.Color"/> if the user clicks on the "OK" button; <see langword="null"/> otherwise.</returns>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorPickerWindow">
+            <summary>
+            A <see cref="T:Avalonia.Controls.Window"/> containing a <see cref="T:AvaloniaColorPicker.ColorPicker"/> control.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.Color">
+            <summary>
+            The color that is currently selected in the <see cref="T:AvaloniaColorPicker.ColorPicker"/>.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.PreviousColor">
+            <summary>
+            Represents the previously selected <see cref="T:Avalonia.Media.Color"/> (e.g. if the <see cref="T:AvaloniaColorPicker.ColorPicker"/> is being used to change the colour of an object, it would represent the previous colour of the object. Set to <see langword="null" /> to hide the previous colour display.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsPaletteVisible">
+            <summary>
+            Determines whether the palette selector is visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsColourBlindnessSelectorVisible">
+            <summary>
+            Determines whether the colour blindness selector is visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsHexVisible">
+            <summary>
+            Determines whether the hex value text box is visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsAlphaVisible">
+            <summary>
+            Determines whether the alpha value text box and slider are visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsCIELABVisible">
+            <summary>
+            Determines whether the CIELAB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsHSBVisible">
+            <summary>
+            Determines whether the HSB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsRGBVisible">
+            <summary>
+            Determines whether RGB component text boxes are visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsColourSpacePreviewVisible">
+            <summary>
+            Determines whether the colour space preview is visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsColourSpaceSelectorVisible">
+            <summary>
+            Determines whether the colour space selector is visible or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsCIELABSelectable">
+            <summary>
+            Determines whether the CIELAB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsHSBSelectable">
+            <summary>
+            Determines whether the HSB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.IsRGBSelectable">
+            <summary>
+            Determines whether the RGB colour space can be selected or not.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPickerWindow.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPickerWindow.#ctor">
+            <summary>
+            Creates a new <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/> instance.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPickerWindow.#ctor(System.Nullable{Avalonia.Media.Color})">
+            <summary>
+            Creates a new <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/> instance, setting the <see cref="P:AvaloniaColorPicker.ColorPickerWindow.Color"/> and <see cref="P:AvaloniaColorPicker.ColorPickerWindow.PreviousColor"/> to the specified value.
+            </summary>
+            <param name="previousColor"></param>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPickerWindow.ShowDialog(Avalonia.Controls.Window)">
+            <summary>
+            Shows the <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/> as a dialog.
+            </summary>
+            <param name="parent">The <see cref="T:AvaloniaColorPicker.ColorPickerWindow"/>'s owner window.</param>
+            <returns>The selected <see cref="T:Avalonia.Media.Color"/> if the user clicks on the "OK" button; <see langword="null"/> otherwise.</returns>
+        </member>
+        <member name="T:AvaloniaColorPicker.IAControl">
+            <summary>
+            Represents a control used to set the colour's alpha value.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IAControl.A">
+            <summary>
+            The colour's alpha value.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IAControl.AChanged">
+            <summary>
+            Invoked when the colour's alpha value changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.AControl">
+            <summary>
+            A control used to set the colour's alpha value.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.AControl.AProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.AControl.A"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.AControl.A">
+            <summary>
+            Determines the alpha component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.AControl.AChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.AControl.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.AControl.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.AControl"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.AChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IAControl.AChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.AChangedEventArgs.A">
+            <summary>
+            The new alplha value.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.AChangedEventArgs.#ctor(System.Byte)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.AChangedEventArgs"/> object.
+            </summary>
+            <param name="a">The new alpha value.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.ICIELABControls">
+            <summary>
+            Represents controls used to set the colour based on CIELAB coordinates.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ICIELABControls.L">
+            <summary>
+            The L* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ICIELABControls.a">
+            <summary>
+            The a* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ICIELABControls.b">
+            <summary>
+            The b* component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ICIELABControls.ColorChanged">
+            <summary>
+            Invoked when the selected colour changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.CIELABControls">
+            <summary>
+            Controls used to set the colour based on CIELAB coordinates.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CIELABControls.LProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CIELABControls.L"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABControls.L">
+            <summary>
+            Determines the L* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CIELABControls.aProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CIELABControls.a"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABControls.a">
+            <summary>
+            Determines the a* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CIELABControls.bProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CIELABControls.b"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABControls.b">
+            <summary>
+            Determines the b* component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.CIELABControls.ColorChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.CIELABControls.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.CIELABControls.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.CIELABControls"/> object.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.CIELABChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.ICIELABControls.ColorChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABChangedEventArgs.L">
+            <summary>
+            The L* component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABChangedEventArgs.a">
+            <summary>
+            The a* component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CIELABChangedEventArgs.b">
+            <summary>
+            The b* component of the new colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.CIELABChangedEventArgs.#ctor(System.Byte,System.Int32,System.Int32)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.CIELABChangedEventArgs"/> object.
+            </summary>
+            <param name="l">The L* component of the new colour.</param>
+            <param name="a">The a* component of the new colour.</param>
+            <param name="b">The b* component of the new colour.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorBlindnessModes">
+            <summary>
+            Colour blindness simulation modes.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.Normal">
+            <summary>
+            Normal vision.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.Protanopia">
+            <summary>
+            Protanopia (red-green colour blindness).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.Deuteranopia">
+            <summary>
+            Deuteranopia (red-green colour blindness).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.Tritanopia">
+            <summary>
+            Tritanopia (blue-yellow colour blindness).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.ConeAchromatopsia">
+            <summary>
+            Cone achromatopsia (only one kind of cone cells).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessModes.RodAchromatopsia">
+            <summary>
+            Rod achromatopsia (lack of all cone cells).
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorBlindnessSelector">
+            <summary>
+            Represents a control used to select the colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorBlindnessSelector.ColorBlindnessMode">
+            <summary>
+            The colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorBlindnessSelector.ColorBlindnessModeChanged">
+            <summary>
+            Invoked when the selected colour blindness simulation mode changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorBlindnessSelector">
+            <summary>
+            A control used to select the colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorBlindnessSelector.ColorBlindnessModeProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorBlindnessSelector.ColorBlindnessMode"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorBlindnessSelector.ColorBlindnessMode">
+            <summary>
+            Determines the colour-blindness preview mode.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorBlindnessSelector.ColorBlindnessModeChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorBlindnessSelector.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorBlindnessSelector.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorBlindnessSelector"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorBlindnessModeChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IColorBlindnessSelector.ColorBlindnessModeChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorBlindnessModeChangedEventArgs.ColorBlindnessMode">
+            <summary>
+            The new colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorBlindnessModeChangedEventArgs.#ctor(AvaloniaColorPicker.ColorBlindnessModes)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorBlindnessModeChangedEventArgs"/> object.
+            </summary>
+            <param name="colorBlindnessMode">The new colour blindness simulation mode.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorCanvasControls">
+            <summary>
+            Represents controls used to select a colour from a colour canvas.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.ColorSpace">
+            <summary>
+            The colour space of the canvas.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.ColorComponent">
+            <summary>
+            The currently selected colour component.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.R">
+            <summary>
+            The red component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.G">
+            <summary>
+            The green component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.B">
+            <summary>
+            The blue component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.H">
+            <summary>
+            The hue of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.S">
+            <summary>
+            The saturation of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.V">
+            <summary>
+            The value (brightness) of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.L">
+            <summary>
+            The L* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.a">
+            <summary>
+            The a* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.b">
+            <summary>
+            The b* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorCanvasControls.A">
+            <summary>
+            The alpha component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromCanvas2D">
+            <summary>
+            Invoked when the user selects a new colour from the 2D canvas.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromCanvas1D">
+            <summary>
+            Invoked when the user selects a new colour from the 1D canvas.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromAlphaCanvas">
+            <summary>
+            Invoked when the user changes the alpha value of the colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.IColorCanvasControls.UpdatePreview(System.Boolean)">
+            <summary>
+            Update the canvases after the value of the colour components has been changed.
+            </summary>
+            <param name="instantTransition">If this is <see langword="true" />, the update happens instantly. Otherwise, a smooth transition is applied.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorCanvasControls">
+            <summary>
+            Controls used to select a colour from a colour canvas.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.IsAlphaVisibleProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.IsAlphaVisible"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.IsAlphaVisible">
+            <summary>
+            Determines whether the alpha slider is visible or not.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.ColorComponentProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.ColorComponent"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.ColorComponent">
+            <summary>
+            The currently selected colour component.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.RProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.R"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.R">
+            <summary>
+            Determines the R component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.GProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.G"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.G">
+            <summary>
+            Determines the G component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.BProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.B"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.B">
+            <summary>
+            Determines the B component (blue) of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.HProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.H"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.H">
+            <summary>
+            Determines the H component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.SProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.S"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.S">
+            <summary>
+            Determines the S component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.VProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.V"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.V">
+            <summary>
+            Determines the V component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.AProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.A"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.A">
+            <summary>
+            Determines the alpha component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.LProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.L"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.L">
+            <summary>
+            Determines the L* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.aProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.a"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.a">
+            <summary>
+            Determines the a* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorCanvasControls.bProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorCanvasControls.b"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorCanvasControls.b">
+            <summary>
+            Determines the b* component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorCanvasControls.ColorUpdatedFromCanvas2D">
+            <inheritdoc/>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorCanvasControls.ColorUpdatedFromCanvas1D">
+            <inheritdoc/>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorCanvasControls.ColorUpdatedFromAlphaCanvas">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorCanvasControls.UpdatePreview(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorCanvasControls.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorCanvasControls.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorCanvasControls"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorUpdatedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromAlphaCanvas"/>, <see cref="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromCanvas1D"/>
+            and <see cref="E:AvaloniaColorPicker.IColorCanvasControls.ColorUpdatedFromCanvas2D"/> events.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.R">
+            <summary>
+            The R component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.G">
+            <summary>
+            The G component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.B">
+            <summary>
+            The B component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.H">
+            <summary>
+            The H component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.S">
+            <summary>
+            The S component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.V">
+            <summary>
+            The V component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.L">
+            <summary>
+            The L* component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.a">
+            <summary>
+            The a* component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.b">
+            <summary>
+            The b* component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.A">
+            <summary>
+            The alpha component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorUpdatedEventArgs.InstantTransition">
+            <summary>
+            Whether the event should trigger an instantaneous update or not.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorUpdatedEventArgs.#ctor(System.Byte,System.Byte,System.Byte,System.Byte,System.Byte,System.Byte,System.Byte,System.Int32,System.Int32,System.Byte,System.Boolean)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorUpdatedEventArgs"/> object.
+            </summary>
+            <param name="r">The R component of the new colour.</param>
+            <param name="g">The G component of the new colour.</param>
+            <param name="b">The B component of the new colour.</param>
+            <param name="h">The H component of the new colour.</param>
+            <param name="s">The S component of the new colour.</param>
+            <param name="v">The V component of the new colour.</param>
+            <param name="l">The L* component of the new colour.</param>
+            <param name="aStar">The a* component of the new colour.</param>
+            <param name="bStar">The b* component of the new colour.</param>
+            <param name="a">The alpha component of the new colour.</param>
+            <param name="instantTransition">Whether the event should trigger an instantaneous update or not.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorComponentSelector">
+            <summary>
+            Represents a control used to select a colour component.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorComponentSelector.ColorSpace">
+            <summary>
+            The colour space whose components can be selected.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorComponentSelector.ColorComponent">
+            <summary>
+            The selected colour component.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorComponentSelector.ColorComponentChanged">
+            <summary>
+            Invoked when the selected colour component is changed.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorComponents">
+            <summary>
+            The colour components.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorComponents.Component1">
+            <summary>
+            The first component (R, H, or L*).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorComponents.Component2">
+            <summary>
+            The second component (G, S, or a*).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorComponents.Component3">
+            <summary>
+            The third component (B, V or b*).
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorComponentSelector">
+            <summary>
+            A control to select a colour component.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorComponentSelector.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorComponentSelector.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorComponentSelector.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorComponentSelector.ColorComponentProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorComponentSelector.ColorComponent"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorComponentSelector.ColorComponent">
+            <summary>
+            The currently selected colour component.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorComponentSelector.ColorComponentChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorComponentSelector.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorComponentSelector.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorComponentSelector"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorComponentChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IColorComponentSelector.ColorComponentChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorComponentChangedEventArgs.ColorComponent">
+            <summary>
+            The new colour component.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorComponentChangedEventArgs.#ctor(AvaloniaColorPicker.ColorComponents)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorComponentChangedEventArgs"/> object.
+            </summary>
+            <param name="colorComponent">The new colour component.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.ICurrentColorPreview">
+            <summary>
+            Represents a control providing a preview of the currently selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ICurrentColorPreview.CurrentColor">
+            <summary>
+            The currently selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ICurrentColorPreview.ColorBlindnessMode">
+            <summary>
+            The colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ICurrentColorPreview.ColorSelected">
+            <summary>
+            Invoked when the user clicks on a colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ICurrentColorPreview.SetColor(Avalonia.Media.Color,System.Boolean)">
+            <summary>
+            Change the currently selected colour.
+            </summary>
+            <param name="color">The new colour.</param>
+            <param name="instantTransition">Whether the change should happen instantly or not.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IPreviousColorPreview">
+            <summary>
+            Represents a control providing a preview of the previously selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IPreviousColorPreview.PreviousColor">
+            <summary>
+            The previously selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IPreviousColorPreview.ColorBlindnessMode">
+            <summary>
+            The colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IPreviousColorPreview.ColorSelected">
+            <summary>
+            Invoked when the user clicks on a colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.IPreviousColorPreview.SetColor(Avalonia.Media.Color,System.Boolean)">
+            <summary>
+            Change the previously selected colour.
+            </summary>
+            <param name="color">The new colour.</param>
+            <param name="instantTransition">Whether the change should happen instantly or not.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.CurrentColorPreview">
+            <summary>
+            A control that provides a preview of the currently selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CurrentColorPreview.CurrentColor">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.CurrentColorPreview.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.CurrentColorPreview"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.PreviousColorPreview">
+            <summary>
+            A control that provides a preview of the previously selected colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PreviousColorPreview.PreviousColor">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.PreviousColorPreview.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.PreviousColorPreview"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorPreview">
+            <summary>
+            A control that provides a preview of a colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPreview.ColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPreview.Color"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPreview.Color">
+            <summary>
+            The currently selected colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorPreview.ColorBlindnessModeProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorPreview.ColorBlindnessMode"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorPreview.ColorBlindnessMode">
+            <summary>
+            Determines the colour-blindness preview mode.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorPreview.ColorSelected">
+            <summary>
+            Invoked when the user clicks on a colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPreview.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPreview.SetColor(Avalonia.Media.Color,System.Boolean)">
+            <summary>
+            Change the colour.
+            </summary>
+            <param name="color">The new colour.</param>
+            <param name="instantTransition">Whether the change should happen instantly or not.</param>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPreview.#ctor(System.Boolean)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorPreview"/>.
+            </summary>
+            <param name="canBeSelected">Determines whether the current colour (central hexagon) can be selected or not.</param>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorPreview.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorPreview"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorSpacePreview">
+            <summary>
+            Represents a control providing a preview of the current colour space.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.ColorSpace">
+            <summary>
+            The current colour space.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.ColorComponent">
+            <summary>
+            The currently selected colour component.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.R">
+            <summary>
+            The red component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.G">
+            <summary>
+            The green component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.B">
+            <summary>
+            The blue component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.H">
+            <summary>
+            The hue of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.S">
+            <summary>
+            The saturation of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.V">
+            <summary>
+            The value (brightness) of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.L">
+            <summary>
+            The L* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.a">
+            <summary>
+            The a* component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpacePreview.b">
+            <summary>
+            The b* component of the colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.IColorSpacePreview.UpdatePreview(System.Boolean,AvaloniaColorPicker.IOutsideRGBWarning)">
+            <summary>
+            Update the preview of the colour space after the selected colour has changed.
+            </summary>
+            <param name="instantTransition">Whether the update should happen instantly or not.</param>
+            <param name="warningTooltip">An <see cref="T:AvaloniaColorPicker.IOutsideRGBWarning"/> control representing the warning that appears if the user selects a colour outside of the sRGB colour space. This can be <see langword="null"/>.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorSpacePreview">
+            <summary>
+            A control providing a preview of the currently selected colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.RProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.R"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.R">
+            <summary>
+            Determines the R component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.GProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.G"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.G">
+            <summary>
+            Determines the G component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.BProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.B"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.B">
+            <summary>
+            Determines the B component (blue) of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.HProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.H"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.H">
+            <summary>
+            Determines the H component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.SProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.S"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.S">
+            <summary>
+            Determines the S component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.VProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.V"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.V">
+            <summary>
+            Determines the V component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.LProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.L"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.L">
+            <summary>
+            Determines the L* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.aProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.a"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.a">
+            <summary>
+            Determines the a* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.bProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.b"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.b">
+            <summary>
+            Determines the b* component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpacePreview.ColorComponentProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpacePreview.ColorComponent"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpacePreview.ColorComponent">
+            <summary>
+            The currently selected colour component.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSpacePreview.UpdatePreview(System.Boolean,AvaloniaColorPicker.IOutsideRGBWarning)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSpacePreview.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorSpacePreview"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorSpaceSelector">
+            <summary>
+            Represents a control used to select the current colour space.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorSpaceSelector.ColorSpace">
+            <summary>
+            The current colour space.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IColorSpaceSelector.ColorSpaceChanged">
+            <summary>
+            Invoked when the selected colour space changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorSpaceSelector">
+            <summary>
+            A control used to select the current colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.ColorSpaceSelector.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.ColorSpaceSelector.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpaceSelector.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.ColorSpaceSelector.ColorSpaceChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSpaceSelector.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSpaceSelector.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorSpaceSelector"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorSpaceChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IColorSpaceSelector.ColorSpaceChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSpaceChangedEventArgs.ColorSpace">
+            <summary>
+            The new colour space.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSpaceChangedEventArgs.#ctor(AvaloniaColorPicker.ColorPicker.ColorSpaces)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorSpaceChangedEventArgs"/> object.
+            </summary>
+            <param name="colorSpace">The new colour space.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IColorPicker">
+            <summary>
+            Represents a colour picker control.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorPicker.Color">
+            <summary>
+            The <see cref="T:Avalonia.Media.Color"/> that is currently selected.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IColorPicker.PreviousColor">
+            <summary>
+            Represents the previously selected <see cref="T:Avalonia.Media.Color"/> (e.g. if the <see cref="T:AvaloniaColorPicker.IColorPicker"/> is being used to change the colour of an object, it would represent the previous colour of the object). Set to <see langword="null" /> to hide the previous colour display.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.CustomColorPicker">
+            <summary>
+            A custom colour picker control.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CustomColorPicker.ColorSpaceProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CustomColorPicker.ColorSpace"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CustomColorPicker.ColorSpace">
+            <summary>
+            The currently selected colour space.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CustomColorPicker.ColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CustomColorPicker.Color"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CustomColorPicker.Color">
+            <summary>
+            The <see cref="T:Avalonia.Media.Color"/> that is currently selected.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.CustomColorPicker.PreviousColorProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.CustomColorPicker.PreviousColor"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.CustomColorPicker.PreviousColor">
+            <summary>
+            Represents the previously selected <see cref="T:Avalonia.Media.Color"/> (e.g. if the <see cref="T:AvaloniaColorPicker.CustomColorPicker"/> is being used to change the colour of an object, it would represent the previous colour of the object. Set to <see langword="null" /> to hide the previous colour display.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.CustomColorPicker.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorPicker"/> instance.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.CustomColorPicker.#ctor(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Create  a new <see cref="T:AvaloniaColorPicker.ColorPicker"/> instance.
+            </summary>
+            <param name="controlElements">The controls that are used to select the colour.</param>
+        </member>
+        <member name="M:AvaloniaColorPicker.CustomColorPicker.#ctor(System.Object[])">
+            <summary>
+            Create  a new <see cref="T:AvaloniaColorPicker.ColorPicker"/> instance.
+            </summary>
+            <param name="controlElements">The controls that are used to select the colour.</param>
+        </member>
+        <member name="M:AvaloniaColorPicker.CustomColorPicker.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:AvaloniaColorPicker.IHexControl">
+            <summary>
+            Represents a control used to display the hex representation of a colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IHexControl.Text">
+            <summary>
+            The hex representation of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IHexControl.TextChanged">
+            <summary>
+            Invoked when the user changes the hex representation of the colour.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.HexControl">
+            <summary>
+            A control used to display the hex representation of a colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.HexControl.TextProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.HexControl.Text"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HexControl.Text">
+            <summary>
+            Determines the text of the Hex control.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.HexControl.TextChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.HexControl.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.HexControl.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.HexControl"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.HexTextChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IHexControl.TextChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HexTextChangedEventArgs.Text">
+            <summary>
+            The hex representation of the colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.HexTextChangedEventArgs.#ctor(System.String)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.HexTextChangedEventArgs"/> object.
+            </summary>
+            <param name="text">The hex representation of the colour.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IHSBControls">
+            <summary>
+            Represents controls used to specify a colour using hue, saturation and brightness (value).
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IHSBControls.H">
+            <summary>
+            The hue of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IHSBControls.S">
+            <summary>
+            The saturation of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IHSBControls.B">
+            <summary>
+            The brightness (value) of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IHSBControls.ColorChanged">
+            <summary>
+            Invoked when the selected colour changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.HSBControls">
+            <summary>
+            Controls used to specify a colour using hue, saturation and brightness (value).
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.HSBControls.HProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.HSBControls.H"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBControls.H">
+            <summary>
+            Determines the H component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.HSBControls.SProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.HSBControls.S"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBControls.S">
+            <summary>
+            Determines the S component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.HSBControls.BProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.HSBControls.B"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBControls.B">
+            <summary>
+            Determines the B/V component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.HSBControls.ColorChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.HSBControls.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.HSBControls.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.HSBControls"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.HSBChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IHSBControls.ColorChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBChangedEventArgs.H">
+            <summary>
+            The hue of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBChangedEventArgs.S">
+            <summary>
+            The saturation of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.HSBChangedEventArgs.B">
+            <summary>
+            The brightness (value) of the new colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.HSBChangedEventArgs.#ctor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.HSBChangedEventArgs"/> object.
+            </summary>
+            <param name="h">The hue of the new colour.</param>
+            <param name="s">The saturation of the new colour.</param>
+            <param name="b">The brightness (value) of the new colour.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IOutsideRGBWarning">
+            <summary>
+            Represents a control containing a warning that is displayed when the user selects a colour that falls outside of the sRGB spectrum.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IOutsideRGBWarning.Opacity">
+            <summary>
+            The opacity of the warning.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.OutsideRGBWarning">
+            <summary>
+            A control containing a warning that is displayed when the user selects a colour that falls outside of the sRGB spectrum.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.OutsideRGBWarning.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.OutsideRGBWarning"/> object.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.PaletteControl">
+            <summary>
+            A control representing a colour palette.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteControl.Owner">
+            <inheritdoc/>
+        </member>
+        <member name="E:AvaloniaColorPicker.PaletteControl.ColorSelected">
+            <inheritdoc/>
+        </member>
+        <member name="E:AvaloniaColorPicker.PaletteControl.ColorAdded">
+            <summary>
+            Invoked when the user adds a colour to the palette.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.PaletteControl.ColorRemoved">
+            <summary>
+            Invoked when the user removes a colour from the palette.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.PaletteControl.ColorBlindnessModeProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.PaletteControl.ColorBlindnessMode"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteControl.ColorBlindnessMode">
+            <inheritdoc/>
+        </member>
+        <member name="F:AvaloniaColorPicker.PaletteControl.ColorsProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.PaletteControl.Colors"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteControl.Colors">
+            <summary>
+            The colours contained in the palette. Note that you cannot directly add, remove or change elements from this list;
+            you always need to create a new <see cref="T:System.Collections.Immutable.ImmutableList"/> and change the value of the property.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.PaletteControl.CanAddRemoveProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.PaletteControl.CanAddRemove"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteControl.CanAddRemove">
+            <summary>
+            Determines whether the user can add and remove colours from the palette.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.PaletteControl.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.PaletteControl"/>.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.PaletteControl.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorAddedRemovedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.PaletteControl.ColorAdded"/> and <see cref="E:AvaloniaColorPicker.PaletteControl.ColorRemoved"/> events.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorAddedRemovedEventArgs.Index">
+            <summary>
+            The index at which the colour was added or removed.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorAddedRemovedEventArgs.Color">
+            <summary>
+            The colour that was added or removed.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorAddedRemovedEventArgs.#ctor(System.Int32,Avalonia.Media.Color)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorAddedRemovedEventArgs"/> instance.
+            </summary>
+            <param name="index">The index at which the colour was added or removed.</param>
+            <param name="color">The colour that was added or removed.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IRGBControls">
+            <summary>
+            Represents controls used to specify a colour based on its RGB components.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IRGBControls.R">
+            <summary>
+            The red component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IRGBControls.G">
+            <summary>
+            The green component of the colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IRGBControls.B">
+            <summary>
+            The blue component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IRGBControls.ColorChanged">
+            <summary>
+            Invoked when the selected colour changes.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.RGBControls">
+            <summary>
+            Controls used to specify a colour based on its RGB components.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.RGBControls.RProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.RGBControls.R"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBControls.R">
+            <summary>
+            Determines the R component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.RGBControls.GProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.RGBControls.G"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBControls.G">
+            <summary>
+            Determines the G component of the colour.
+            </summary>
+        </member>
+        <member name="F:AvaloniaColorPicker.RGBControls.BProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.RGBControls.B"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBControls.B">
+            <summary>
+            Determines the B component of the colour.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.RGBControls.ColorChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.RGBControls.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.RGBControls.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.RGBControls"/>.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.RGBChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:AvaloniaColorPicker.IRGBControls.ColorChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBChangedEventArgs.R">
+            <summary>
+            The red component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBChangedEventArgs.G">
+            <summary>
+            The green component of the new colour.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.RGBChangedEventArgs.B">
+            <summary>
+            The blue component of the new colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.RGBChangedEventArgs.#ctor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.RGBChangedEventArgs"/> object.
+            </summary>
+            <param name="r">The red component of the new colour.</param>
+            <param name="g">The green component of the new colour.</param>
+            <param name="b">The blue component of the new colour.</param>
+        </member>
+        <member name="T:AvaloniaColorPicker.IPaletteControl">
+            <summary>
+            Represents a control displaying a colour palette.
+            </summary>
+        </member>
+        <member name="E:AvaloniaColorPicker.IPaletteControl.ColorSelected">
+            <summary>
+            Invoked when a colour is selected from the palette.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IPaletteControl.Owner">
+            <summary>
+            The <see cref="T:AvaloniaColorPicker.IColorPicker"/> to which the <see cref="T:AvaloniaColorPicker.IPaletteControl"/> belongs.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.IPaletteControl.ColorBlindnessMode">
+            <summary>
+            The colour blindness simulation mode.
+            </summary>
+        </member>
+        <member name="T:AvaloniaColorPicker.PaletteSelector">
+            <summary>
+            A control displaying a collection of pre-set and user defined palettes. These cannot be edited programmatically and are shared between all programs using this library.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteSelector.Owner">
+            <inheritdoc/>
+        </member>
+        <member name="E:AvaloniaColorPicker.PaletteSelector.ColorSelected">
+            <inheritdoc/>
+        </member>
+        <member name="F:AvaloniaColorPicker.PaletteSelector.ColorBlindnessModeProperty">
+            <summary>
+            Defines the <see cref="P:AvaloniaColorPicker.PaletteSelector.ColorBlindnessMode"/> property.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.PaletteSelector.ColorBlindnessMode">
+            <inheritdoc/>
+        </member>
+        <member name="M:AvaloniaColorPicker.PaletteSelector.#ctor">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.PaletteSelector"/>.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.PaletteSelector.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:AvaloniaColorPicker.ColorSelectedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for events where a colour has been selected.
+            </summary>
+        </member>
+        <member name="P:AvaloniaColorPicker.ColorSelectedEventArgs.Color">
+            <summary>
+            The selected colour.
+            </summary>
+        </member>
+        <member name="M:AvaloniaColorPicker.ColorSelectedEventArgs.#ctor(Avalonia.Media.Color)">
+            <summary>
+            Create a new <see cref="T:AvaloniaColorPicker.ColorSelectedEventArgs"/> object.
+            </summary>
+            <param name="color">The selected colour.</param>
+        </member>
+    </members>
+</doc>

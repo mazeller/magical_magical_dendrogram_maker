@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.MuPDFUtils</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.MuPDFUtils.ImageURIParser">
+            <summary>
+            Provides a method to parse an image URI into a page.
+            </summary>
+        </member>
+        <member name="M:VectSharp.MuPDFUtils.ImageURIParser.Parser(System.Func{System.String,System.Boolean,VectSharp.Page})">
+            <summary>
+            Parses an image URI into a page. This is intended to replace the default image URI interpreter in <c>VectSharp.SVG.Parser.ParseImageURI</c>. To do this, use something like:
+            <code>VectSharp.SVG.Parser.ParseImageURI = VectSharp.MuPDFUtils.ImageURIParser.Parser(VectSharp.SVG.Parser.ParseSVGURI);</code>
+            </summary>
+            <param name="parseSVG">A function to parse an SVG image uri into a page. You should pass <c>VectSharp.SVG.Parser.ParseSVGURI</c> as this argument.</param>
+            <returns>A function to parse an image URI into a page.</returns>
+        </member>
+        <member name="T:VectSharp.MuPDFUtils.RasterImageFile">
+            <summary>
+            A <see cref="T:VectSharp.RasterImage"/> created from a file.
+            </summary>
+        </member>
+        <member name="M:VectSharp.MuPDFUtils.RasterImageFile.#ctor(System.String,System.Int32,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.RasterImage"/> from the specified file.
+            </summary>
+            <param name="fileName">The path to the file containing the image.</param>
+            <param name="pageNumber">The number of the page in the file from which the image should be created, starting at 0. Only useful for multi-page formats, such as PDF.</param>
+            <param name="scale">The scale factor at which to render the image.</param>
+            <param name="alpha">A boolean value indicating whether transparency (alpha) data from the image should be preserved or not.</param>
+            <param name="interpolate">A boolean value indicating whether the image should be interpolated when it is resized or not.</param>
+        </member>
+        <member name="T:VectSharp.MuPDFUtils.RasterImageStream">
+            <summary>
+            A <see cref="T:VectSharp.RasterImage"/> created from a stream.
+            </summary>
+        </member>
+        <member name="M:VectSharp.MuPDFUtils.RasterImageStream.#ctor(System.IO.Stream,MuPDFCore.InputFileTypes,System.Int32,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.RasterImage"/> from the specified stream.
+            </summary>
+            <param name="imageStream">The stream containing the image data.</param>
+            <param name="fileType">The type of the image contained in the stream.</param>
+            <param name="pageNumber">The number of the page in the file from which the image should be created, starting at 0. Only useful for multi-page formats, such as PDF.</param>
+            <param name="scale">The scale factor at which to render the image.</param>
+            <param name="alpha">A boolean value indicating whether transparency (alpha) data from the image should be preserved or not.</param>
+            <param name="interpolate">A boolean value indicating whether the image should be interpolated when it is resized or not.</param>
+        </member>
+        <member name="M:VectSharp.MuPDFUtils.RasterImageStream.#ctor(System.IntPtr,System.Int64,MuPDFCore.InputFileTypes,System.Int32,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.RasterImage"/> from the specified stream.
+            </summary>
+            <param name="imageAddress">A pointer to the address where the image data is contained.</param>
+            <param name="imageLength">The length in bytes of the image data.</param>
+            <param name="fileType">The type of the image contained in the stream.</param>
+            <param name="pageNumber">The number of the page in the file from which the image should be created, starting at 0. Only useful for multi-page formats, such as PDF.</param>
+            <param name="scale">The scale factor at which to render the image.</param>
+            <param name="alpha">A boolean value indicating whether transparency (alpha) data from the image should be preserved or not.</param>
+            <param name="interpolate">A boolean value indicating whether the image should be interpolated when it is resized or not.</param>
+        </member>
+    </members>
+</doc>

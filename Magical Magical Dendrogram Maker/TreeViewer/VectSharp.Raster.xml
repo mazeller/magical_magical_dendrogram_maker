@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.Raster</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.Raster.Raster">
+            <summary>
+            Contains methods to render a page to a PNG image.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.SaveAsPNG(VectSharp.Page,System.String,System.Double)">
+            <summary>
+            Render the page to a PNG file.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="fileName">The full path to the file to save. If it exists, it will be overwritten.</param>
+            <param name="scale">The scale to be used when rasterising the page. This will determine the width and height of the image file.</param>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.SaveAsPNG(VectSharp.Page,System.IO.Stream,System.Double)">
+            <summary>
+            Render the page to a PNG stream.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="stream">The stream to which the PNG data will be written.</param>
+            <param name="scale">The scale to be used when rasterising the page. This will determine the width and height of the image file.</param>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.Rasterise(VectSharp.Graphics,VectSharp.Rectangle,System.Double,System.Boolean)">
+            <summary>
+            Rasterise a region of a <see cref="T:VectSharp.Graphics"/> object.
+            </summary>
+            <param name="graphics">The <see cref="T:VectSharp.Graphics"/> object that will be rasterised.</param>
+            <param name="region">The region of the <paramref name="graphics"/> that will be rasterised.</param>
+            <param name="scale">The scale at which the image will be rendered.</param>
+            <param name="interpolate">Whether the resulting image should be interpolated or not when it is drawn on another <see cref="T:VectSharp.Graphics"/> surface.</param>
+            <returns>A <see cref="T:VectSharp.RasterImage"/> containing the rasterised graphics.</returns>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.SaveAsRawBytes(VectSharp.Page,System.Int32@,System.Int32@,System.Int32@,System.Double)">
+            <summary>
+            Render the page to raw pixel data, in 32bpp RGBA format.
+            </summary>
+            <param name="pag">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="scale">The scale to be used when rasterising the page. This will determine the width and height of the image.</param>
+            <param name="width">The width of the rendered image.</param>
+            <param name="height">The height of the rendered image.</param>
+            <param name="totalSize">The size in bytes of the raw pixel data.</param>
+            <returns>A <see cref="T:VectSharp.DisposableIntPtr"/> containing a pointer to the raw pixel data, stored in unmanaged memory. Dispose this object to release the unmanaged memory.</returns>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.SaveAsAnimatedPNG(VectSharp.Animation,System.IO.Stream,System.Double,System.Double,System.Double,VectSharp.AnimatedPNG.InterframeCompression)">
+            <summary>
+            Saves the animation to a stream in animated PNG format.
+            </summary>
+            <param name="animation">The animation to export.</param>
+            <param name="imageStream">The stream on which the animated PNG will be written.</param>
+            <param name="scale">The scale at which the animation will be rendered.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps). This is capped by the animated PNG specification at 90 fps.</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="interframeCompression">The kind of compression that will be used to reduce file size. Note that if the animation has a transparent background, no compression can be performed, and the value of this parameter is ignored.</param>
+        </member>
+        <member name="M:VectSharp.Raster.Raster.SaveAsAnimatedPNG(VectSharp.Animation,System.String,System.Double,System.Double,System.Double,VectSharp.AnimatedPNG.InterframeCompression)">
+            <summary>
+            Saves the animation to an animated PNG file.
+            </summary>
+            <param name="animation">The animation to export.</param>
+            <param name="fileName">The output file to create.</param>
+            <param name="scale">The scale at which the animation will be rendered.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps). This is capped by the animated PNG specification at 90 fps.</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="interframeCompression">The kind of compression that will be used to reduce file size. Note that if the animation has a transparent background, no compression can be performed, and the value of this parameter is ignored.</param>
+        </member>
+    </members>
+</doc>

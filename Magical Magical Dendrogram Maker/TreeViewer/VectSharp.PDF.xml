@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.PDF</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.PDF.PDFContextInterpreter">
+            <summary>
+            Contains methods to render a <see cref="T:VectSharp.Document"/> as a PDF document.
+            </summary>
+        </member>
+        <member name="M:VectSharp.PDF.PDFContextInterpreter.SaveAsPDF(VectSharp.Document,System.String,VectSharp.PDF.PDFContextInterpreter.TextOptions,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.PDF.PDFContextInterpreter.FilterOption)">
+            <summary>
+            Save the document to a PDF file.
+            </summary>
+            <param name="document">The <see cref="T:VectSharp.Document"/> to save.</param>
+            <param name="fileName">The full path to the file to save. If it exists, it will be overwritten.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="compressStreams">Indicates whether the streams in the PDF file should be compressed.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+        <member name="T:VectSharp.PDF.PDFContextInterpreter.TextOptions">
+            <summary>
+            Defines whether the used fonts should be included in the file.
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.TextOptions.SubsetFonts">
+            <summary>
+            Embeds subsetted font files containing only the glyphs for the characters that have been used.
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.TextOptions.ConvertIntoPaths">
+            <summary>
+            Does not embed any font file and converts all text items into paths.
+            </summary>
+        </member>
+        <member name="T:VectSharp.PDF.PDFContextInterpreter.FilterOption">
+            <summary>
+            Determines how and whether image filters are rasterised.
+            </summary>
+        </member>
+        <member name="T:VectSharp.PDF.PDFContextInterpreter.FilterOption.FilterOperations">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.FilterOption.FilterOperations.RasteriseAll">
+            <summary>
+            Image filters will always be rasterised.
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.FilterOption.FilterOperations.IgnoreAll">
+            <summary>
+            All image filters will be ignored.
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.FilterOption.FilterOperations.SkipAll">
+            <summary>
+            All the images that should be drawn with a filter will be ignored.
+            </summary>
+        </member>
+        <member name="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.Operation">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolution">
+            <summary>
+            The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.
+            </summary>
+        </member>
+        <member name="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolutionRelative">
+            <summary>
+            Determines whether the value of <see cref="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).
+            </summary>
+        </member>
+        <member name="F:VectSharp.PDF.PDFContextInterpreter.FilterOption.Default">
+            <summary>
+            The default options for image filter rasterisation.
+            </summary>
+        </member>
+        <member name="M:VectSharp.PDF.PDFContextInterpreter.FilterOption.#ctor(VectSharp.PDF.PDFContextInterpreter.FilterOption.FilterOperations,System.Double,System.Boolean)">
+            <summary>
+            Create a new <see cref="T:VectSharp.PDF.PDFContextInterpreter.FilterOption"/> object.
+            </summary>
+            <param name="operation">Defines whether image filters should be rasterised or not.</param>
+            <param name="rasterisationResolution">The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.</param>
+            <param name="rasterisationResolutionRelative">Determines whether the value of <see cref="P:VectSharp.PDF.PDFContextInterpreter.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).</param>
+        </member>
+        <member name="M:VectSharp.PDF.PDFContextInterpreter.SaveAsPDF(VectSharp.Document,System.IO.Stream,VectSharp.PDF.PDFContextInterpreter.TextOptions,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},VectSharp.PDF.PDFContextInterpreter.FilterOption)">
+            <summary>
+            Save the document to a PDF stream.
+            </summary>
+            <param name="document">The <see cref="T:VectSharp.Document"/> to save.</param>
+            <param name="stream">The stream to which the PDF data will be written.</param>
+            <param name="textOption">Defines whether the used fonts should be included in the file.</param>
+            <param name="compressStreams">Indicates whether the streams in the PDF file should be compressed.</param>
+            <param name="linkDestinations">A dictionary associating element tags to link targets. If this is provided, objects that have been drawn with a tag contained in the dictionary will become hyperlink to the destination specified in the dictionary. If the destination starts with a hash (#), it is interpreted as the tag of another object in the current document; otherwise, it is interpreted as an external URI.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+        </member>
+    </members>
+</doc>

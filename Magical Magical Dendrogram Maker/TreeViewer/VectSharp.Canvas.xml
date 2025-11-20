@@ -1,0 +1,912 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VectSharp.Canvas</name>
+    </assembly>
+    <members>
+        <member name="T:VectSharp.Canvas.AnimatedCanvas">
+            <summary>
+            An <see cref="T:Avalonia.Controls.Canvas"/> containing an animation.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AnimatedCanvas.CurrentFrameProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.Canvas.AnimatedCanvas.CurrentFrame"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.AnimatedCanvas.CurrentFrame">
+            <summary>
+            The current frame in the animation.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AnimatedCanvas.FrameCountProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.Canvas.AnimatedCanvas.FrameCount"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.AnimatedCanvas.FrameCount">
+            <summary>
+            The number of frames in the animation.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AnimatedCanvas.FrameRateProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.Canvas.AnimatedCanvas.FrameRate"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.AnimatedCanvas.FrameRate">
+            <summary>
+            The target frame rate of the animation.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AnimatedCanvas.IsPlayingProperty">
+            <summary>
+            Defines the <see cref="P:VectSharp.Canvas.AnimatedCanvas.IsPlaying"/> property.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.AnimatedCanvas.IsPlaying">
+            <summary>
+            The current frame in the animation.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.AnimatedCanvas.Render(Avalonia.Media.DrawingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:VectSharp.Canvas.AnimatedCanvas.OnDetachedFromVisualTree(Avalonia.VisualTreeAttachmentEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:VectSharp.Canvas.AnimatedCanvas.OnAttachedToVisualTree(Avalonia.VisualTreeAttachmentEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="T:VectSharp.Canvas.RenderAction">
+            <summary>
+            Represents a light-weight rendering action.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.RenderAction.ActionTypes">
+            <summary>
+            Types of rendering actions.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.RenderAction.ActionTypes.Path">
+            <summary>
+            The render action represents a path object.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.RenderAction.ActionTypes.Text">
+            <summary>
+            The render action represents a text object.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.RenderAction.ActionTypes.RasterImage">
+            <summary>
+            The render action represents a raster image.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.ActionType">
+            <summary>
+            Type of the rendering action.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Geometry">
+            <summary>
+            Geometry that needs to be rendered (null if the action type is <see cref="F:VectSharp.Canvas.RenderAction.ActionTypes.Text"/>). If you change this, you need to invalidate the <see cref="P:VectSharp.Canvas.RenderAction.Parent"/>'s visual.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Text">
+            <summary>
+            Text that needs to be rendered (null if the action type is <see cref="F:VectSharp.Canvas.RenderAction.ActionTypes.Path"/>). If you change this, you need to invalidate the <see cref="P:VectSharp.Canvas.RenderAction.Parent"/>'s visual.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Stroke">
+            <summary>
+            Rendering stroke (null if the action type is <see cref="F:VectSharp.Canvas.RenderAction.ActionTypes.Text"/> or if the rendered action only has a <see cref="P:VectSharp.Canvas.RenderAction.Fill"/>). If you change this, you need to invalidate the <see cref="P:VectSharp.Canvas.RenderAction.Parent"/>'s visual.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Fill">
+            <summary>
+            Rendering fill (null if the rendered action only has a <see cref="P:VectSharp.Canvas.RenderAction.Stroke"/>). If you change this, you need to invalidate the <see cref="P:VectSharp.Canvas.RenderAction.Parent"/>'s visual.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.ImageId">
+            <summary>
+            Univocal identifier of the image that needs to be drawn.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.ImageSource">
+            <summary>
+            The source rectangle of the image.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.ImageDestination">
+            <summary>
+            The destination rectangle of the image.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.ClippingPath">
+            <summary>
+            The current clipping path.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.InverseTransform">
+            <summary>
+            Inverse transformation matrix.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Transform">
+            <summary>
+            Rendering transformation matrix. If you change this, you need to invalidate the <see cref="P:VectSharp.Canvas.RenderAction.Parent"/>'s visual.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Tag">
+            <summary>
+            A tag to access the <see cref="T:VectSharp.Canvas.RenderAction"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.RenderAction.Parent">
+            <summary>
+            The container of this <see cref="T:VectSharp.Canvas.RenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.RenderAction.PointerEnter">
+            <summary>
+            Raised when the pointer enters the area covered by the <see cref="T:VectSharp.Canvas.RenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.RenderAction.PointerLeave">
+            <summary>
+            Raised when the pointer leaves the area covered by the <see cref="T:VectSharp.Canvas.RenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.RenderAction.PointerPressed">
+            <summary>
+            Raised when the pointer is pressed while over the area covered by the <see cref="T:VectSharp.Canvas.RenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.RenderAction.PointerReleased">
+            <summary>
+            Raised when the pointer is released after a <see cref="E:VectSharp.Canvas.RenderAction.PointerPressed"/> event.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.RenderAction.PathAction(Avalonia.Media.Geometry,Avalonia.Media.Pen,Avalonia.Media.IBrush,Avalonia.Matrix,Avalonia.Media.Geometry,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.RenderAction"/> representing a path.
+            </summary>
+            <param name="geometry">The geometry to be rendered.</param>
+            <param name="stroke">The stroke of the path (can be null).</param>
+            <param name="fill">The fill of the path (can be null).</param>
+            <param name="transform">The transform that will be applied to the path.</param>
+            <param name="clippingPath">The clipping path.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.RenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.RenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.RenderAction"/> representing a path.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.RenderAction.TextAction(Avalonia.Media.FormattedText,Avalonia.Media.IBrush,Avalonia.Matrix,Avalonia.Media.Geometry,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.RenderAction"/> representing text.
+            </summary>
+            <param name="text">The text to be rendered.</param>
+            <param name="fill">The fill of the text (can be null).</param>
+            <param name="transform">The transform that will be applied to the text.</param>
+            <param name="clippingPath">The clipping path.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.RenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.RenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.RenderAction"/> representing text.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.RenderAction.ImageAction(System.String,Avalonia.Rect,Avalonia.Rect,Avalonia.Matrix,Avalonia.Media.Geometry,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.RenderAction"/> representing an image.
+            </summary>
+            <param name="imageId">The univocal identifier of the image to draw.</param>
+            <param name="sourceRect">The source rectangle of the image.</param>
+            <param name="destinationRect">The destination rectangle of the image.</param>
+            <param name="transform">The transform that will be applied to the image.</param>
+            <param name="clippingPath">The clipping path.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.RenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.RenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.RenderAction"/> representing an image.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.RenderAction.BringToFront">
+            <summary>
+            Brings the render action to the front of the rendering queue. This method can only be invoked after the output has been fully initialised.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.RenderAction.SendToBack">
+            <summary>
+            Brings the render action to the back of the rendering queue. This method can only be invoked after the output has been fully initialised.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.AvaloniaContextInterpreter">
+            <summary>
+            Contains methods to render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions">
+            <summary>
+            Defines whether text items should be converted into paths when drawing.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions.AlwaysConvert">
+            <summary>
+            Converts all text items into paths.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions.ConvertIfNecessary">
+            <summary>
+            Converts all text items into paths, with the exception of those that use a standard font.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions.NeverConvert">
+            <summary>
+            Does not convert any text items into paths.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.AvaloniaContextInterpreter.PaintToCanvas(VectSharp.Page,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.AvaloniaContextInterpreter.PaintToCanvas(VectSharp.Page,System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="graphicsAsControls">If this is true, each graphics object (e.g. paths, text...) is rendered as a separate <see cref="T:Avalonia.Controls.Control"/>. Otherwise, they are directly rendered onto the drawing context (which is faster, but does not allow interactivity).</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.AvaloniaContextInterpreter.PaintToCanvas(VectSharp.Page,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Delegate},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="graphicsAsControls">If this is true, each graphics object (e.g. paths, text...) is rendered as a separate <see cref="T:Avalonia.Controls.Control"/>. Otherwise, they are directly rendered onto the drawing context (which is faster, but does not allow interactivity).</param>
+            <param name="taggedActions">A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing the <see cref="T:System.Action"/>s that will be performed on items with the corresponding tag.
+            If <paramref name="graphicsAsControls"/> is true, the delegates should be voids that accept one parameter of type <see cref="T:Avalonia.Controls.TextBlock"/> or <see cref="T:Avalonia.Controls.Shapes.Path"/> (depending on the tagged item), otherwise, they should accept one parameter of type <see cref="T:VectSharp.Canvas.RenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the actions that will actually be performed.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the <see cref="T:System.Action"/>s should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same <see cref="T:System.Action"/> should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.AvaloniaContextInterpreter.PaintToCanvas(VectSharp.Page,System.Collections.Generic.Dictionary{System.String,System.Delegate},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="taggedActions">A <see cref="T:System.Collections.Generic.Dictionary`2"/> containing the <see cref="T:System.Action"/>s that will be performed on items with the corresponding tag.
+            The delegates should accept one parameter of type <see cref="T:Avalonia.Controls.TextBlock"/> or <see cref="T:Avalonia.Controls.Shapes.Path"/> (depending on the tagged item).</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the <see cref="T:System.Action"/>s should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same <see cref="T:System.Action"/> should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.AvaloniaContextInterpreter.PaintToAnimatedCanvas(VectSharp.Animation,System.Double,System.Double,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render an <see cref="T:VectSharp.Animation"/> to an <see cref="T:Avalonia.Controls.Canvas"/>.
+            </summary>
+            <param name="animation">The <see cref="T:VectSharp.Animation"/> to render.</param>
+            <param name="frameRate">The target frame rate of the animation, in frames-per-second (fps).</param>
+            <param name="durationScaling">A scaling factor that will be applied to all durations in the animation. Values greater than 1 slow down the animation, values smaller than 1 accelerate it. Note that this does not affect the frame rate of the animation.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered animation.</returns>
+        </member>
+        <member name="T:VectSharp.Canvas.SKMultiLayerRenderCanvas">
+            <summary>
+            Represents a multi-threaded, triple-buffered canvas on which the image is drawn using SkiaSharp.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKMultiLayerRenderCanvas.PageWidth">
+            <summary>
+            The width of the page that is rendered on this canvas.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKMultiLayerRenderCanvas.PageHeight">
+            <summary>
+            The height of the page that is rendered on this canvas.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKMultiLayerRenderCanvas.RenderActions">
+            <summary>
+            The list of render actions, each element in this list is itself a list, containing the actions that correspond to a layer in the image.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKMultiLayerRenderCanvas.LayerTransforms">
+            <summary>
+            The list of transforms associated with each layer.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKMultiLayerRenderCanvas.Spinner">
+            <summary>
+            If the image to draw is not already cached, this method is called with an argument containing the number of milliseconds since the image was last rendered.
+            The method can return a Bitmap that will be drawn on the canvas in order to let users know that the image is being rendered in background.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.#ctor(VectSharp.Document,VectSharp.Colour,System.Double,System.Double,System.Collections.Generic.List{VectSharp.Canvas.SKRenderAction})">
+            <summary>
+            Create a new SKMultiLayerRenderCanvas from a <see cref="T:VectSharp.Document"/>, where each page represents a layer.
+            </summary>
+            <param name="document">The document containing the layers as <see cref="T:VectSharp.Page"/>s.</param>
+            <param name="layerTransforms">A list of transforms associated with each layer. This list should contain the same number of elements as the number of pages in <paramref name="document"/>. This is useful to manipulate the position of each layer individually. If this is null, an identity transform is applied to each layer.</param>
+            <param name="backgroundColour">The background colour of the canvas.</param>
+            <param name="width">The width of the canvas and the pages it contains.</param>
+            <param name="height">The height of the canvas and the pages it contains.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.#ctor(System.Collections.Generic.IEnumerable{VectSharp.Page},VectSharp.Colour,System.Double,System.Double,System.Collections.Generic.List{VectSharp.Canvas.SKRenderAction})">
+            <summary>
+            Create a new SKMultiLayerRenderCanvas from a collection of <see cref="T:VectSharp.Page"/>s, each representing a layer.
+            </summary>
+            <param name="layers">The contents of the canvas. Each element in this list represents a layer.</param>
+            <param name="layerTransforms">A list of transforms associated with each layer. This list should contain the same number of elements as <paramref name="layers"/>. This is useful to manipulate the position of each layer individually. If this is null, an identity transform is applied to each layer.</param>
+            <param name="backgroundColour">The background colour of the canvas.</param>
+            <param name="width">The width of the canvas and the pages it contains.</param>
+            <param name="height">The height of the canvas and the pages it contains.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.#ctor(System.Collections.Generic.List{VectSharp.Canvas.SKRenderContext},System.Collections.Generic.List{VectSharp.Canvas.SKRenderAction},VectSharp.Colour,System.Double,System.Double)">
+            <summary>
+            Create a new SKMultiLayerRenderCanvas from a list of SKRenderContexts, each representing a layer.
+            </summary>
+            <param name="contents">The contents of the canvas. Each element in this list represents a layer. A Page can be converded to a SKRenderContext through the CopyToSKRenderContext method.</param>
+            <param name="contentTransforms">A list of transforms associated with each layer. This list should contain the same number of elements as <paramref name="contents"/>. This is useful to manipulate the position of each layer individually.</param>
+            <param name="backgroundColour">The background colour of the canvas.</param>
+            <param name="width">The width of the canvas and the page it contains.</param>
+            <param name="height">The height of the canvas and the page it contains.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.UpdateWith(System.Collections.Generic.List{VectSharp.Canvas.SKRenderContext},System.Collections.Generic.List{VectSharp.Canvas.SKRenderAction},VectSharp.Colour,System.Double,System.Double)">
+            <summary>
+            Replace the contents of the SKMultiLayerRenderCanvas with the specified layers.
+            </summary>
+            <param name="contents">The contents of the canvas. Each element in this list represents a layer. A Page can be converded to a SKRenderContext through the CopyToSKRenderContext method.</param>
+            <param name="contentTransforms">A list of transforms associated with each layer. This list should contain the same number of elements as <paramref name="contents"/>. This is useful to manipulate the position of each layer individually.</param>
+            <param name="backgroundColour">The background colour of the canvas.</param>
+            <param name="width">The width of the canvas and the page it contains.</param>
+            <param name="height">The height of the canvas and the page it contains.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.UpdateLayer(System.Int32,VectSharp.Canvas.SKRenderContext,VectSharp.Canvas.SKRenderAction)">
+            <summary>
+            Replace a single layer with the specified content.
+            </summary>
+            <param name="layer">The index of the layer to replace.</param>
+            <param name="newContent">The new contents of the layer. A Page can be converded to a SKRenderContext through the CopyToSKRenderContext method.</param>
+            <param name="newTransform">The new transform for the layer.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.AddLayer(VectSharp.Canvas.SKRenderContext,VectSharp.Canvas.SKRenderAction)">
+            <summary>
+            Add a new layer to the image.
+            </summary>
+            <param name="newContent">The contents of the new layer. A Page can be converded to a SKRenderContext through the CopyToSKRenderContext method.</param>
+            <param name="newTransform">The transform for the new layer.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.InsertLayer(System.Int32,VectSharp.Canvas.SKRenderContext,VectSharp.Canvas.SKRenderAction)">
+            <summary>
+            Insert a new layer at the specified index.
+            </summary>
+            <param name="index">The position at which the new layer will be inserted.</param>
+            <param name="newContent">The contents of the new layer.</param>
+            <param name="newTransform">The transform for the new layer.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.RemoveLayer(System.Int32)">
+            <summary>
+            Remove the specified layer from the image.
+            </summary>
+            <param name="layer">The index of the layer to remove.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.SwitchLayers(System.Int32,System.Int32)">
+            <summary>
+            Switch the position of the two specified layers.
+            </summary>
+            <param name="layer1">The index of the first layer to switch.</param>
+            <param name="layer2">The index of the second layer to switch.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.MoveLayer(System.Int32,System.Int32)">
+            <summary>
+            Move the specified layer to the specified position, shifting all other layers as necessary.
+            </summary>
+            <param name="oldIndex">The current index of the layer to move.</param>
+            <param name="newIndex">The final index of the layer. Layers after this will be shifted by 1 in order to accommodate the moved layer.</param>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.OnAttachedToVisualTree(Avalonia.VisualTreeAttachmentEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.OnDetachedFromVisualTree(Avalonia.VisualTreeAttachmentEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="F:VectSharp.Canvas.SKMultiLayerRenderCanvas.RenderLock">
+            <summary>
+            An lock for the rendering loop. The public methods of this class already lock on this, but you may need it if you want to directly manipulate the contents of the canvas.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.RenderAtResolution(System.Int32,System.Int32,System.Nullable{SkiaSharp.SKColor})">
+            <summary>
+            Render the image at to a bitmap at the specified resolution.
+            </summary>
+            <param name="width">The width of the rendered image. Note that the actual width of the returned image might be lower than this, depending on the aspect ratio of the image.</param>
+            <param name="height">The height of the rendered image. Note that the actual height of the returned image might be lower than this, depending on the aspect ratio of the image.</param>
+            <param name="background">The background colour for the image. If this is <see langword="null" />, the current background colour is used.</param>
+            <returns>A <see cref="T:Avalonia.Media.Imaging.RenderTargetBitmap"/> containing the image rendered at the specified resolution.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.InvalidateDirty">
+            <summary>
+            Invalidate the contents of the canvas, forcing it to redraw itself.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.InvalidateZIndex">
+            <summary>
+            Invalidate the contents of the canvas, specifying that the order of the layers has changed.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.Render(Avalonia.Media.DrawingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.Dispose(System.Boolean)">
+            <inheritdoc cref="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.Dispose"/>
+        </member>
+        <member name="M:VectSharp.Canvas.SKMultiLayerRenderCanvas.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:VectSharp.Canvas.SKRenderAction">
+            <summary>
+            Represents a light-weight rendering action.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Disposed">
+            <summary>
+            Returns a boolean value indicating whether the current instance has been disposed.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.SKRenderAction.ActionTypes">
+            <summary>
+            Types of rendering actions.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Path">
+            <summary>
+            The render action represents a path object.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text">
+            <summary>
+            The render action represents a text object.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.RasterImage">
+            <summary>
+            The render action represents a raster image.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Transform">
+            <summary>
+            The render action represents a transformation of the coordinate space.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Save">
+            <summary>
+            The render action represents saving the current graphics state.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Restore">
+            <summary>
+            The render action represents restoring the last saved graphics state.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Clip">
+            <summary>
+            The render action represents an update of the current clip path.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.SKRenderAction.ActionTypes.DrawFiltered">
+            <summary>
+            The render action represents rendering a graphics object with a filter.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.ActionType">
+            <summary>
+            Type of the rendering action.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Path">
+            <summary>
+            Path that needs to be rendered (null if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Path"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Text">
+            <summary>
+            Text that needs to be rendered (null if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Font">
+            <summary>
+            The font that will be used to render the text (null if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.TextX">
+            <summary>
+            The X coordainate at which the text will be drawn (null if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.TextY">
+            <summary>
+            The Y coordainate at which the text will be drawn (null if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Paint">
+            <summary>
+            Paint used to render the text or path (<see langword="null"/> if the action type is neither <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Text"/> nor <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Path"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.ImageId">
+            <summary>
+            Univocal identifier of the image that needs to be drawn.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.ImageSource">
+            <summary>
+            The source rectangle of the image (<see langword="null"/> if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.RasterImage"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.ImageDestination">
+            <summary>
+            The destination rectangle of the image (<see langword="null"/> if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.RasterImage"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Transform">
+            <summary>
+            The transformation matrix that will be applied to the current coordinate system (<see langword="null"/> if the action type is not <see cref="F:VectSharp.Canvas.SKRenderAction.ActionTypes.Transform"/>). If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Tag">
+            <summary>
+            A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.ZIndex">
+            <summary>
+            The Z-index of the rendering action (an action with a higher Z-index will always appear above an action with a lower Z-index).
+            The more different values there are for the Z-index, the slower the rendering, so keep use of this property to a minimum.
+            If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateZIndex"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Graphics">
+            <summary>
+            The graphics that will be drawn with the specified <see cref="P:VectSharp.Canvas.SKRenderAction.Filter"/>. If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Filter">
+            <summary>
+            The filter with which the <see cref="P:VectSharp.Canvas.SKRenderAction.Graphics"/> is drawn. If you change this, you probably want to call this object's <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual"/> method.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Payload">
+            <summary>
+            An arbitrary object associated with the RenderAction.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.SKRenderAction.Parent">
+            <summary>
+            The container of this <see cref="T:VectSharp.Canvas.SKRenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.SKRenderAction.PointerEnter">
+            <summary>
+            Raised when the pointer enters the area covered by the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.SKRenderAction.PointerLeave">
+            <summary>
+            Raised when the pointer leaves the area covered by the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.SKRenderAction.PointerPressed">
+            <summary>
+            Raised when the pointer is pressed while over the area covered by the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.
+            </summary>
+        </member>
+        <member name="E:VectSharp.Canvas.SKRenderAction.PointerReleased">
+            <summary>
+            Raised when the pointer is released after a <see cref="E:VectSharp.Canvas.SKRenderAction.PointerPressed"/> event.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath">
+            <summary>
+            <para>Signals to this object that its shape has changed a new path needs to be computed for the purpose of hit-testing.
+            Also signals to the <see cref="P:VectSharp.Canvas.SKRenderAction.Parent"/> that the visual properties of this object have changed and triggers a redraw.</para>
+            <para>This method should be called whenever the "shape" of the object represented by the <see cref="T:VectSharp.Canvas.SKRenderAction"/> changes.
+            If only the visual properties of this object have changed (e.g. the colour), call the <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual"/> method instead.</para>
+            <para>If you make changes to more than one <see cref="T:VectSharp.Canvas.SKRenderAction"/> contained in the same <see cref="N:VectSharp.Canvas"/>, you only need to invalidate the last one.</para>
+            <para>This method should only be called after the output has been fully initialized.</para>
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.InvalidateVisual">
+            <summary>
+            <para>This methods signals to the <see cref="P:VectSharp.Canvas.SKRenderAction.Parent"/> that the visual properties (e.g. the colour) of this object have changed and triggers a redraw.</para>
+            <para>If the "shape" of the object has changed as well, call the <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateHitTestPath"/> method instead. If the Z-index of the
+            object has changed, call the <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateZIndex"/> method instead. If both the "shape" and the Z-index of the object have changed,
+            call the <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateAll"/> method.</para>
+            <para>If you make changes to more than one <see cref="T:VectSharp.Canvas.SKRenderAction"/> contained in the same <see cref="N:VectSharp.Canvas"/>, you only need to invalidate the last one.</para>
+            <para>This method should only be called after the output has been fully initialized.</para>
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.InvalidateZIndex">
+            <summary>
+            <para>This methods signals to the <see cref="P:VectSharp.Canvas.SKRenderAction.Parent"/> that the Z-index and visual properties (e.g. the colour) of this object have changed and triggers a redraw.</para>
+            <para>If the "shape" of the object has changed as well, call the <see cref="M:VectSharp.Canvas.SKRenderAction.InvalidateAll"/> method instead.</para>
+            <para>If you make changes to more than one <see cref="T:VectSharp.Canvas.SKRenderAction"/> contained in the same <see cref="N:VectSharp.Canvas"/>, you only need to invalidate the last one.</para>
+            <para>This method should only be called after the output has been fully initialized.</para>
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.InvalidateAll">
+            <summary>
+            <para>This methods signals to the <see cref="P:VectSharp.Canvas.SKRenderAction.Parent"/> that the Z-index, shape and visual properties (e.g. the colour) of this object have changed and triggers a redraw.</para>
+            <para>If you make changes to more than one <see cref="T:VectSharp.Canvas.SKRenderAction"/> contained in the same <see cref="N:VectSharp.Canvas"/>, you only need to invalidate the last one.</para>
+            <para>This method should only be called after the output has been fully initialized.</para>
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.PathAction(SkiaSharp.SKPath,SkiaSharp.SKPaint,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a path.
+            </summary>
+            <param name="path">The geometry to be rendered.</param>
+            <param name="paint">The paint used to fill or stroke the path.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.SKRenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a path.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.ClipAction(SkiaSharp.SKPath,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a clipping action.
+            </summary>
+            <param name="clippingPath">The path to be used for clipping.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a clipping action.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.TextAction(System.String,System.Single,System.Single,SkiaSharp.SKFont,SkiaSharp.SKPaint,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing text.
+            </summary>
+            <param name="text">The text to be rendered.</param>
+            <param name="x">The X coordinate at which the text will be drawn.</param>
+            <param name="y">The Y coordinate at which the text will be drawn.</param>
+            <param name="font">The font to be used to render the text.</param>
+            <param name="paint">The paint to be used to fill or stroke the text.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.SKRenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing text.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.ImageAction(System.String,SkiaSharp.SKRect,SkiaSharp.SKRect,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing an image.
+            </summary>
+            <param name="imageId">The univocal identifier of the image to draw.</param>
+            <param name="sourceRect">The source rectangle of the image.</param>
+            <param name="destinationRect">The destination rectangle of the image.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>. If this is null this <see cref="T:VectSharp.Canvas.SKRenderAction"/> is not visible in the hit test.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing an image.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.TransformAction(SkiaSharp.SKMatrix,System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a transform.
+            </summary>
+            <param name="transform">The transform to apply.</param>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> representing a transform.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.SaveAction(System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that saves the current graphics state.
+            </summary>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that saves the current graphics state.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.RestoreAction(System.String)">
+            <summary>
+            Creates a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that saves the current graphics state.
+            </summary>
+            <param name="tag">A tag to access the <see cref="T:VectSharp.Canvas.SKRenderAction"/>.</param>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that restores the last saved graphics state.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.DrawFilteredGraphicsAction(VectSharp.Canvas.SKRenderContext,VectSharp.Filters.IFilter,System.String)">
+            <summary>
+            Create a new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that draws some graphics with a filter.
+            </summary>
+            <returns>A new <see cref="T:VectSharp.Canvas.SKRenderAction"/> that draws some graphics with a filter.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.Dispose(System.Boolean)">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderAction.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="T:VectSharp.Canvas.SKRenderContext">
+            <summary>
+            Represents a page that has been prepared for fast rendering using the SkiaSharp renderer.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.FilterOption">
+            <summary>
+            Determines how and whether image filters are rasterised.
+            </summary>
+        </member>
+        <member name="T:VectSharp.Canvas.FilterOption.FilterOperations">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.FilterOption.FilterOperations.RasteriseAllWithSkia">
+            <summary>
+            Image filters will always be rasterised using the SkiaSharp backend.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.FilterOption.FilterOperations.RasteriseAllWithVectSharp">
+            <summary>
+            Image filters will always be rasterised using the VectSharp.Raster or VectSharp.Raster.ImageSharp. This option requires a reference to VectSharp.Raster or to VectSharp.Raster.ImageSharp to be added.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.FilterOption.FilterOperations.IgnoreAll">
+            <summary>
+            All image filters will be ignored.
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.FilterOption.FilterOperations.SkipAll">
+            <summary>
+            All the images that should be drawn with a filter will be ignored.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.FilterOption.Operation">
+            <summary>
+            Defines whether image filters should be rasterised or not.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.FilterOption.RasterisationResolution">
+            <summary>
+            The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.Canvas.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.
+            </summary>
+        </member>
+        <member name="P:VectSharp.Canvas.FilterOption.RasterisationResolutionRelative">
+            <summary>
+            Determines whether the value of <see cref="P:VectSharp.Canvas.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).
+            </summary>
+        </member>
+        <member name="F:VectSharp.Canvas.FilterOption.Default">
+            <summary>
+            The default options for image filter rasterisation.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.FilterOption.#ctor(VectSharp.Canvas.FilterOption.FilterOperations,System.Double,System.Boolean)">
+            <summary>
+            Create a new <see cref="T:VectSharp.Canvas.FilterOption"/> object.
+            </summary>
+            <param name="operation">Defines whether image filters should be rasterised or not.</param>
+            <param name="rasterisationResolution">The resolution that will be used to rasterise image filters. Depending on the value of <see cref="P:VectSharp.Canvas.FilterOption.RasterisationResolutionRelative"/>, this can either be an absolute resolution (i.e. a size in pixel), or a scale factor that is applied to the image size in graphics units.</param>
+            <param name="rasterisationResolutionRelative">Determines whether the value of <see cref="P:VectSharp.Canvas.FilterOption.RasterisationResolution"/> is absolute (i.e. a size in pixel), or relative (i.e. a scale factor that is applied to the image size in graphics units).</param>
+        </member>
+        <member name="T:VectSharp.Canvas.SKRenderContextInterpreter">
+            <summary>
+            Contains methods to render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharp renderer.
+            </summary>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Document,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{VectSharp.Colour},VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Document"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharp renderer. Each page corresponds to a layer in the image.
+            </summary>
+            <param name="document">The <see cref="T:VectSharp.Document"/> to render.</param>
+            <param name="width">The width of the document. If this is <see langword="null" />, the width of the largest page is used.</param>
+            <param name="height">The height of the document. If this is <see langword="null" />, the height of the largest page is used.</param>
+            <param name="background">The background colour of the document. If this is <see langword="null" />, a transparent background is used.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Document,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Boolean,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{VectSharp.Colour},VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Document"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharp renderer. Each page corresponds to a layer in the image.
+            </summary>
+            <param name="document">The <see cref="T:VectSharp.Document"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="width">The width of the document. If this is <see langword="null" />, the width of the largest page is used.</param>
+            <param name="height">The height of the document. If this is <see langword="null" />, the height of the largest page is used.</param>
+            <param name="background">The background colour of the document. If this is <see langword="null" />, a transparent background is used.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Document,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Collections.Generic.Dictionary{System.String,System.ValueTuple{SkiaSharp.SKBitmap,System.Boolean}},System.Boolean,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{VectSharp.Colour},VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Document"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharp renderer. Each page corresponds to a layer in the image.
+            </summary>
+            <param name="document">The <see cref="T:VectSharp.Document"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="images">A dictionary that associates to each raster image path (or data URL) the image rendered as a <see cref="T:SkiaSharp.SKBitmap"/> and a boolean value indicating whether it should be drawn as "pixelated" or not. This will be populated automatically as the page is rendered.
+            If you are rendering multiple <see cref="T:VectSharp.Page"/>s (or you are rendering the same page multiple times), it will be beneficial to keep a reference to this dictionary and pass it again on further rendering requests; otherwise, you can just pass an empty dictionary.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="width">The width of the document. If this is <see langword="null" />, the width of the largest page is used.</param>
+            <param name="height">The height of the document. If this is <see langword="null" />, the height of the largest page is used.</param>
+            <param name="background">The background colour of the document. If this is <see langword="null" />, a transparent background is used.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Page,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharp renderer.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Page,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharpRenderer.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.PaintToSKCanvas(VectSharp.Page,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Collections.Generic.Dictionary{System.String,System.ValueTuple{SkiaSharp.SKBitmap,System.Boolean}},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to an <see cref="T:Avalonia.Controls.Canvas"/> using the SkiaSharpRenderer.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="images">A dictionary that associates to each raster image path (or data URL) the image rendered as a <see cref="T:SkiaSharp.SKBitmap"/> and a boolean value indicating whether it should be drawn as "pixelated" or not. This will be populated automatically as the page is rendered.
+            If you are rendering multiple <see cref="T:VectSharp.Page"/>s (or you are rendering the same page multiple times), it will be beneficial to keep a reference to this dictionary and pass it again on further rendering requests; otherwise, you can just pass an empty dictionary.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>An <see cref="T:Avalonia.Controls.Canvas"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.CopyToSKRenderContext(VectSharp.Page,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to a <see cref="T:VectSharp.Canvas.SKRenderContext"/>. This can be drawn using the SkiaSharpRenderer by adding it to a <see cref="T:VectSharp.Canvas.SKMultiLayerRenderCanvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>A <see cref="T:VectSharp.Canvas.SKRenderContext"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.CopyToSKRenderContext(VectSharp.Page,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to a <see cref="T:VectSharp.Canvas.SKRenderContext"/>. This can be drawn using the SkiaSharpRenderer by adding it to a <see cref="T:VectSharp.Canvas.SKMultiLayerRenderCanvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>A <see cref="T:VectSharp.Canvas.SKRenderContext"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.CopyToSKRenderContext(VectSharp.Page,System.Collections.Generic.Dictionary{System.String,System.Func{VectSharp.Canvas.SKRenderAction,System.Collections.Generic.IEnumerable{VectSharp.Canvas.SKRenderAction}}},System.Collections.Generic.Dictionary{System.String,System.ValueTuple{SkiaSharp.SKBitmap,System.Boolean}},System.Boolean,VectSharp.Canvas.AvaloniaContextInterpreter.TextOptions,VectSharp.Canvas.FilterOption)">
+            <summary>
+            Render a <see cref="T:VectSharp.Page"/> to a <see cref="T:VectSharp.Canvas.SKRenderContext"/>. This can be drawn using the SkiaSharpRenderer by adding it to a <see cref="T:VectSharp.Canvas.SKMultiLayerRenderCanvas"/>.
+            </summary>
+            <param name="page">The <see cref="T:VectSharp.Page"/> to render.</param>
+            <param name="taggedActions">A Dictionary containing the actions that will be performed on items with the corresponding tag.
+            These should be functions that accept one parameter of type <see cref="T:VectSharp.Canvas.SKRenderAction"/> and return an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the render actions that will actually be added to the plot.</param>
+            <param name="images">A dictionary that associates to each raster image path (or data URL) the image rendered as a <see cref="T:SkiaSharp.SKBitmap"/> and a boolean value indicating whether it should be drawn as "pixelated" or not. This will be populated automatically as the page is rendered.
+            If you are rendering multiple <see cref="T:VectSharp.Page"/>s (or you are rendering the same page multiple times), it will be beneficial to keep a reference to this dictionary and pass it again on further rendering requests; otherwise, you can just pass an empty dictionary.</param>
+            <param name="removeTaggedActionsAfterExecution">Whether the actions should be removed from <paramref name="taggedActions"/> after their execution. Set to false if the same action should be performed on multiple items with the same tag.</param>
+            <param name="textOption">Defines whether text items should be converted into paths when drawing.</param>
+            <param name="filterOption">Defines how and whether image filters should be rasterised when rendering the image.</param>
+            <returns>A <see cref="T:VectSharp.Canvas.SKRenderContext"/> containing the rendered graphics objects.</returns>
+        </member>
+        <member name="M:VectSharp.Canvas.SKRenderContextInterpreter.Rasterise(VectSharp.Graphics,VectSharp.Rectangle,System.Double,System.Boolean)">
+            <summary>
+            Rasterise a region of a <see cref="T:VectSharp.Graphics"/> object.
+            </summary>
+            <param name="graphics">The <see cref="T:VectSharp.Graphics"/> object that will be rasterised.</param>
+            <param name="region">The region of the <paramref name="graphics"/> that will be rasterised.</param>
+            <param name="scale">The scale at which the image will be rendered.</param>
+            <param name="interpolate">Whether the resulting image should be interpolated or not when it is drawn on another <see cref="T:VectSharp.Graphics"/> surface.</param>
+            <returns>A <see cref="T:VectSharp.RasterImage"/> containing the rasterised graphics.</returns>
+        </member>
+    </members>
+</doc>

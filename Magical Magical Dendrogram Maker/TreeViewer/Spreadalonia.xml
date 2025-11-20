@@ -1,0 +1,631 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Spreadalonia</name>
+    </assembly>
+    <members>
+        <member name="T:Spreadalonia.SelectionRange">
+            <summary>
+            Describes a rectangular selection area.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Top">
+            <summary>
+            The y coordinate of the top of the selection.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Bottom">
+            <summary>
+            The y coordinate of the bottom of the selection.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Left">
+            <summary>
+            The x coordinate of the left of the selection.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Right">
+            <summary>
+            The x coordinate of the right of the selection.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Width">
+            <summary>
+            The width of the selection.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.SelectionRange.Height">
+            <summary>
+            The height of the selection.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Create a new <see cref="T:Spreadalonia.SelectionRange"/> representing the specified area.
+            </summary>
+            <param name="left">The x coordinate of the left of the selection.</param>
+            <param name="top">The y coordinate of the top of the selection.</param>
+            <param name="right">The x coordinate of the right of the selection.</param>
+            <param name="bottom">The y coordinate of the bottom of the selection.</param>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Create a new <see cref="T:Spreadalonia.SelectionRange"/> representing a single cell.
+            </summary>
+            <param name="x">The x coordinate of the cell.</param>
+            <param name="y">The y coordinate of the cell.</param>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.#ctor(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Create a new <see cref="T:Spreadalonia.SelectionRange"/> representing a single cell.
+            </summary>
+            <param name="cell">The coordinates of the cell.</param>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.Overlaps(Spreadalonia.SelectionRange)">
+            <summary>
+            Checks whether this <see cref="T:Spreadalonia.SelectionRange"/> overlaps another <see cref="T:Spreadalonia.SelectionRange"/>.
+            </summary>
+            <param name="other">The other selection ra</param>
+            <returns><see langword="true"/> if the two <see cref="T:Spreadalonia.SelectionRange"/>s overlap; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.Contains(System.Int32,System.Int32)">
+            <summary>
+            Checks whether this <see cref="T:Spreadalonia.SelectionRange"/> contains the specified cell.
+            </summary>
+            <param name="x">The x coordinate of the cell.</param>
+            <param name="y">The y coordinate of the cell.</param>
+            <returns><see langword="true"/> if the <see cref="T:Spreadalonia.SelectionRange"/> contains the cell; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.Contains(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Checks whether this <see cref="T:Spreadalonia.SelectionRange"/> contains the specified cell.
+            </summary>
+            <param name="cell">The coordinates of the cell.</param>
+            <returns><see langword="true"/> if the <see cref="T:Spreadalonia.SelectionRange"/> contains the cell; <see langword="false"/> otherwise.</returns>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.Intersection(Spreadalonia.SelectionRange)">
+            <summary>
+            Computes the intersection of this <see cref="T:Spreadalonia.SelectionRange"/> with another one.
+            </summary>
+            <param name="other">The <see cref="T:Spreadalonia.SelectionRange"/> whose intersection with the current instance is sought.</param>
+            <returns>A <see cref="T:Spreadalonia.SelectionRange"/> representing the intersection of the two <see cref="T:Spreadalonia.SelectionRange"/>s.</returns>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.op_Equality(Spreadalonia.SelectionRange,Spreadalonia.SelectionRange)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.SelectionRange.op_Inequality(Spreadalonia.SelectionRange,Spreadalonia.SelectionRange)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Spreadalonia.Spreadsheet">
+            <summary>
+            A simple spreadsheet control for Avalonia.
+            </summary>
+        </member>
+        <member name="E:Spreadalonia.Spreadsheet.CellSizeChanged">
+            <summary>
+            Raised when the size of a cell changes.
+            </summary>
+        </member>
+        <member name="E:Spreadalonia.Spreadsheet.ColorDoubleTapped">
+            <summary>
+            Raised when the user double taps on a colour preview.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DataProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.Data"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.Data">
+            <summary>
+            The data contained in the spreadsheet. Please do not change this directly, or you will mess up the Undo/Redo stack.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DefaultTextAlignmentProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.DefaultTextAlignment"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.DefaultTextAlignment">
+            <summary>
+            The default horizontal text alignment for spreadsheet cells.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DefaultVerticalAlignmentProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.DefaultVerticalAlignment"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.DefaultVerticalAlignment">
+            <summary>
+            The default vertical text alignment for spreadsheet cells.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DefaultRowHeightProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.DefaultRowHeight"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.DefaultRowHeight">
+            <summary>
+            The default height for spreadsheet rows.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DefaultColumnWidthProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.DefaultColumnWidth"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.DefaultColumnWidth">
+            <summary>
+            The default width for spreadsheet columns.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.DefaultCellMarginProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.DefaultColumnWidth"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.DefaultCellMargin">
+            <summary>
+            The default width for spreadsheet columns.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.HeaderFontFamilyProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.HeaderFontFamily"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.HeaderFontFamily">
+            <summary>
+            The font family used for the row and column headers.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.HeaderFontSizeProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.HeaderFontSize"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.HeaderFontSize">
+            <summary>
+            The font size used for the row and column headers.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.HeaderForegroundProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.HeaderForeground"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.HeaderForeground">
+            <summary>
+            The text colour for the row and column headers.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.HeaderBackgroundProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.HeaderBackground"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.HeaderBackground">
+            <summary>
+            The background of the row and column headers.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.GridColorProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.GridColor"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.GridColor">
+            <summary>
+            The colour used to draw the grid lines.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.SelectionProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.Selection"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.Selection">
+            <summary>
+            The currently selected cells.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.GridBackgroundProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.SpreadsheetBackground"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.SpreadsheetBackground">
+            <summary>
+            The background colour of the spreadsheet.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.SelectionAccentProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.SelectionAccent"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.SelectionAccent">
+            <summary>
+            The colour used to highlight the selected cells.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.IsEditingProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.IsEditing"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.IsEditing">
+            <summary>
+            Returns <see langword="true"/> if the user is editing the value of a cell, <see langword="false"/> otherwise.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.ColumnSeparatorProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.ColumnSeparator">
+            <summary>
+            The character used to separate columns (e.g., tab or comma).
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.RowSeparatorProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.RowSeparator">
+            <summary>
+            The character used to separate rows (e.g., the newline character).
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.QuoteSymbolProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.QuoteSymbol"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.QuoteSymbol">
+            <summary>
+            The character used to quote cells containing literal values corresponding to the row or column separators (e.g., single or double quotes).
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.MaxTableWidthProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.MaxTableWidth"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.MaxTableWidth">
+            <summary>
+            The maximum width of the spreadsheet.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.MaxTableHeightProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.MaxTableHeight"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.MaxTableHeight">
+            <summary>
+            The maximum width of the spreadsheet.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.ShowColorPreviewProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.ShowColorPreview"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.ShowColorPreview">
+            <summary>
+            If this is <see langword="true"/>, a small square showing the colour preview is shown in cells containing hex colour representations (<c>#RRGGBB</c> or <c>#RRGGBBAA</c>).
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.CanUndoProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.CanUndo"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.CanUndo">
+            <summary>
+            Determines whether it is possible to undo the last action that was performed on the spreadsheet.
+            </summary>
+        </member>
+        <member name="F:Spreadalonia.Spreadsheet.CanRedoProperty">
+            <summary>
+            Defines the <see cref="P:Spreadalonia.Spreadsheet.CanRedo"/> property.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.Spreadsheet.CanRedo">
+            <summary>
+            Determines whether it is possible to Redo the last action that was performed on the spreadsheet.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.#ctor">
+            <summary>
+            Create a new <see cref="T:Spreadalonia.Spreadsheet"/> instance.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.OnPropertyChanged``1(Avalonia.AvaloniaPropertyChangedEventArgs{``0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.OnTextInput(Avalonia.Input.TextInputEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetTextRepresentation(System.Collections.Generic.IReadOnlyList{Spreadalonia.SelectionRange})">
+            <summary>
+            Obtains a text representation of the selected cells, concatenating them with the <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> and the <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>.
+            </summary>
+            <param name="selection">The cells whose contents should be included.</param>
+            <returns>A text representation of the selected cells.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetSelectedData(System.ValueTuple{System.Int32,System.Int32}[0:,0:]@)">
+            <summary>
+            Returns the data in the currently selected cells.
+            </summary>
+            <param name="coordinates">When this method returns, this array will contain the coordinates of the cells corresponding to the values in the return value.</param>
+            <returns>An array containing the data in the currently selected cells.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Copy">
+            <summary>
+            Copy the selected cells to the clipboard.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Cut">
+            <summary>
+            Cut the selected text out of the spreadsheed and into the clipboard.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.ClearContents">
+            <summary>
+            Clear the contents of the selected cells.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Paste(System.Boolean)">
+            <summary>
+            Paste text or cells from the clipboard onto the spreadsheet. The text is parsed using the <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> and the <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>.
+            </summary>
+            <param name="overwriteEmpty">If this is <see langword="true"/>, the contents of cells that are empty in the pasted text is removed; otherwise, empty cells in the text being pasted do not affect the spreadsheet.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that should be awaited.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Paste(System.String,System.Boolean,System.Text.RegularExpressions.Regex,System.Text.RegularExpressions.Regex)">
+            <summary>
+            Paste the specified text onto the spreadsheet. The text is parsed using the specified <paramref name="rowSeparator"/> and <paramref name="columnSeparator"/>.
+            </summary>
+            <param name="text">The text to parse and paste.</param>
+            <param name="overwriteEmpty">If this is <see langword="true"/>, the contents of cells that are empty in the pasted text is removed; otherwise, empty cells in the text being pasted do not affect the spreadsheet.</param>
+            <param name="rowSeparator">The row separator character. If this is <see langword="null"/>, the current <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/> is used.</param>
+            <param name="columnSeparator">The column separator character. If this is <see langword="null"/>, the current <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> is used.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Undo">
+            <summary>
+            Undoes the last action performed on the spreadsheet.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Redo">
+            <summary>
+            Redoes the last undone action.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.InsertColumns">
+            <summary>
+            Inserts a number of columns equal to the number of selected columns, just before the first selected column.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.DeleteColumns">
+            <summary>
+            Deletes the selected columns.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.InsertRows">
+            <summary>
+            Inserts a number of rows equal to the number of selected rows, just before the first selected rows.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.DeleteRows">
+            <summary>
+            Deletes the selected rows.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.ResetFormat">
+            <summary>
+            Resets the formatting of the selected cells/rows/columns.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.AutoFitWidth">
+            <summary>
+            Automatically determines the width of the selected columns.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.AutoFitHeight">
+            <summary>
+            Automatically determines the height of the selected rows.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.ResetWidth">
+            <summary>
+            Resets the width of the selected columns to the default value.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.ResetHeight">
+            <summary>
+            Resets the height of the selected columns to the default value.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetWidth(System.Collections.Generic.Dictionary{System.Int32,System.Double})">
+            <summary>
+            Set the width of the specified columns.
+            </summary>
+            <param name="columnWidths">The column widths to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetHeight(System.Collections.Generic.Dictionary{System.Int32,System.Double})">
+            <summary>
+            Set the height of the specified rows.
+            </summary>
+            <param name="rowHeights">The row heights to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetTypeface(Avalonia.Media.Typeface)">
+            <summary>
+            Sets the typeface of the current selection.
+            </summary>
+            <param name="typeface">The <see cref="T:Avalonia.Media.Typeface"/> to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetForeground(Avalonia.Media.IBrush)">
+            <summary>
+            Sets the foreground colour of the current selection.
+            </summary>
+            <param name="foreground">The foreground colour to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetTypeface(System.Int32,System.Int32)">
+            <summary>
+            Returns the typeface for the specified cell.
+            </summary>
+            <param name="left">The horizontal coordinate of the cell.</param>
+            <param name="top">The vertical coordinate of the cell.</param>
+            <returns>The typeface associated to the specified cell.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetCellSize(System.Int32,System.Int32)">
+            <summary>
+            Returns the column width and row height for the specified cell.
+            </summary>
+            <param name="left">The horizontal coordinate of the cell.</param>
+            <param name="top">The vertical coordinate of the cell.</param>
+            <returns>The column width and row height of the specified cell.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetAlignment(System.Int32,System.Int32)">
+            <summary>
+            Returns the text alignment for the specified cell.
+            </summary>
+            <param name="left">The horizontal coordinate of the cell.</param>
+            <param name="top">The vertical coordinate of the cell.</param>
+            <returns>The the text alignment associated to the specified cell.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetTextAlignment(Avalonia.Media.TextAlignment)">
+            <summary>
+            Sets the horizontal text alignment of the current selection.
+            </summary>
+            <param name="textAlignment">The text alignment to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetData(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.ValueTuple{System.Int32,System.Int32},System.String}})">
+            <summary>
+            Set the value of the specified cells.
+            </summary>
+            <param name="data">The cell coordinates and values to set. Elements with value <see langword="null"/> will be removed from the spreadsheet.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SetVerticalAlignment(Avalonia.Layout.VerticalAlignment)">
+            <summary>
+            Sets the vertical text alignment of the current selection.
+            </summary>
+            <param name="verticalAlignment">The text alignment to set.</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.OnKeyDown(Avalonia.Input.KeyEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.OnPointerWheelChanged(Avalonia.Input.PointerWheelEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SerializeData">
+            <summary>
+            Obtain a string representation of all the data currently present in the spreadsheet.
+            </summary>
+            <returns>A string representation of all the data currently present in the spreadsheet.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SerializeFormat">
+            <summary>
+            Obtain a string representation of all the formatting information currently present in the spreadsheet.
+            </summary>
+            <returns>A string representation of all the formatting information currently present in the spreadsheet.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.SplitData(System.String,System.Text.RegularExpressions.Regex,System.Text.RegularExpressions.Regex,System.String,System.Int32@)">
+            <summary>
+            Splits the specified <paramref name="text"/> according to the <paramref name="rowSeparator"/> and the <paramref name="columnSeparator"/>, with the specified <paramref name="quote"/> character.
+            </summary>
+            <param name="text">The text to split.</param>
+            <param name="rowSeparator">The row separator (e.g., a newline character).</param>
+            <param name="columnSeparator">The column separator (e.g., a tabulation character).</param>
+            <param name="quote">The character(s) used to quote cells that contain separator characters within their value.</param>
+            <param name="width">When this method returns, this value will contain the maximum width of the splitted text.</param>
+            <returns>The splitted text, as a jagged array. Each element of the array represents a row. Rows may have different lengths.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.Load(System.String,System.String)">
+            <summary>
+            Clear all the currently loaded data and load the supplied data into the spreadsheet.
+            </summary>
+            <param name="serializedData">The data to load (serialized according to the <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> and the <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>).</param>
+            <param name="serializedFormat">The format for the data to load (serialized according to the <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/> and the <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>).</param>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.ScrollTopLeft">
+            <summary>
+            Scrolls to the top left corner of the spreadsheet.
+            </summary>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetColumnSeparator">
+            <summary>
+            Returns a <see langword="string"/> that matches the current <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/>.
+            </summary>
+            <returns>A <see langword="string"/> that matches the current <see cref="P:Spreadalonia.Spreadsheet.ColumnSeparator"/>.</returns>
+        </member>
+        <member name="M:Spreadalonia.Spreadsheet.GetRowSeparator">
+            <summary>
+            Returns a <see langword="string"/> that matches the current <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>.
+            </summary>
+            <returns>A <see langword="string"/> that matches the current <see cref="P:Spreadalonia.Spreadsheet.RowSeparator"/>.</returns>
+        </member>
+        <member name="T:Spreadalonia.CellSizeChangedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:Spreadalonia.Spreadsheet.CellSizeChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.CellSizeChangedEventArgs.Width">
+            <summary>
+            The new width of the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.CellSizeChangedEventArgs.Height">
+            <summary>
+            The new height of the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.CellSizeChangedEventArgs.Left">
+            <summary>
+            The horizontal coordinate of the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.CellSizeChangedEventArgs.Top">
+            <summary>
+            The vertical coordinate of the cell.
+            </summary>
+        </member>
+        <member name="T:Spreadalonia.ColorDoubleTappedEventArgs">
+            <summary>
+            <see cref="T:System.EventArgs"/> for the <see cref="E:Spreadalonia.Spreadsheet.ColorDoubleTapped"/> event.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.ColorDoubleTappedEventArgs.Left">
+            <summary>
+            The horizontal coordinate of the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.ColorDoubleTappedEventArgs.Top">
+            <summary>
+            The vertical coordinate of the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.ColorDoubleTappedEventArgs.Color">
+            <summary>
+            The colour contained in the cell.
+            </summary>
+        </member>
+        <member name="P:Spreadalonia.ColorDoubleTappedEventArgs.Handled">
+            <summary>
+            Set this to <see langword="true"/> to signal that the event has been completely handled.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -29,8 +29,6 @@ namespace Magical_Magical_Dendrogram_Maker
 
         private const int SW_RESTORE = 9;
 
-        //hold variables like filenames for "Magic" button pipelining
-
         public formMain()
         {
             InitializeComponent();
@@ -42,19 +40,19 @@ namespace Magical_Magical_Dendrogram_Maker
         }
 
         // --- Drag and Drop
+        // save fasta location for pipeline
         string fastaPath = "";
-        public System.Windows.Forms.DragDropEffects AllowedEffect { get; }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)
         {
             // Check if the data being dragged is one or more files
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                e.Effect = DragDropEffects.Copy; // Allow copy
+                e.Effect = DragDropEffects.Copy;
             }
             else
             {
-                e.Effect = DragDropEffects.None; // Don’t allow drop
+                e.Effect = DragDropEffects.None;
             }
         }
 
@@ -68,7 +66,7 @@ namespace Magical_Magical_Dendrogram_Maker
                 fastaPath = filePath;
                 txtOldFasta.Text = File.ReadAllText(filePath);
 
-                MessageBox.Show($"Loaded file: {filePath}");
+                MessageBox.Show($"Selected file: {filePath}");
             }
         }
 
@@ -156,11 +154,11 @@ namespace Magical_Magical_Dendrogram_Maker
         private void Form1_Load(object sender, EventArgs e)
         {
             string appBase = AppDomain.CurrentDomain.BaseDirectory;
-            string binDir = Path.GetFullPath(Path.Combine(appBase, ".."));
+            string dir = Path.GetFullPath(Path.Combine(appBase, "..", ".."));
 
-            string iqtreePath = Path.Combine(binDir, "iqtree", "iqtree3.exe");
-            string mafftPath = Path.Combine(binDir, "mafft-win", "mafft.bat");
-            string psScript = Path.Combine(binDir, "iqtree", "safe_iqtree_powershell.ps1");
+            string iqtreePath = Path.Combine(dir, "iqtree", "iqtree3.exe");
+            string mafftPath = Path.Combine(dir, "mafft-win", "mafft.bat");
+            string psScript = Path.Combine(dir, "iqtree", "safe_iqtree_powershell.ps1");
 
             CheckTool(iqtreePath, "IQ-TREE");
             CheckTool(mafftPath, "MAFFT");
@@ -871,9 +869,10 @@ namespace Magical_Magical_Dendrogram_Maker
             string dendrogramPath = "";
             string attachPath = "";
             string homologyPath = "";
+            string mafftStatus = "MAFFT failed to run.";
 
             // Create process
-            //run mafft
+            // Check whether fasta is currently in use; if not, use file dialog
             if (string.IsNullOrWhiteSpace(txtOldFasta.Text))
             {
                 OpenFileDialog ofd = new OpenFileDialog
@@ -881,13 +880,12 @@ namespace Magical_Magical_Dendrogram_Maker
                     Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
                     Title = "Select a fasta file"
                 };
-                
+
                 using (ofd)
                 {
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
                         string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
-                        string mafftStatus = "MAFFT failed to run.";
                         fastaPath = ofd.FileName;
                         await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
                         {
@@ -905,62 +903,14 @@ namespace Magical_Magical_Dendrogram_Maker
                                 mafftStatus = "MAFFT ran but failed to produce aligned fasta";
                             }
                         });
-
-                        //run iqtree
-                        string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
-                        string iqtreeStatus = "IQTREE failed to run.";
-                        await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
-                        {
-                            await Task.Run(() =>
-                            {
-                                treePath = RunSafeIqtree(alnPath, safeIqtreePath);
-                            });
-                            iqtreeStatus = "Treefile created at: " + treePath;
-                            if (iqtreeStatus == "Treefile created at: ")
-                            {
-                                iqtreeStatus = "IQTREE ran but failed to produce new treefile";
-                            }
-                        });
-
-                        //run treeview
-                        string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
-                        string treeViewerStatus = "TREEVIEWER failed to run.";
-                        await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
-                        {
-                            await Task.Run(() =>
-                            {
-                                dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
-                            });
-                            treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
-                            if (treeViewerStatus == "Dendrogram created at: ")
-                            {
-                                treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
-                            }
-                        });
-
-                        //run homology
-                        string homologyStatus = "Homology failed to run.";
-                        await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
-                        {
-                            await Task.Run(() =>
-                            {
-                                homologyPath = RunHomology(fastaPath);
-                            });
-                            homologyStatus = "Table created at: " + homologyPath;
-                            if (homologyStatus == "Table created at: ")
-                            {
-                                homologyStatus = "Homology ran but failed to produce new Table";
-                            }
-                        });
-                        MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
                     }
                 }
-            } else 
-            {
+            } 
+            else
+            { // fasta is already selected and in textbox: use that fasta for process
                 if (fastaPath != "" || fastaPath != null)
                 {
                     string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
-                    string mafftStatus = "MAFFT failed to run.";
                     await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
                     {
                         await Task.Run(() =>
@@ -977,58 +927,56 @@ namespace Magical_Magical_Dendrogram_Maker
                             mafftStatus = "MAFFT ran but failed to produce aligned fasta";
                         }
                     });
-
-                    //run iqtree
-                    string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
-                    string iqtreeStatus = "IQTREE failed to run.";
-                    await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
-                    {
-                        await Task.Run(() =>
-                        {
-                            treePath = RunSafeIqtree(alnPath, safeIqtreePath);
-                        });
-                        iqtreeStatus = "Treefile created at: " + treePath;
-                        if (iqtreeStatus == "Treefile created at: ")
-                        {
-                            iqtreeStatus = "IQTREE ran but failed to produce new treefile";
-                        }
-                    });
-
-                    //run treeview
-                    string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
-                    string treeViewerStatus = "TREEVIEWER failed to run.";
-                    await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
-                    {
-                        await Task.Run(() =>
-                        {
-                            dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
-                        });
-                        treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
-                        if (treeViewerStatus == "Dendrogram created at: ")
-                        {
-                            treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
-                        }
-                    });
-
-                    //run homology
-                    string homologyStatus = "Homology failed to run.";
-                    await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
-                    {
-                        await Task.Run(() =>
-                        {
-                            homologyPath = RunHomology(fastaPath);
-                        });
-                        homologyStatus = "Table created at: " + homologyPath;
-                        if (homologyStatus == "Table created at: ")
-                        {
-                            homologyStatus = "Homology ran but failed to produce new Table";
-                        }
-                    });
-                    MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
                 }
             }
 
-            
+            //run iqtree
+            string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
+            string iqtreeStatus = "IQTREE failed to run.";
+            await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
+            {
+                await Task.Run(() =>
+                {
+                    treePath = RunSafeIqtree(alnPath, safeIqtreePath);
+                });
+                iqtreeStatus = "Treefile created at: " + treePath;
+                if (iqtreeStatus == "Treefile created at: ")
+                {
+                    iqtreeStatus = "IQTREE ran but failed to produce new treefile";
+                }
+            });
+
+            //run treeview
+            string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
+            string treeViewerStatus = "TREEVIEWER failed to run.";
+            await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
+            {
+                await Task.Run(() =>
+                {
+                    dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
+                });
+                treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
+                if (treeViewerStatus == "Dendrogram created at: ")
+                {
+                    treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
+                }
+            });
+
+            //run homology
+            string homologyStatus = "Homology failed to run.";
+            await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
+            {
+                await Task.Run(() =>
+                {
+                    homologyPath = RunHomology(fastaPath);
+                });
+                homologyStatus = "Table created at: " + homologyPath;
+                if (homologyStatus == "Table created at: ")
+                {
+                    homologyStatus = "Homology ran but failed to produce new Table";
+                }
+            });
+            MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
         }
 
 
@@ -1037,6 +985,7 @@ namespace Magical_Magical_Dendrogram_Maker
         {
             MessageBox.Show(
                 "Quick help:\n\n" +
+                "Drag a fasta and click Magic button to create both a dendrogram image and a homology table.\n\n" +
                 "File: \n\n" +
                 "   Open -> Opens fasta for modification or examination\n\n" +
                 "Dendrogram: \n\n" +
@@ -1084,28 +1033,25 @@ namespace Magical_Magical_Dendrogram_Maker
             // Start from where the .exe is running
             string exeDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
 
-            // Detect if we're in bin\Debug, bin\Release, obj\Debug, etc.
-            string binRoot;
+            // Detect if we're in bin\Debug or bin\Release
+            string root;
             if (exeDir.EndsWith(@"\bin\Debug", StringComparison.OrdinalIgnoreCase) ||
-                exeDir.EndsWith(@"\bin\Release", StringComparison.OrdinalIgnoreCase))
-            {
-                // We're in bin\Debug → go up ONE level to reach bin\
-                binRoot = Directory.GetParent(exeDir).FullName;
-            }
-            else if (exeDir.EndsWith(@"\obj\Debug", StringComparison.OrdinalIgnoreCase) ||
+                exeDir.EndsWith(@"\bin\Release", StringComparison.OrdinalIgnoreCase) ||
+                    exeDir.EndsWith(@"\obj\Debug", StringComparison.OrdinalIgnoreCase) ||
                      exeDir.EndsWith(@"\obj\Release", StringComparison.OrdinalIgnoreCase))
             {
-                // We're in obj\Debug → go up TWO levels to reach project root, then down into bin\
-                binRoot = Path.Combine(Directory.GetParent(Directory.GetParent(exeDir).FullName).FullName, "bin");
+                // Go up two level to reach base project directory
+                root = Directory.GetParent(Directory.GetParent(exeDir).FullName).FullName;
+
             }
             else
             {
                 // Installed elsewhere → assume tools are in same folder as .exe
-                binRoot = exeDir;
+                root = exeDir;
             }
 
             // Now build the final path: binRoot → toolFolder → executable
-            string fullPath = Path.GetFullPath(Path.Combine(binRoot, toolFolder, executable));
+            string fullPath = Path.GetFullPath(Path.Combine(root, toolFolder, executable));
 
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException($"Tool not found: {fullPath}", fullPath);
@@ -1115,6 +1061,35 @@ namespace Magical_Magical_Dendrogram_Maker
 
         internal static class MatrixInterop
         {
+            [DllImport("kernel32", SetLastError = true)]
+            private static extern bool SetDllDirectory(string lpPathName);
+
+            // Ensure the homology folder is added to the native DLL search path
+            static MatrixInterop()
+            {
+                try
+                {
+                    string exeDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
+                    string homologyDir = Path.Combine(exeDir, "Homology");
+                    string root = Directory.GetParent(Directory.GetParent(exeDir).FullName).FullName;
+                    homologyDir = Path.GetFullPath(Path.Combine(root, "Homology"));
+
+                    if (Directory.Exists(homologyDir))
+                    {
+                        SetDllDirectory(homologyDir);
+                        Debug.WriteLine($"MatrixInterop: added homology folder to DLL search path: {homologyDir}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"MatrixInterop: homology folder not found at {homologyDir}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("MatrixInterop static constructor failed: " + ex);
+                }
+            }
+
             [DllImport("matrix_builder.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr buildSimilarityMatrix(
                 IntPtr sequences,
@@ -1140,6 +1115,16 @@ namespace Magical_Magical_Dendrogram_Maker
 
                 // Call the C function
                 IntPtr matrixPtr = buildSimilarityMatrix(seqArrayPtr, count, match, mismatch, gap);
+
+                if (matrixPtr == IntPtr.Zero)
+                {
+                    // Provide clearer diagnostic than an opaque DllNotFound/AccessViolation
+                    Marshal.FreeHGlobal(seqArrayPtr);
+                    foreach (var ptr in seqPtrs)
+                        Marshal.FreeHGlobal(ptr);
+
+                    throw new DllNotFoundException("Native function buildSimilarityMatrix returned NULL. Confirm matrix_builder.dll exists in the homology folder and that its dependencies and architecture match the process.");
+                }
 
                 // Copy flat result back into managed memory
                 double[] flat = new double[size];
