@@ -288,8 +288,7 @@ namespace Magical_Magical_Dendrogram_Maker
 
                 if (proc.ExitCode != 0)
                 {
-                    MessageBox.Show($"MAFFT failed:\n\n{stderr}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ShowErrorForm("MAFFT failed: \n\nSTDOUT:\n" + stdout + "\n\nSTDERR:\n" + stderr);
                 }
             }
             return alnFile;
@@ -378,7 +377,7 @@ namespace Magical_Magical_Dendrogram_Maker
             // Ensure the PowerShell script exists
             if (!File.Exists(iqtreeScript))
             {
-                MessageBox.Show($"Safe Iqtree script not found at: {iqtreeScript}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowErrorForm($"Safe Iqtree script not found at: {iqtreeScript}");
                 return null;
             }
 
@@ -873,110 +872,93 @@ namespace Magical_Magical_Dendrogram_Maker
 
             // Create process
             // Check whether fasta is currently in use; if not, use file dialog
-            if (string.IsNullOrWhiteSpace(txtOldFasta.Text))
+            if (string.IsNullOrEmpty(fastaPath))
             {
                 OpenFileDialog ofd = new OpenFileDialog
                 {
                     Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
                     Title = "Select a fasta file"
                 };
-
                 using (ofd)
                 {
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
                         fastaPath = ofd.FileName;
-                        await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
-                        {
-                            await Task.Run(() =>
-                            {
-                                alnPath = RunMafft(fastaPath, mafftPath);
-                                Invoke(new Action(() =>
-                                {
-                                    txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
-                                }));
-                            });
-                            mafftStatus = "Aligned file created at: " + alnPath;
-                            if (mafftStatus == "Aligned file created at: ")
-                            {
-                                mafftStatus = "MAFFT ran but failed to produce aligned fasta";
-                            }
-                        });
                     }
                 }
-            } 
-            else
-            { // fasta is already selected and in textbox: use that fasta for process
-                if (fastaPath != "" || fastaPath != null)
-                {
-                    string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
-                    await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
-                    {
-                        await Task.Run(() =>
-                        {
-                            alnPath = RunMafft(fastaPath, mafftPath);
-                            Invoke(new Action(() =>
-                            {
-                                txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
-                            }));
-                        });
-                        mafftStatus = "Aligned file created at: " + alnPath;
-                        if (mafftStatus == "Aligned file created at: ")
-                        {
-                            mafftStatus = "MAFFT ran but failed to produce aligned fasta";
-                        }
-                    });
-                }
             }
-
-            //run iqtree
-            string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
-            string iqtreeStatus = "IQTREE failed to run.";
-            await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
+            // fasta is already selected and in textbox: use that fasta for process
+            if (!string.IsNullOrEmpty(fastaPath))
             {
-                await Task.Run(() =>
+                //run mafft
+                string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
+                await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
                 {
-                    treePath = RunSafeIqtree(alnPath, safeIqtreePath);
+                    await Task.Run(() =>
+                    {
+                        alnPath = RunMafft(fastaPath, mafftPath);
+                        Invoke(new Action(() =>
+                        {
+                            txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
+                        }));
+                    });
+                    mafftStatus = "Aligned file created at: " + alnPath;
+                    if (mafftStatus == "Aligned file created at: ")
+                    {
+                        mafftStatus = "MAFFT ran but failed to produce aligned fasta";
+                    }
                 });
-                iqtreeStatus = "Treefile created at: " + treePath;
-                if (iqtreeStatus == "Treefile created at: ")
-                {
-                    iqtreeStatus = "IQTREE ran but failed to produce new treefile";
-                }
-            });
 
-            //run treeview
-            string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
-            string treeViewerStatus = "TREEVIEWER failed to run.";
-            await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
-            {
-                await Task.Run(() =>
+                //run iqtree
+                string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
+                string iqtreeStatus = "IQTREE failed to run.";
+                await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
                 {
-                    dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
+                    await Task.Run(() =>
+                    {
+                        treePath = RunSafeIqtree(alnPath, safeIqtreePath);
+                    });
+                    iqtreeStatus = "Treefile created at: " + treePath;
+                    if (iqtreeStatus == "Treefile created at: ")
+                    {
+                        iqtreeStatus = "IQTREE ran but failed to produce new treefile";
+                    }
                 });
-                treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
-                if (treeViewerStatus == "Dendrogram created at: ")
-                {
-                    treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
-                }
-            });
 
-            //run homology
-            string homologyStatus = "Homology failed to run.";
-            await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
-            {
-                await Task.Run(() =>
+                //run treeview
+                string treeViewerPath = ResolveToolPath("TreeViewer", "TreeViewerCommandLine.exe");
+                string treeViewerStatus = "TREEVIEWER failed to run.";
+                await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
                 {
-                    homologyPath = RunHomology(fastaPath);
+                    await Task.Run(() =>
+                    {
+                        dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
+                    });
+                    treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
+                    if (treeViewerStatus == "Dendrogram created at: ")
+                    {
+                        treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
+                    }
                 });
-                homologyStatus = "Table created at: " + homologyPath;
-                if (homologyStatus == "Table created at: ")
+
+                //run homology
+                string homologyStatus = "Homology failed to run.";
+                await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
                 {
-                    homologyStatus = "Homology ran but failed to produce new Table";
-                }
-            });
-            MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
+                    await Task.Run(() =>
+                    {
+                        homologyPath = RunHomology(fastaPath);
+                    });
+                    homologyStatus = "Table created at: " + homologyPath;
+                    if (homologyStatus == "Table created at: ")
+                    {
+                        homologyStatus = "Homology ran but failed to produce new Table";
+                    }
+                });
+                fastaPath = "";
+                txtOldFasta.Text = "";
+                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
+            }
         }
 
 
@@ -1006,11 +988,13 @@ namespace Magical_Magical_Dendrogram_Maker
         }
 
         //--- helper functions ---
+
+        // outputs scrollable error windows
         private void ShowErrorForm(string text)
         {
             Form errorForm = new Form
             {
-                Text = "TreeViewer Output",
+                Text = "Output",
                 Width = 800,
                 Height = 600
             };
@@ -1028,6 +1012,7 @@ namespace Magical_Magical_Dendrogram_Maker
             errorForm.ShowDialog();
         }
 
+        // finds the tool path
         private string ResolveToolPath(string toolFolder, string executable)
         {
             // Start from where the .exe is running

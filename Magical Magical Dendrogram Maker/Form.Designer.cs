@@ -259,7 +259,7 @@
             // mnuHomologyTable
             // 
             this.mnuHomologyTable.Name = "mnuHomologyTable";
-            this.mnuHomologyTable.Size = new System.Drawing.Size(138, 22);
+            this.mnuHomologyTable.Size = new System.Drawing.Size(140, 22);
             this.mnuHomologyTable.Text = "Create Table";
             this.mnuHomologyTable.Click += new System.EventHandler(this.MnuHomologyTable_Click);
             // 
@@ -299,9 +299,9 @@
             this.btnAllInOne.Font = new System.Drawing.Font("Gadugi", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAllInOne.Location = new System.Drawing.Point(177, 421);
             this.btnAllInOne.Name = "btnAllInOne";
-            this.btnAllInOne.Size = new System.Drawing.Size(112, 23);
+            this.btnAllInOne.Size = new System.Drawing.Size(95, 23);
             this.btnAllInOne.TabIndex = 11;
-            this.btnAllInOne.Text = "All in One Button";
+            this.btnAllInOne.Text = "Do All";
             this.btnAllInOne.UseVisualStyleBackColor = true;
             this.btnAllInOne.Click += new System.EventHandler(this.btnAllInOne_Click);
             // 
