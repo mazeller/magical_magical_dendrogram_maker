@@ -61,12 +61,17 @@ namespace Magical_Magical_Dendrogram_Maker
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
             if (paths != null && paths.Length > 0)
             {
-                // For example, load the first file
-                string filePath = paths[0];
-                fastaPath = filePath;
-                txtOldFasta.Text = File.ReadAllText(filePath);
+                if (ValidateFasta(paths[0]))
+                {
+                    fastaPath = paths[0];
+                    txtOldFasta.Text = File.ReadAllText(fastaPath);
 
-                MessageBox.Show($"Selected file: {filePath}");
+                    MessageBox.Show($"Selected file: {fastaPath}");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid format, please choose a fasta file.");
+                }
             }
         }
 
@@ -306,26 +311,29 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
-                    string mafftStatus = "MAFFT failed to run.";
-                    string alnPath = ofd.FileName;
-                    await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
+                    if (ValidateFasta(ofd.FileName))
                     {
-                        await Task.Run(() =>
+                        string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
+                        string mafftStatus = "MAFFT failed to run.";
+                        string alnPath = ofd.FileName;
+                        await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
                         {
-                            alnPath = RunMafft(alnPath, mafftPath);
-                            Invoke(new Action(() =>
+                            await Task.Run(() =>
                             {
-                                txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
-                            }));
+                                alnPath = RunMafft(alnPath, mafftPath);
+                                Invoke(new Action(() =>
+                                {
+                                    txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
+                                }));
+                            });
+                            mafftStatus = "Aligned file created at: " + alnPath;
+                            if (mafftStatus == "Aligned file created at: ")
+                            {
+                                mafftStatus = "MAFFT ran but failed to produce aligned fasta";
+                            }
                         });
-                        mafftStatus = "Aligned file created at: " + alnPath;
-                        if (mafftStatus == "Aligned file created at: ")
-                        {
-                            mafftStatus = "MAFFT ran but failed to produce aligned fasta";
-                        }
-                    });
-                    MessageBox.Show(mafftStatus);
+                        MessageBox.Show(mafftStatus);
+                    }
                 }
             }
         }
@@ -441,29 +449,32 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
-                    string iqtreeStatus = "IQTREE failed to run.";
-                    string treefilePath = ofd.FileName;
-                    await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
+                    if (ValidateFasta(ofd.FileName))
                     {
-                        await Task.Run(() =>
+                        string safeIqtreePath = ResolveToolPath("iqtree", "safe_iqtree_powershell.ps1");
+                        string iqtreeStatus = "IQTREE failed to run.";
+                        string treefilePath = ofd.FileName;
+                        await LoadingForm.RunWithLoading(this, "Creating Treefile with IQTREE...", async () =>
                         {
-                            treefilePath = RunSafeIqtree(treefilePath, safeIqtreePath);
+                            await Task.Run(() =>
+                            {
+                                treefilePath = RunSafeIqtree(treefilePath, safeIqtreePath);
+                            });
+                            iqtreeStatus = "Treefile created at: " + treefilePath;
+                            if (iqtreeStatus == "Treefile created at: ")
+                            {
+                                iqtreeStatus = "IQTREE ran but failed to produce new treefile";
+                            }
                         });
-                        iqtreeStatus = "Treefile created at: " + treefilePath;
-                        if (iqtreeStatus == "Treefile created at: ")
-                        {
-                            iqtreeStatus = "IQTREE ran but failed to produce new treefile";
-                        }
-                    });
-                    MessageBox.Show(iqtreeStatus);
+                        MessageBox.Show(iqtreeStatus);
+                    }
                 }
             }
         }
 
         // --- Dendrogram Section ---
 
-        // handles treeview commands and creates the dendrogram
+        // handles treeview commands via opening window and pasting and creates the dendrogram
         private string RunDendrogram(string file, string treePath, string attachmentPath)
         {
             file = Path.GetFullPath(file);
@@ -556,6 +567,7 @@ namespace Magical_Magical_Dendrogram_Maker
             return outputImage;
         }
 
+        // handles treeview commands via redirected process and creates the dendrogram
         private string RunDendrogramRedirected(string file, string treePath, string attachmentPath)
         {
             if (!File.Exists(treePath))
@@ -767,24 +779,27 @@ namespace Magical_Magical_Dendrogram_Maker
             };
             using (ofd)
             {
-                // Get iqtree paths to create treefile
+                // use fasta for homology process
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string homologyStatus = "Homology failed to run.";
-                    string homologyPath = "";
-                    await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
+                    if (ValidateFasta(ofd.FileName))
                     {
-                        await Task.Run(() =>
+                        string homologyStatus = "Homology failed to run.";
+                        string homologyPath = "";
+                        await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
                         {
-                            homologyPath = RunHomology(ofd.FileName);
+                            await Task.Run(() =>
+                            {
+                                homologyPath = RunHomology(ofd.FileName);
+                            });
+                            homologyStatus = "Table created at: " + homologyPath;
+                            if (homologyStatus == "Table created at: ")
+                            {
+                                homologyStatus = "Homology ran but failed to produce new Table";
+                            }
                         });
-                        homologyStatus = "Table created at: " + homologyPath;
-                        if (homologyStatus == "Table created at: ")
-                        {
-                            homologyStatus = "Homology ran but failed to produce new Table";
-                        }
-                    });
-                    MessageBox.Show(homologyStatus);
+                        MessageBox.Show(homologyStatus);
+                    }
                 }
             }
         }
@@ -883,7 +898,10 @@ namespace Magical_Magical_Dendrogram_Maker
                 {
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        fastaPath = ofd.FileName;
+                        if (ValidateFasta(ofd.FileName))
+                        {
+                            fastaPath = ofd.FileName;
+                        }
                     }
                 }
             }
@@ -1043,6 +1061,54 @@ namespace Magical_Magical_Dendrogram_Maker
 
             return fullPath;
         }
+
+        private bool ValidateFasta(string filePath)
+        {
+            string ext = Path.GetExtension(filePath).ToLower();
+            if (ext != ".fasta" && ext != ".fa" && ext != ".fas")
+            {
+                MessageBox.Show("This is not a fasta");
+                return false;
+            }
+
+            var validChars = "ACGTUI-RYKMSWBDHVN".ToCharArray();
+
+            string[] lines = File.ReadAllLines(filePath);
+            bool expectingHeader = true;
+
+
+            foreach (var rawLine in lines)
+            {
+                string line = rawLine.Trim();
+                if (line == "") continue;
+
+                if (expectingHeader)
+                {
+                    if (!line.StartsWith(">"))
+                    {
+                        MessageBox.Show("ts header doesn't work");
+                        return false;
+                    }
+                    expectingHeader = false;
+                }
+                else
+                {
+                    if (line.StartsWith(">"))
+                    {
+                        expectingHeader = false;
+                        continue;
+                    }
+                    else if (line.Any(c => !validChars.Contains(char.ToUpper(c))))
+                    {
+                        MessageBox.Show("ts sequence isn't valid");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
 
         internal static class MatrixInterop
         {
