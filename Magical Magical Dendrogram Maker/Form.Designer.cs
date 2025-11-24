@@ -219,8 +219,8 @@
             // mnuAlign
             // 
             this.mnuAlign.Name = "mnuAlign";
-            this.mnuAlign.Size = new System.Drawing.Size(178, 22);
-            this.mnuAlign.Text = "Alignment";
+            this.mnuAlign.Size = new System.Drawing.Size(180, 22);
+            this.mnuAlign.Text = "Align Fasta";
             this.mnuAlign.Click += new System.EventHandler(this.mnuAlign_Click);
             // 
             // toolStripMenuItem5
@@ -301,7 +301,7 @@
             this.btnAllInOne.Name = "btnAllInOne";
             this.btnAllInOne.Size = new System.Drawing.Size(95, 23);
             this.btnAllInOne.TabIndex = 11;
-            this.btnAllInOne.Text = "Do All";
+            this.btnAllInOne.Text = "Run All";
             this.btnAllInOne.UseVisualStyleBackColor = true;
             this.btnAllInOne.Click += new System.EventHandler(this.btnAllInOne_Click);
             // 

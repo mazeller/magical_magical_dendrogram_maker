@@ -20,7 +20,6 @@ namespace Magical_Magical_Dendrogram_Maker
 
     public partial class formMain : Form
     {
-
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
@@ -65,8 +64,7 @@ namespace Magical_Magical_Dendrogram_Maker
                 {
                     fastaPath = paths[0];
                     txtOldFasta.Text = File.ReadAllText(fastaPath);
-
-                    MessageBox.Show($"Selected file: {fastaPath}");
+                    MessageBox.Show($"Selected fasta: {fastaPath}");
                 }
                 else
                 {
@@ -502,55 +500,55 @@ namespace Magical_Magical_Dendrogram_Maker
 
             string[] commands = new[]
             {
-        $"file {file}",
-        "open",
-        "load",
-        "y",
-        "module enable Reroot tree",
-        "module select Reroot tree",
-        "option select Rooting mode",
-        "option set Mid-point",
-        "update all",
-        "module enable Sort nodes",
-        "module select Sort nodes",
-        "option select Order",
-        "option set Ascending",
-        "update all",
-        "module enable Rectangular",
-        "module select Rectangular",
-        "option select Width",
-        "option set 1200",
-        "option select Height",
-        "option set 1200",
-        "update all",
-        "module enable Scale tree",
-        "module select Scale tree",
-        "option select Scaling factor",
-        "option set 1000",
-        "update all",
-        "module enable Branches",
-        "module select Branches",
-        "option select Root branch",
-        "option set true",
-        "module enable Labels",
-        "module select Labels",
-        "option select Show on",
-        "option set Leaves",
-        "node select root",
-        $"attachment add {attachmentPath}",
-        "attach",
-        "y",
-        "y",
-        "module enable parse node states",
-        "module select parse node states",
-        "option select #1",
-        "option set attach",
-        "option select #9",
-        "option set true",
-        "update all",
-        $"png {outputImage}",
-        "exit"
-    };
+    $"file {file}",
+    "open",
+    "load",
+    "y",
+    "module enable Reroot tree",
+    "module select Reroot tree",
+    "option select Rooting mode",
+    "option set Mid-point",
+    "update all",
+    "module enable Sort nodes",
+    "module select Sort nodes",
+    "option select Order",
+    "option set Ascending",
+    "update all",
+    "module enable Rectangular",
+    "module select Rectangular",
+    "option select Width",
+    "option set 1200",
+    "option select Height",
+    "option set 1200",
+    "update all",
+    "module enable Scale tree",
+    "module select Scale tree",
+    "option select Scaling factor",
+    "option set 1000",
+    "update all",
+    "module enable Branches",
+    "module select Branches",
+    "option select Root branch",
+    "option set true",
+    "module enable Labels",
+    "module select Labels",
+    "option select Show on",
+    "option set Leaves",
+    "node select root",
+    $"attachment add {attachmentPath}",
+    "attach",
+    "y",
+    "y",
+    "module enable parse node states",
+    "module select parse node states",
+    "option select #1",
+    "option set attach",
+    "option select #9",
+    "option set true",
+    "update all",
+    $"png {outputImage}",
+    "exit"
+};
 
             string joinedCommands = string.Join("\r\n", commands) + "\r\n";
             Clipboard.SetText(joinedCommands);
@@ -580,55 +578,55 @@ namespace Magical_Magical_Dendrogram_Maker
 
             string[] commands = new[]
             {
-        $"file {file}",
-        "open",
-        "load",
-        "y",
-        "module enable Reroot tree",
-        "module select Reroot tree",
-        "option select Rooting mode",
-        "option set Mid-point",
-        "update all",
-        "module enable Sort nodes",
-        "module select Sort nodes",
-        "option select Order",
-        "option set Ascending",
-        "update all",
-        "module enable Rectangular",
-        "module select Rectangular",
-        "option select Width",
-        "option set 1200",
-        "option select Height",
-        "option set 1200",
-        "update all",
-        "module enable Scale tree",
-        "module select Scale tree",
-        "option select Scaling factor",
-        "option set 1000",
-        "update all",
-        "module enable Branches",
-        "module select Branches",
-        "option select Root branch",
-        "option set true",
-        "module enable Labels",
-        "module select Labels",
-        "option select Show on",
-        "option set Leaves",
-        "node select root",
-        $"attachment add {attachmentPath}",
-        "attach",
-        "y",
-        "y",
-        "module enable parse node states",
-        "module select parse node states",
-        "option select #1",
-        "option set attach",
-        "option select #9",
-        "option set true",
-        "update all",
-        $"png {outputImage}",
-        "exit"
-    };
+    $"file {file}",
+    "open",
+    "load",
+    "y",
+    "module enable Reroot tree",
+    "module select Reroot tree",
+    "option select Rooting mode",
+    "option set Mid-point",
+    "update all",
+    "module enable Sort nodes",
+    "module select Sort nodes",
+    "option select Order",
+    "option set Ascending",
+    "update all",
+    "module enable Rectangular",
+    "module select Rectangular",
+    "option select Width",
+    "option set 1200",
+    "option select Height",
+    "option set 1200",
+    "update all",
+    "module enable Scale tree",
+    "module select Scale tree",
+    "option select Scaling factor",
+    "option set 1000",
+    "update all",
+    "module enable Branches",
+    "module select Branches",
+    "option select Root branch",
+    "option set true",
+    "module enable Labels",
+    "module select Labels",
+    "option select Show on",
+    "option set Leaves",
+    "node select root",
+    $"attachment add {attachmentPath}",
+    "attach",
+    "y",
+    "y",
+    "module enable parse node states",
+    "module select parse node states",
+    "option select #1",
+    "option set attach",
+    "option select #9",
+    "option set true",
+    "update all",
+    $"png {outputImage}",
+    "exit"
+};
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -750,7 +748,7 @@ namespace Magical_Magical_Dendrogram_Maker
                                 MessageBox.Show("No attachment file selected");
                             }
                         }
-                    
+
                         //Run TreeViewer
                         string dendrogramFile = RunDendrogram(ofd.FileName, treeViewPath, attachmentPath);
                         if (dendrogramFile != null)
@@ -885,7 +883,6 @@ namespace Magical_Magical_Dendrogram_Maker
             string homologyPath = "";
             string mafftStatus = "MAFFT failed to run.";
 
-            // Create process
             // Check whether fasta is currently in use; if not, use file dialog
             if (string.IsNullOrEmpty(fastaPath))
             {
@@ -905,7 +902,8 @@ namespace Magical_Magical_Dendrogram_Maker
                     }
                 }
             }
-            // fasta is already selected and in textbox: use that fasta for process
+
+            // Checks that a fasta was actually selected; ensures cancellations don't create errors
             if (!string.IsNullOrEmpty(fastaPath))
             {
                 //run mafft
@@ -984,16 +982,17 @@ namespace Magical_Magical_Dendrogram_Maker
         private void MnuHelp_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Quick help:\n\n" +
-                "Drag a fasta and click Magic button to create both a dendrogram image and a homology table.\n\n" +
-                "File: \n\n" +
-                "   Open -> Opens fasta for modification or examination\n\n" +
-                "Dendrogram: \n\n" +
-                "   Align Fasta -> Uses mafft to align fasta for treefile creation \n\n" +
-                "   Create Treefile -> Uses IQ-TREE to create treefile from aligned fasta\n\n" +
+                "Main Function:\n" +
+                "   Run All -> Drag a fasta and click \"Run All\" button to create both a dendrogram image and a homology table.\n\n" +
+                "File:\n" +
+                "   Open -> Opens fasta for modification or examination\n" +
+                "   Save Fasta -> save what is currently in the top text box as a fasta file\n\n" +
+                "Dendrogram:\n" +
+                "   Align Fasta -> Uses mafft to align fasta for treefile creation\n" +
+                "   Create Treefile -> Uses IQ-TREE to create treefile from aligned fasta\n" +
                 "   Create Dendrogram -> Uses TreeViewer to create dendrogram image from treefile\n\n" +
-                "Homology: \n\n" +
-                "   Create Homology Table -> Creates a homology table CSV from \n\n",
+                "Homology:\n" +
+                "   Create Homology Table -> Creates a homology table CSV from\n\n",
                 "Help",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
@@ -1041,7 +1040,7 @@ namespace Magical_Magical_Dendrogram_Maker
             if (exeDir.EndsWith(@"\bin\Debug", StringComparison.OrdinalIgnoreCase) ||
                 exeDir.EndsWith(@"\bin\Release", StringComparison.OrdinalIgnoreCase) ||
                     exeDir.EndsWith(@"\obj\Debug", StringComparison.OrdinalIgnoreCase) ||
-                     exeDir.EndsWith(@"\obj\Release", StringComparison.OrdinalIgnoreCase))
+                        exeDir.EndsWith(@"\obj\Release", StringComparison.OrdinalIgnoreCase))
             {
                 // Go up two level to reach base project directory
                 root = Directory.GetParent(Directory.GetParent(exeDir).FullName).FullName;
@@ -1062,53 +1061,56 @@ namespace Magical_Magical_Dendrogram_Maker
             return fullPath;
         }
 
+        // checks input file validity
         private bool ValidateFasta(string filePath)
         {
+            // checks if is fasta
             string ext = Path.GetExtension(filePath).ToLower();
             if (ext != ".fasta" && ext != ".fa" && ext != ".fas")
             {
-                MessageBox.Show("This is not a fasta");
                 return false;
             }
 
+            // valid fasta alphabet
             var validChars = "ACGTUI-RYKMSWBDHVN".ToCharArray();
-
             string[] lines = File.ReadAllLines(filePath);
             bool expectingHeader = true;
 
-
+            // checks each line in fasta
             foreach (var rawLine in lines)
             {
                 string line = rawLine.Trim();
                 if (line == "") continue;
 
+                // validates header
                 if (expectingHeader)
                 {
                     if (!line.StartsWith(">"))
                     {
-                        MessageBox.Show("ts header doesn't work");
+                        MessageBox.Show("Incorrect header formatting");
                         return false;
                     }
                     expectingHeader = false;
                 }
+                // validates probably not header
                 else
                 {
+                    // is header
                     if (line.StartsWith(">"))
                     {
                         expectingHeader = false;
                         continue;
                     }
+                    // contains invalid chars
                     else if (line.Any(c => !validChars.Contains(char.ToUpper(c))))
                     {
-                        MessageBox.Show("ts sequence isn't valid");
+                        MessageBox.Show("Sequences aren't valid");
                         return false;
                     }
                 }
             }
-
             return true;
         }
-
 
         internal static class MatrixInterop
         {
