@@ -105,7 +105,7 @@ namespace Magical_Magical_Dendrogram_Maker
         // Append typed contents to the fasta contents and save new fasta
         private void btnAppend_Click(object sender, EventArgs e)
         {
-            txtOldFasta.Text += txtNewFasta.Text;
+            txtOldFasta.Text += "\r\n" + txtNewFasta.Text;
 
             MessageBox.Show("Sequences appended successfully!",
                         "Success",
@@ -1148,7 +1148,7 @@ namespace Magical_Magical_Dendrogram_Maker
             string[] lines = File.ReadAllLines(filePath);
             string seqName = lines[0].Split('"')[1];
             string sequence = lines[4];
-            seqText = ">" + seqName + "\r\n" + sequence + "\r\n";
+            seqText = ">" + seqName + "\r\n" + sequence;
             MessageBox.Show(seqText);
 
             return true;
