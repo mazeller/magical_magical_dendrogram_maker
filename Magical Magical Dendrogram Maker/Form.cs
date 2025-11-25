@@ -32,17 +32,21 @@ namespace Magical_Magical_Dendrogram_Maker
         {
             InitializeComponent();
             this.Resize += Form1_Resize;
-            this.AllowDrop = true;
+            txtOldFasta.AllowDrop = true;
+            txtNewFasta.AllowDrop = true;
 
-            this.DragEnter += FormMain_DragEnter;
-            this.DragDrop += FormMain_DragDrop;
+            txtOldFasta.DragEnter += CheckDragEnter;
+            txtOldFasta.DragDrop += TextBox1_DragDrop;
+            txtNewFasta.DragEnter += CheckDragEnter;
+            txtNewFasta.DragDrop += TextBox2_DragDrop;
         }
 
-        // --- Drag and Drop
+        // --- Drag and Drop ---
         // save fasta location for pipeline
         string fastaPath = "";
+        string seqText = "";
 
-        private void FormMain_DragEnter(object sender, DragEventArgs e)
+        private void CheckDragEnter(object sender, DragEventArgs e)
         {
             // Check if the data being dragged is one or more files
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -55,7 +59,8 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
-        private void FormMain_DragDrop(object sender, DragEventArgs e)
+        // Fasta Workplace takes only one fasta
+        private void TextBox1_DragDrop(object sender, DragEventArgs e)
         {
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
             if (paths != null && paths.Length > 0)
@@ -65,6 +70,28 @@ namespace Magical_Magical_Dendrogram_Maker
                     fastaPath = paths[0];
                     txtOldFasta.Text = File.ReadAllText(fastaPath);
                     MessageBox.Show($"Selected fasta: {fastaPath}");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid format, please choose a fasta file.");
+                }
+            }
+        }
+
+        // New Sequences takes both fasta and seq files and additively appends them to existing text
+        private void TextBox2_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (paths != null && paths.Length > 0)
+            {
+                if (ValidateFasta(paths[0]))
+                {
+                    fastaPath = paths[0];
+                    txtNewFasta.Text += File.ReadAllText(fastaPath);
+                }
+                else if (ParseSeq(paths[0]))
+                {
+                    txtNewFasta.Text += seqText;
                 }
                 else
                 {
@@ -144,11 +171,6 @@ namespace Magical_Magical_Dendrogram_Maker
         }
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
         }
@@ -434,7 +456,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
-        // handles "Tree Treefile" menu click event
+        // Handles "Tree Treefile" menu click event
         private async void MnuTreefile_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
@@ -472,7 +494,7 @@ namespace Magical_Magical_Dendrogram_Maker
 
         // --- Dendrogram Section ---
 
-        // handles treeview commands via opening window and pasting and creates the dendrogram
+        // Handles treeview commands via opening window and pasting and creates the dendrogram
         private string RunDendrogram(string file, string treePath, string attachmentPath)
         {
             file = Path.GetFullPath(file);
@@ -565,7 +587,7 @@ namespace Magical_Magical_Dendrogram_Maker
             return outputImage;
         }
 
-        // handles treeview commands via redirected process and creates the dendrogram
+        // Handles treeview commands via redirected process and creates the dendrogram
         private string RunDendrogramRedirected(string file, string treePath, string attachmentPath)
         {
             if (!File.Exists(treePath))
@@ -661,7 +683,7 @@ namespace Magical_Magical_Dendrogram_Maker
             return outputImage;
         }
 
-        // handles "Dendrogram" menu click event
+        // Handles "Dendrogram" menu click event
         private async void MnuTreeDendrogram_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
@@ -802,6 +824,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
+        // Handles alignment and matrix and csv formatting processes
         private string RunHomology(string fileName)
         {
             // parse fasta into array
@@ -977,7 +1000,6 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
-
         // Instructions
         private void MnuHelp_Click(object sender, EventArgs e)
         {
@@ -1006,7 +1028,7 @@ namespace Magical_Magical_Dendrogram_Maker
 
         //--- helper functions ---
 
-        // outputs scrollable error windows
+        // Outputs scrollable error windows
         private void ShowErrorForm(string text)
         {
             Form errorForm = new Form
@@ -1029,7 +1051,7 @@ namespace Magical_Magical_Dendrogram_Maker
             errorForm.ShowDialog();
         }
 
-        // finds the tool path
+        // Finds the tool path
         private string ResolveToolPath(string toolFolder, string executable)
         {
             // Start from where the .exe is running
@@ -1061,7 +1083,7 @@ namespace Magical_Magical_Dendrogram_Maker
             return fullPath;
         }
 
-        // checks input file validity
+        // Checks input file validity
         private bool ValidateFasta(string filePath)
         {
             // checks if is fasta
@@ -1112,6 +1134,27 @@ namespace Magical_Magical_Dendrogram_Maker
             return true;
         }
 
+        // Validates and translates seq file
+        private bool ParseSeq(string filePath)
+        {
+            // checks if is seq file
+            string ext = Path.GetExtension(filePath).ToLower();
+            if (ext != ".seq")
+            {
+                return false;
+            }
+
+            // changes seq file info to fasta compatible format
+            string[] lines = File.ReadAllLines(filePath);
+            string seqName = lines[0].Split('"')[1];
+            string sequence = lines[4];
+            seqText = ">" + seqName + "\r\n" + sequence + "\r\n";
+            MessageBox.Show(seqText);
+
+            return true;
+        }
+
+        // Translates C methods
         internal static class MatrixInterop
         {
             [DllImport("kernel32", SetLastError = true)]
@@ -1152,6 +1195,7 @@ namespace Magical_Magical_Dendrogram_Maker
                 int gap
             );
 
+            // Create homology matrix
             public static double[,] ComputeMatrix(string[] sequences, int match = 1, int mismatch = -1, int gap = -12)
             {
                 int count = sequences.Length;

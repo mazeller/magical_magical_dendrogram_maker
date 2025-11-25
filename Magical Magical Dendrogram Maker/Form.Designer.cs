@@ -86,6 +86,7 @@
             this.txtOldFasta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOldFasta.Location = new System.Drawing.Point(12, 50);
+            this.txtOldFasta.MaxLength = 0;
             this.txtOldFasta.Multiline = true;
             this.txtOldFasta.Name = "txtOldFasta";
             this.txtOldFasta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -97,6 +98,7 @@
             // 
             this.txtNewFasta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNewFasta.Location = new System.Drawing.Point(12, 245);
+            this.txtNewFasta.MaxLength = 0;
             this.txtNewFasta.Multiline = true;
             this.txtNewFasta.Name = "txtNewFasta";
             this.txtNewFasta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -115,11 +117,6 @@
             this.btnAppend.Text = "Append";
             this.btnAppend.UseVisualStyleBackColor = true;
             this.btnAppend.Click += new System.EventHandler(this.btnAppend_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1_FileOk);
             // 
             // btnSave
             // 
@@ -219,7 +216,7 @@
             // mnuAlign
             // 
             this.mnuAlign.Name = "mnuAlign";
-            this.mnuAlign.Size = new System.Drawing.Size(180, 22);
+            this.mnuAlign.Size = new System.Drawing.Size(178, 22);
             this.mnuAlign.Text = "Align Fasta";
             this.mnuAlign.Click += new System.EventHandler(this.mnuAlign_Click);
             // 
@@ -310,13 +307,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
+            this.Controls.Add(this.txtOldFasta);
             this.Controls.Add(this.btnAllInOne);
             this.Controls.Add(this.cbxNewSequences);
             this.Controls.Add(this.lblNewSequences);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnAppend);
             this.Controls.Add(this.txtNewFasta);
-            this.Controls.Add(this.txtOldFasta);
             this.Controls.Add(this.lblNewFasta);
             this.Controls.Add(this.lblOldFasta);
             this.Controls.Add(this.mnuStrip);
