@@ -77,9 +77,9 @@
             this.lblNewFasta.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNewFasta.Location = new System.Drawing.Point(12, 226);
             this.lblNewFasta.Name = "lblNewFasta";
-            this.lblNewFasta.Size = new System.Drawing.Size(174, 16);
+            this.lblNewFasta.Size = new System.Drawing.Size(210, 16);
             this.lblNewFasta.TabIndex = 1;
-            this.lblNewFasta.Text = "New Sequences in Fasta Format";
+            this.lblNewFasta.Text = "New Sequences in Fasta or Seq Format";
             // 
             // txtOldFasta
             // 

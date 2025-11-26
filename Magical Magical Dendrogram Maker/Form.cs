@@ -68,8 +68,8 @@ namespace Magical_Magical_Dendrogram_Maker
                 if (ValidateFasta(paths[0]))
                 {
                     fastaPath = paths[0];
-                    txtOldFasta.Text = File.ReadAllText(fastaPath);
-                    MessageBox.Show($"Selected fasta: {fastaPath}");
+                    txtOldFasta.Text = File.ReadAllText(fastaPath).Trim();
+                    //MessageBox.Show($"Selected fasta: {fastaPath}");
                 }
                 else
                 {
@@ -87,11 +87,33 @@ namespace Magical_Magical_Dendrogram_Maker
                 if (ValidateFasta(paths[0]))
                 {
                     fastaPath = paths[0];
-                    txtNewFasta.Text += File.ReadAllText(fastaPath);
+                    // first item in textbox 2 trimmed for consistency when fasta have trailing newlines
+                    if (string.IsNullOrEmpty(txtNewFasta.Text))
+                    {
+                        txtNewFasta.Text += File.ReadAllText(fastaPath).Trim();
+                    }
+                    // ensures proper spacing between each element
+                    else
+                    {
+                        txtNewFasta.Text += "\r\n" + File.ReadAllText(fastaPath).Trim();
+                        txtNewFasta.SelectionStart = txtNewFasta.Text.Length;
+                        txtNewFasta.ScrollToCaret();
+                    }
                 }
                 else if (ParseSeq(paths[0]))
                 {
-                    txtNewFasta.Text += seqText;
+                    // first item in textbox 2 trimmed for consistency when fasta have trailing newlines
+                    if (string.IsNullOrEmpty(txtNewFasta.Text))
+                    {
+                        txtNewFasta.Text += seqText;
+                    }
+                    // ensures proper spacing between each element
+                    else
+                    {
+                        txtNewFasta.Text += "\r\n" + seqText;
+                        txtNewFasta.SelectionStart = txtNewFasta.Text.Length;
+                        txtNewFasta.ScrollToCaret();
+                    }
                 }
                 else
                 {
@@ -107,10 +129,10 @@ namespace Magical_Magical_Dendrogram_Maker
         {
             txtOldFasta.Text += "\r\n" + txtNewFasta.Text;
 
-            MessageBox.Show("Sequences appended successfully!",
+            /*MessageBox.Show("Sequences appended successfully!",
                         "Success",
                         MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                        MessageBoxIcon.Information);*/
 
             txtOldFasta.SelectionStart = txtOldFasta.Text.Length;
             txtOldFasta.ScrollToCaret();
@@ -1131,6 +1153,7 @@ namespace Magical_Magical_Dendrogram_Maker
                     }
                 }
             }
+            fastaPath = filePath;
             return true;
         }
 
@@ -1149,8 +1172,6 @@ namespace Magical_Magical_Dendrogram_Maker
             string seqName = lines[0].Split('"')[1];
             string sequence = lines[4];
             seqText = ">" + seqName + "\r\n" + sequence;
-            MessageBox.Show(seqText);
-
             return true;
         }
 
