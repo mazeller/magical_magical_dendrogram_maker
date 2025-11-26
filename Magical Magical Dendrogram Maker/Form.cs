@@ -67,9 +67,12 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 if (ValidateFasta(paths[0]))
                 {
+                    if (!string.IsNullOrEmpty(txtOldFasta.Text))
+                    {
+                        MessageBox.Show($"Selected file: {paths[0]}");
+                    }
                     fastaPath = paths[0];
                     txtOldFasta.Text = File.ReadAllText(fastaPath).Trim();
-                    //MessageBox.Show($"Selected fasta: {fastaPath}");
                 }
                 else
                 {
@@ -156,36 +159,9 @@ namespace Magical_Magical_Dendrogram_Maker
         // Save fasta
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                Filter = "FASTA files (*.fasta)|*.fasta|All files (*.*)|*.*",
-                Title = "Save FASTA file"
-            };
-
-            using (sfd)
-            {
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    // Build FASTA contents
-                    StringBuilder fastaBuilder = new StringBuilder();
-
-                    // Add text in first textbox to new fasta
-                    if (!string.IsNullOrWhiteSpace(txtOldFasta.Text))
-                    {
-                        fastaBuilder.AppendLine(txtOldFasta.Text);
-                    }
-
-                    // Save to file
-                    System.IO.File.WriteAllText(sfd.FileName, fastaBuilder.ToString());
-
-
-                    MessageBox.Show("Fasta saved successfully!",
-                                "Success",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                }
-            }
+            SaveMethod();
         }
+
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -264,37 +240,46 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
+        private void SaveMethod()
+        {
+            if (!string.IsNullOrEmpty(txtOldFasta.Text))
+            {
+                // preparing to put new fasta in location of old fasta, and find location for archive
+                string fastaDir = Path.GetDirectoryName(fastaPath);
+                string archiveDir = Path.Combine(fastaDir, "archive");
+
+                // Create archive directory
+                Directory.CreateDirectory(archiveDir);
+
+                // archive old fasta
+                string fastaName = Path.GetFileName(fastaPath);
+                string archivedName = $"old_{fastaName}";
+                string archivedPath = Path.Combine(archiveDir, archivedName);
+                File.Move(fastaPath, archivedPath);
+
+                // Build new FASTA
+                StringBuilder fastaBuilder = new StringBuilder();
+
+                fastaBuilder.AppendLine(txtOldFasta.Text+"\r\n");
+
+                // Save new file
+                File.WriteAllText(fastaPath, fastaBuilder.ToString());
+
+                MessageBox.Show("Fasta saved successfully!",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Make a fasta file");
+            }
+        }
+
         // Handles the "Save" menu click event
         private void MnuFileSaveFasta_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                Filter = "FASTA files (*.fasta)|*.fasta|All files (*.*)|*.*",
-                Title = "Save FASTA file"
-            };
-            using (sfd)
-            {
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    // Build FASTA contents
-                    StringBuilder fastaBuilder = new StringBuilder();
-
-                    // Add text in first textbox to new fasta
-                    if (!string.IsNullOrWhiteSpace(txtOldFasta.Text))
-                    {
-                        fastaBuilder.AppendLine(txtOldFasta.Text);
-                    }
-
-                    // Save to file
-                    System.IO.File.WriteAllText(sfd.FileName, fastaBuilder.ToString());
-
-
-                    MessageBox.Show("Fasta saved successfully!",
-                                "Success",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                }
-            }
+            SaveMethod();
         }
 
         // Handles the "Exit" menu click event
@@ -1027,10 +1012,12 @@ namespace Magical_Magical_Dendrogram_Maker
         {
             MessageBox.Show(
                 "Main Function:\n" +
+                "   Append -> Add new sequences onto the selected fasta. \r\n" +
+                "   Save -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
                 "   Run All -> Drag a fasta and click \"Run All\" button to create both a dendrogram image and a homology table.\n\n" +
                 "File:\n" +
                 "   Open -> Opens fasta for modification or examination\n" +
-                "   Save Fasta -> save what is currently in the top text box as a fasta file\n\n" +
+                "   Save Fasta -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
                 "Dendrogram:\n" +
                 "   Align Fasta -> Uses mafft to align fasta for treefile creation\n" +
                 "   Create Treefile -> Uses IQ-TREE to create treefile from aligned fasta\n" +
@@ -1146,7 +1133,7 @@ namespace Magical_Magical_Dendrogram_Maker
                         continue;
                     }
                     // contains invalid chars
-                    else if (line.Any(c => !validChars.Contains(char.ToUpper(c))))
+                    else if (line.Any(c => !validChars.Contains(char.ToLower(c))))
                     {
                         MessageBox.Show("Sequences aren't valid");
                         return false;
