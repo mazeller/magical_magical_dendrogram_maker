@@ -52,6 +52,8 @@
             this.mnuTreeDendrogram = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHomology = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHomologyTable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.createAminoAcidTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNewSequences = new System.Windows.Forms.Label();
             this.cbxNewSequences = new System.Windows.Forms.CheckedListBox();
@@ -247,7 +249,9 @@
             // mnuHomology
             // 
             this.mnuHomology.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuHomologyTable});
+            this.mnuHomologyTable,
+            this.toolStripMenuItem4,
+            this.createAminoAcidTableToolStripMenuItem});
             this.mnuHomology.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuHomology.Name = "mnuHomology";
             this.mnuHomology.Size = new System.Drawing.Size(76, 20);
@@ -256,9 +260,21 @@
             // mnuHomologyTable
             // 
             this.mnuHomologyTable.Name = "mnuHomologyTable";
-            this.mnuHomologyTable.Size = new System.Drawing.Size(140, 22);
-            this.mnuHomologyTable.Text = "Create Table";
+            this.mnuHomologyTable.Size = new System.Drawing.Size(206, 22);
+            this.mnuHomologyTable.Text = "Create Nucleotide Table";
             this.mnuHomologyTable.Click += new System.EventHandler(this.MnuHomologyTable_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(203, 6);
+            // 
+            // createAminoAcidTableToolStripMenuItem
+            // 
+            this.createAminoAcidTableToolStripMenuItem.Name = "createAminoAcidTableToolStripMenuItem";
+            this.createAminoAcidTableToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.createAminoAcidTableToolStripMenuItem.Text = "Create Amino Acid Table";
+            this.createAminoAcidTableToolStripMenuItem.Click += new System.EventHandler(this.createAminoAcidTableToolStripMenuItem_Click);
             // 
             // mnuHelp
             // 
@@ -358,6 +374,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCreateAttach;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem mnuAlign;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem createAminoAcidTableToolStripMenuItem;
     }
 }
 

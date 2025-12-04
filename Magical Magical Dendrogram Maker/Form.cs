@@ -6,13 +6,17 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Navigation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ClosedXML.Excel;
 
 
 namespace Magical_Magical_Dendrogram_Maker
@@ -162,16 +166,9 @@ namespace Magical_Magical_Dendrogram_Maker
             SaveMethod();
         }
 
+        private void TextBox1_TextChanged(object sender, EventArgs e) { }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void TextBox2_TextChanged(object sender, EventArgs e) { }
 
         // Check for required tools on load
         private void Form1_Load(object sender, EventArgs e)
@@ -296,6 +293,7 @@ namespace Magical_Magical_Dendrogram_Maker
 
             // Format paths and commands for process
             string alnFile = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + "_aligned.fasta");
+            //string command = $"/C call \"{mafft}\" --auto --out \"{alnFile}\" \"{file}\"";
             string command = $"/C call \"{mafft}\" --localpair --out \"{alnFile}\" \"{file}\"";
 
             // mafft process settings
@@ -325,6 +323,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
             return alnFile;
         }
+
 
         // Handles the "Edit Align" menu click event
         private async void mnuAlign_Click(object sender, EventArgs e)
@@ -811,9 +810,9 @@ namespace Magical_Magical_Dendrogram_Maker
                 {
                     if (ValidateFasta(ofd.FileName))
                     {
-                        string homologyStatus = "Homology failed to run.";
+                        string homologyStatus = "Nucleotide Homology failed to run.";
                         string homologyPath = "";
-                        await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
+                        await LoadingForm.RunWithLoading(this, "Creating Nucleotide Homology Table CSV...", async () =>
                         {
                             await Task.Run(() =>
                             {
@@ -822,7 +821,7 @@ namespace Magical_Magical_Dendrogram_Maker
                             homologyStatus = "Table created at: " + homologyPath;
                             if (homologyStatus == "Table created at: ")
                             {
-                                homologyStatus = "Homology ran but failed to produce new Table";
+                                homologyStatus = "Nucleotide Homology ran but failed to produce new Table";
                             }
                         });
                         MessageBox.Show(homologyStatus);
@@ -831,7 +830,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
-        // Handles alignment and matrix and csv formatting processes
+        // Handles alignment, nucleotide matrix, and csv formatting processes
         private string RunHomology(string fileName)
         {
             // parse fasta into array
@@ -871,7 +870,7 @@ namespace Magical_Magical_Dendrogram_Maker
             double[,] matrix = MatrixInterop.ComputeMatrix(seqArray);
 
             // Save results as CSV
-            string outputFile = fileName.Replace(".fasta", "_homology.csv");
+            string outputFile = fileName.Replace(".fasta", "_nucleotide_homology.csv");
             using (var writer = new StreamWriter(outputFile))
             {
                 writer.Write(",");
@@ -903,6 +902,164 @@ namespace Magical_Magical_Dendrogram_Maker
             return outputFile;
         }
 
+        // Handles amino acid similarity table creation
+        private async void createAminoAcidTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
+                Title = "Select a fasta file"
+            };
+            using (ofd)
+            {
+                // use fasta for homology process
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    if (ValidateFasta(ofd.FileName))
+                    {
+                        string aminoacidStatus = "Amino Acid Homology failed to run.";
+                        string aminoacidPath = "";
+                        await LoadingForm.RunWithLoading(this, "Creating Amino Acid Homology Table CSV...", async () =>
+                        {
+                            await Task.Run(() =>
+                            {
+                                aminoacidPath = RunAminoAcidHomology(ofd.FileName);
+                            });
+                            aminoacidStatus = "Table created at: " + aminoacidPath;
+                            if (aminoacidStatus == "Table created at: ")
+                            {
+                                aminoacidStatus = "Amino Acid Homology ran but failed to produce new Table";
+                            }
+                        });
+                        MessageBox.Show(aminoacidStatus);
+                    }
+                }
+            }
+        }
+
+        // Handles amino acid translation, similarity table creation, and csv formatting processes
+        private string RunAminoAcidHomology(string fileName)
+        {
+            if (ValidateFasta(fileName) == false)
+            {
+                return fileName + " is not a valid fasta file.";
+            }
+
+            var fasta = new List<(string Header, string Seq)>();
+            string header = null;
+            var sb = new StringBuilder();
+
+            // format fasta
+            foreach (var line in File.ReadLines(fileName))
+            {
+                if (line.StartsWith(">"))
+                {
+                    if (header != null)
+                    {
+                        fasta.Add((header, sb.ToString()));
+                    }
+
+                    header = line.Substring(1).Trim();
+                    sb.Clear();
+                }
+                else
+                {
+                    sb.Append(line.Trim());
+                }
+            }
+            if (header != null)
+            {
+                fasta.Add((header, sb.ToString()));
+
+            }
+
+            // Translate sequences to amino acids
+            var aminoAcidSeq = new List<(string Header, string Sequence)>();
+            foreach (var line in fasta)
+            {
+                aminoAcidSeq.Add((line.Header, GetAminoAcidSeq(line.Seq)));
+            }
+
+            // create amino acid file to align
+            var fastaBuilder = new StringBuilder();
+
+            foreach (var line in aminoAcidSeq)
+            {
+                fastaBuilder.AppendLine(">" + line.Header);
+                fastaBuilder.AppendLine(line.Sequence);
+            }
+
+            // Location for aligned AAfasta to go
+            string fastaDir = Path.GetDirectoryName(fileName);
+            string fastaName = Path.GetFileNameWithoutExtension(fileName);
+            string fullPath = Path.Combine(fastaDir, fastaName + "_amino_acid.fasta");
+            File.WriteAllText(fullPath, fastaBuilder.ToString());
+
+            // align with mafft
+            string alnFile = RunMafft(fullPath, ResolveToolPath("mafft-win", "mafft.bat"));
+
+            // format aligned fasta
+            foreach (var line in File.ReadLines(alnFile))
+            {
+                if (line.StartsWith(">"))
+                {
+                    if (header != null)
+                    {
+                        fasta.Add((header, sb.ToString()));
+                    }
+
+                    header = line.Substring(1).Trim();
+                    sb.Clear();
+                }
+                else
+                {
+                    sb.Append(line.Trim());
+                }
+            }
+            if (header != null)
+            {
+                fasta.Add((header, sb.ToString()));
+            }
+
+            // Create similarity matrix
+            string[] seqArray = aminoAcidSeq.Select(s => s.Sequence).ToArray();
+
+            double[,] matrix = MatrixInterop.ComputeMatrix(seqArray);
+
+            // Save results as CSV
+            string outputFile = fileName.Replace(".fasta", "_amino_acid_homology.csv");
+            using (var writer = new StreamWriter(outputFile))
+            {
+                writer.Write(",");
+                writer.WriteLine(string.Join(",", aminoAcidSeq.Select(s => s.Header)));
+
+                for (int i = 0; i < aminoAcidSeq.Count; i++)
+                {
+                    writer.Write(aminoAcidSeq[i].Header + ",");
+                    for (int j = 0; j < aminoAcidSeq.Count; j++)
+                    {
+                        double value = matrix[i, j];
+                        string output;
+
+                        if (i == j)
+                            output = "--";
+                        else if (value == 100.00)
+                            output = "100%";
+                        else
+                            output = value.ToString("F2") + "%";
+
+                        writer.Write(output);
+                        if (j < aminoAcidSeq.Count - 1)
+                            writer.Write(",");
+                    }
+                    writer.WriteLine();
+                }
+            }
+
+            return outputFile;
+        }
+
+        // Run All button method
         private async void btnAllInOne_Click(object sender, EventArgs e)
         {
             // paths for pipelining
@@ -911,6 +1068,7 @@ namespace Magical_Magical_Dendrogram_Maker
             string dendrogramPath = "";
             string attachPath = "";
             string homologyPath = "";
+            string aminoacidPath = "";
             string mafftStatus = "MAFFT failed to run.";
 
             // Check whether fasta is currently in use; if not, use file dialog
@@ -987,9 +1145,9 @@ namespace Magical_Magical_Dendrogram_Maker
                     }
                 });
 
-                //run homology
-                string homologyStatus = "Homology failed to run.";
-                await LoadingForm.RunWithLoading(this, "Creating Homology Table CSV...", async () =>
+                //run nucleotide homology
+                string homologyStatus = "Nucleotide Homology failed to run.";
+                await LoadingForm.RunWithLoading(this, "Creating Nucleotide Homology Table CSV...", async () =>
                 {
                     await Task.Run(() =>
                     {
@@ -998,12 +1156,50 @@ namespace Magical_Magical_Dendrogram_Maker
                     homologyStatus = "Table created at: " + homologyPath;
                     if (homologyStatus == "Table created at: ")
                     {
-                        homologyStatus = "Homology ran but failed to produce new Table";
+                        homologyStatus = "Nucleotide Homology ran but failed to produce new Table";
                     }
                 });
+
+                //run amino acid homology
+                string aminoacidStatus = "Amino Acid Homology failed to run.";
+                await LoadingForm.RunWithLoading(this, "Creating Amino Acid Homology Table CSV...", async () =>
+                {
+                    await Task.Run(() =>
+                    {
+                        aminoacidPath = RunAminoAcidHomology(fastaPath);
+                    });
+                    aminoacidStatus = " Table created at: " + aminoacidPath;
+                    if (aminoacidStatus == "Table created at: ")
+                    {
+                        aminoacidStatus = "Amino Acid Homology ran but failed to produce new Table";
+                    }
+                });
+
+                //create homology workbook
+                string workbookStatus = "Failed to create Homology Workbook.";
+                string workbookPath = Path.Combine(Path.GetDirectoryName(fastaPath), Path.GetFileNameWithoutExtension(fastaPath) + "_homology.xlsx"); ;
+                await LoadingForm.RunWithLoading(this, "Creating Homology Workbook XLSX...", async () =>
+                {
+                    await Task.Run(() =>
+                    {
+                        workbookPath = CSVtoXLSX(homologyPath, aminoacidPath, workbookPath);
+                    });
+                    workbookStatus = " Workbook created at: " + workbookPath;
+                    if (workbookStatus == "Workbook created at: ")
+                    {
+                        workbookStatus = "Homology Workbook attempted but failed to produce new Workbook";
+                    }
+                });
+
+                // clear extra csvs
+                if (new FileInfo(workbookPath).Length > 100)
+                {
+                    File.Delete(homologyPath);
+                    File.Delete(aminoacidPath);
+                }
                 fastaPath = "";
                 txtOldFasta.Text = "";
-                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus);
+                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus + "\n" + workbookStatus);
             }
         }
 
@@ -1037,6 +1233,57 @@ namespace Magical_Magical_Dendrogram_Maker
 
         //--- helper functions ---
 
+        // Translates nucleotide sequence to amino acid sequence
+        private static string GetAminoAcidSeq(string dna)
+        {
+            // formatting
+            dna = dna.ToUpper().Replace("\n", "").Replace("\r", "").Replace(" ", "");
+
+            // nucleotide to codon
+            var codonTable = new Dictionary<string, char>
+            {
+                {"TTT",'F'}, {"TTC",'F'}, {"TTA",'L'}, {"TTG",'L'},
+                {"TCT",'S'}, {"TCC",'S'}, {"TCA",'S'}, {"TCG",'S'},
+                {"TAT",'Y'}, {"TAC",'Y'}, {"TAA",'*'}, {"TAG",'*'},
+                {"TGT",'C'}, {"TGC",'C'}, {"TGA",'*'}, {"TGG",'W'},
+
+                {"CTT",'L'}, {"CTC",'L'}, {"CTA",'L'}, {"CTG",'L'},
+                {"CCT",'P'}, {"CCC",'P'}, {"CCA",'P'}, {"CCG",'P'},
+                {"CAT",'H'}, {"CAC",'H'}, {"CAA",'Q'}, {"CAG",'Q'},
+                {"CGT",'R'}, {"CGC",'R'}, {"CGA",'R'}, {"CGG",'R'},
+
+                {"ATT",'I'}, {"ATC",'I'}, {"ATA",'I'}, {"ATG",'M'},
+                {"ACT",'T'}, {"ACC",'T'}, {"ACA",'T'}, {"ACG",'T'},
+                {"AAT",'N'}, {"AAC",'N'}, {"AAA",'K'}, {"AAG",'K'},
+                {"AGT",'S'}, {"AGC",'S'}, {"AGA",'R'}, {"AGG",'R'},
+
+                {"GTT",'V'}, {"GTC",'V'}, {"GTA",'V'}, {"GTG",'V'},
+                {"GCT",'A'}, {"GCC",'A'}, {"GCA",'A'}, {"GCG",'A'},
+                {"GAT",'D'}, {"GAC",'D'}, {"GAA",'E'}, {"GAG",'E'},
+                {"GGT",'G'}, {"GGC",'G'}, {"GGA",'G'}, {"GGG",'G'},
+            };
+
+            var sb = new StringBuilder();
+
+            // translate 3 bases to codon
+            for (int pos = 0; pos + 2 < dna.Length; pos += 3)
+            {
+                string codon = dna.Substring(pos, 3);
+                if (codonTable.TryGetValue(codon, out char aa))
+                {
+                    sb.Append(aa);
+
+                }
+                else
+                {
+                    sb.Append('?'); // invalid codon/gap
+                }
+            }
+
+            return sb.ToString();
+        }
+
+
         // Outputs scrollable error windows
         private void ShowErrorForm(string text)
         {
@@ -1047,7 +1294,7 @@ namespace Magical_Magical_Dendrogram_Maker
                 Height = 600
             };
 
-            TextBox textBox = new TextBox
+            System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox
             {
                 Multiline = true,
                 ScrollBars = ScrollBars.Both,
@@ -1103,7 +1350,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
 
             // valid fasta alphabet
-            var validChars = "ACGTUI-RYKMSWBDHVN".ToCharArray();
+            var validChars = @"ACGTUI-RYKMSWBDHVN".ToCharArray();
             string[] lines = File.ReadAllLines(filePath);
             bool expectingHeader = true;
 
@@ -1133,9 +1380,10 @@ namespace Magical_Magical_Dendrogram_Maker
                         continue;
                     }
                     // contains invalid chars
-                    else if (line.Any(c => !validChars.Contains(char.ToLower(c))))
+                    else if (line.Any(c => !validChars.Contains(char.ToUpper(c))))
                     {
-                        MessageBox.Show("Sequences aren't valid");
+                        char bad = line.First(c => !validChars.Contains(char.ToUpper(c)));
+                        ShowErrorForm("Sequences aren't valid because of " + bad);
                         return false;
                     }
                 }
@@ -1160,6 +1408,36 @@ namespace Magical_Magical_Dendrogram_Maker
             string sequence = lines[4];
             seqText = ">" + seqName + "\r\n" + sequence;
             return true;
+        }
+
+        // create excel workbook
+        private string CSVtoXLSX(string nCSV, string aaCSV, string outputXlsx)
+        {
+            using (var wb = new XLWorkbook())
+            {
+                // Sheet 1
+                var ws1 = wb.Worksheets.Add("Nucleotide");
+                var lines1 = File.ReadAllLines(nCSV);
+                for (int r = 0; r < lines1.Length; r++)
+                {
+                    var cells = lines1[r].Split(',');
+                    for (int c = 0; c < cells.Length; c++)
+                        ws1.Cell(r + 1, c + 1).Value = cells[c];
+                }
+
+                // Sheet 2
+                var ws2 = wb.Worksheets.Add("Amino Acid");
+                var lines2 = File.ReadAllLines(aaCSV);
+                for (int r = 0; r < lines2.Length; r++)
+                {
+                    var cells = lines2[r].Split(',');
+                    for (int c = 0; c < cells.Length; c++)
+                        ws2.Cell(r + 1, c + 1).Value = cells[c];
+                }
+
+                wb.SaveAs(outputXlsx);
+            }
+            return outputXlsx;
         }
 
         // Translates C methods
