@@ -252,6 +252,15 @@ namespace Magical_Magical_Dendrogram_Maker
                 string fastaName = Path.GetFileName(fastaPath);
                 string archivedName = $"old_{fastaName}";
                 string archivedPath = Path.Combine(archiveDir, archivedName);
+                MessageBox.Show(archivedName + " " + archivedPath);
+                // handle archive filename conflicts
+                int count = 1;
+                string archivedNameNoExt = Path.GetFileNameWithoutExtension(archivedName);
+                while (File.Exists(archivedPath))
+                {
+                    archivedPath = Path.Combine(archiveDir, archivedNameNoExt + " (" + count + ").fasta");
+                    count++;
+                }
                 File.Move(fastaPath, archivedPath);
 
                 // Build new FASTA
