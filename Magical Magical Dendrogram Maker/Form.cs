@@ -252,7 +252,6 @@ namespace Magical_Magical_Dendrogram_Maker
                 string fastaName = Path.GetFileName(fastaPath);
                 string archivedName = $"old_{fastaName}";
                 string archivedPath = Path.Combine(archiveDir, archivedName);
-                MessageBox.Show(archivedName + " " + archivedPath);
                 // handle archive filename conflicts
                 int count = 1;
                 string archivedNameNoExt = Path.GetFileNameWithoutExtension(archivedName);
@@ -1193,7 +1192,7 @@ namespace Magical_Magical_Dendrogram_Maker
                     {
                         workbookPath = CSVtoXLSX(homologyPath, aminoacidPath, workbookPath);
                     });
-                    workbookStatus = " Workbook created at: " + workbookPath;
+                    workbookStatus = "Workbook created at: " + workbookPath;
                     if (workbookStatus == "Workbook created at: ")
                     {
                         workbookStatus = "Homology Workbook attempted but failed to produce new Workbook";
@@ -1208,7 +1207,7 @@ namespace Magical_Magical_Dendrogram_Maker
                 }
                 fastaPath = "";
                 txtOldFasta.Text = "";
-                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus + "\n" + workbookStatus);
+                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + workbookStatus);
             }
         }
 
