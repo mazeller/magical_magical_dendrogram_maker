@@ -14,7 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-using System.Windows.Navigation;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ClosedXML.Excel;
 
@@ -175,31 +174,87 @@ namespace Magical_Magical_Dendrogram_Maker
         {
             string appBase = AppDomain.CurrentDomain.BaseDirectory;
             string dir = Path.GetFullPath(Path.Combine(appBase, "..", ".."));
+            bool mafftExists = false;
+            bool iqtreeExists = false;
+            bool psScriptExists = false;
+            bool treeviewerExists = false;
 
-            string iqtreePath = Path.Combine(dir, "iqtree", "iqtree3.exe");
+            // This is for the debug/release/project version
             string mafftPath = Path.Combine(dir, "mafft-win", "mafft.bat");
+            string iqtreePath = Path.Combine(dir, "iqtree", "iqtree3.exe");
             string psScript = Path.Combine(dir, "iqtree", "safe_iqtree_powershell.ps1");
+            string treeviewerPath = Path.Combine(dir, "TreeViewer", "TreeViewerCommandLine.exe");
+            // This is for the published version
+            string mafftPath2 = Path.Combine(appBase, "mafft-win", "mafft.bat");
+            string iqtreePath2 = Path.Combine(appBase, "iqtree", "iqtree3.exe");
+            string psScript2 = Path.Combine(appBase, "iqtree", "safe_iqtree_powershell.ps1");
+            string treeviewerPath2 = Path.Combine(appBase, "TreeViewer", "TreeViewerCommandLine.exe");
 
-            CheckTool(iqtreePath, "IQ-TREE");
-            CheckTool(mafftPath, "MAFFT");
-            CheckTool(psScript, "PowerShell wrapper script");
-        }
+            mafftExists = File.Exists(mafftPath);
+            iqtreeExists = File.Exists(iqtreePath);
+            psScriptExists = File.Exists(psScript);
+            treeviewerExists = File.Exists(treeviewerPath);
 
-        // Helper function that returns whether tool is found or not
-        private void CheckTool(string path, string toolName)
-        {
-            if (!File.Exists(path))
+            if (!mafftExists)
             {
-                MessageBox.Show(
-                    $"{toolName} was not found at:\n{path}\n\nPlease verify installation or update the path.",
+                mafftPath = mafftPath2;
+                mafftExists = File.Exists(mafftPath2);
+            }
+            if (!iqtreeExists)
+            {
+                iqtreePath = iqtreePath2;
+                iqtreeExists = File.Exists(iqtreePath2);
+            }
+            if (!psScriptExists)
+            {
+                psScript = psScript2;
+                psScriptExists = File.Exists(psScript2);
+            }
+            if (!treeviewerExists)
+            {
+                treeviewerPath = treeviewerPath2;
+                treeviewerExists = File.Exists(treeviewerPath2);
+            }
+
+            if (!mafftExists)
+            {
+                    MessageBox.Show("MAFFT not found. Please install MAFFT and place it in the application directory.",
                     "Missing Tool",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
-            else
+                    MessageBoxIcon.Error);
+            } else
             {
-                Console.WriteLine($"{toolName} found: {path}");
+                Console.WriteLine("MAFFT found: " + mafftPath);
+            }
+            if (!iqtreeExists)
+            {
+                    MessageBox.Show("IQ-TREE not found. Please install IQ-TREE and place it in the application directory.",
+                    "Missing Tool",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            } else
+            {
+                Console.WriteLine("IQ-TREE found: " + iqtreePath);
+            }
+            if (!psScriptExists)
+            {
+                    MessageBox.Show("PowerShell wrapper script for IQ-TREE not found. Please ensure it is in the iqtree directory.",
+                    "Missing Tool",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            } else
+            {
+                Console.WriteLine("PowerShell wrapper script found: " + psScript);
+            }
+            if (!treeviewerExists)
+            {
+                    MessageBox.Show("TreeViewer not found. Please install TreeViewer and place it in the application directory.",
+                    "Missing Tool",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            } else
+            {
+                Console.WriteLine("TreeViewer found: " + treeviewerPath);
             }
         }
 
@@ -1334,7 +1389,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
             else
             {
-                // Installed elsewhere → assume tools are in same folder as .exe
+                // Installed elsewhere → assume tool folder is in same folder as .exe
                 root = exeDir;
             }
 
@@ -1451,33 +1506,24 @@ namespace Magical_Magical_Dendrogram_Maker
         // Translates C methods
         internal static class MatrixInterop
         {
-            [DllImport("kernel32", SetLastError = true)]
-            private static extern bool SetDllDirectory(string lpPathName);
 
-            // Ensure the homology folder is added to the native DLL search path
             static MatrixInterop()
             {
-                try
-                {
-                    string exeDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
-                    string homologyDir = Path.Combine(exeDir, "Homology");
-                    string root = Directory.GetParent(Directory.GetParent(exeDir).FullName).FullName;
-                    homologyDir = Path.GetFullPath(Path.Combine(root, "Homology"));
-
-                    if (Directory.Exists(homologyDir))
+                NativeLibrary.SetDllImportResolver(
+                    typeof(MatrixInterop).Assembly,
+                    (name, assembly, path) =>
                     {
-                        SetDllDirectory(homologyDir);
-                        Debug.WriteLine($"MatrixInterop: added homology folder to DLL search path: {homologyDir}");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"MatrixInterop: homology folder not found at {homologyDir}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("MatrixInterop static constructor failed: " + ex);
-                }
+                        if (name == "matrix_builder.dll")
+                        {
+                            string dllPath = Path.Combine(
+                                AppContext.BaseDirectory,
+                                "homology",
+                                "matrix_builder.dll"
+                            );
+                            return NativeLibrary.Load(dllPath);
+                        }
+                        return IntPtr.Zero;
+                    });
             }
 
             [DllImport("matrix_builder.dll", CallingConvention = CallingConvention.Cdecl)]
