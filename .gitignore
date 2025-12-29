@@ -41,11 +41,10 @@ bld/
 #!**/[Bb]in/*.refresh
 
 # Keep MAFFT-required folders
-!mafft-win/bin/
-!mafft-win/bin/**
-
-!mafft-win/tmp/
-!mafft-win/tmp/**
+!Magical Magical Dendrogram Maker/mafft-win/
+!Magical Magical Dendrogram Maker/mafft-win/tmp/
+!Magical Magical Dendrogram Maker/mafft-win/usr/
+!Magical Magical Dendrogram Maker/mafft-win/usr/bin/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
