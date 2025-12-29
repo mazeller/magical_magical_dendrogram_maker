@@ -45,6 +45,7 @@ bld/
 !Magical Magical Dendrogram Maker/mafft-win/tmp/
 !Magical Magical Dendrogram Maker/mafft-win/usr/
 !Magical Magical Dendrogram Maker/mafft-win/usr/bin/
+!Magical Magical Dendrogram Maker/mafft-win/usr/bin/**
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
