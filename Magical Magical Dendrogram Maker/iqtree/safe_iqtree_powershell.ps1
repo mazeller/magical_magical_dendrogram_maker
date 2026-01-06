@@ -74,7 +74,10 @@ Get-Content $MapFile | ForEach-Object {
 
 $TreeText = Get-Content "$WorkDir\$BaseName.treefile" -Raw
 foreach ($safe in ($Mapping.Keys | Sort-Object Length -Descending)) {
-    $TreeText = $TreeText -replace [regex]::Escape($safe), [regex]::Escape($Mapping[$safe])
+    $orig = $Mapping[$safe]
+    $escaped = $orig -replace "'","''"
+    $quoted = "'$escaped'"
+    $TreeText = $TreeText -replace [regex]::Escape($safe), $quoted
 }
 
 Set-Content -Path $TreeOut -Value $TreeText

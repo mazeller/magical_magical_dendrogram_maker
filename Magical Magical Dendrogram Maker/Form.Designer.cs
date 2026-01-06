@@ -28,319 +28,333 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblOldFasta = new System.Windows.Forms.Label();
-            this.lblNewFasta = new System.Windows.Forms.Label();
-            this.txtOldFasta = new System.Windows.Forms.TextBox();
-            this.txtNewFasta = new System.Windows.Forms.TextBox();
-            this.btnAppend = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.mnuStrip = new System.Windows.Forms.MenuStrip();
-            this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuFileSaveFasta = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuCreateAttach = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuFileExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDendrogram = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuAlign = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuTreefile = new System.Windows.Forms.ToolStripMenuItem();
-            this.createDendrogramToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuTreeDendrogram = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuHomology = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuHomologyTable = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.createAminoAcidTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblNewSequences = new System.Windows.Forms.Label();
-            this.cbxNewSequences = new System.Windows.Forms.CheckedListBox();
-            this.btnAllInOne = new System.Windows.Forms.Button();
-            this.mnuStrip.SuspendLayout();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
+            lblOldFasta = new Label();
+            lblNewFasta = new Label();
+            txtOldFasta = new TextBox();
+            txtNewFasta = new TextBox();
+            btnAppend = new Button();
+            openFileDialog1 = new OpenFileDialog();
+            btnSave = new Button();
+            mnuStrip = new MenuStrip();
+            mnuFile = new ToolStripMenuItem();
+            mnuFileOpen = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            MnuFileSaveFasta = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripSeparator();
+            mnuCreateAttach = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripSeparator();
+            mnuFileExit = new ToolStripMenuItem();
+            mnuDendrogram = new ToolStripMenuItem();
+            mnuAlign = new ToolStripMenuItem();
+            toolStripMenuItem5 = new ToolStripSeparator();
+            mnuTreefile = new ToolStripMenuItem();
+            createDendrogramToolStripMenuItem = new ToolStripSeparator();
+            mnuTreeDendrogram = new ToolStripMenuItem();
+            mnuHomology = new ToolStripMenuItem();
+            mnuHomologyTable = new ToolStripMenuItem();
+            toolStripMenuItem4 = new ToolStripSeparator();
+            createAminoAcidTableToolStripMenuItem = new ToolStripMenuItem();
+            mnuHelp = new ToolStripMenuItem();
+            instructionsToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem7 = new ToolStripSeparator();
+            intermediateFileToggleToolStripMenuItem = new ToolStripMenuItem();
+            lblNewSequences = new Label();
+            cbxNewSequences = new CheckedListBox();
+            btnAllInOne = new Button();
+            mnuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // lblOldFasta
             // 
-            this.lblOldFasta.AutoSize = true;
-            this.lblOldFasta.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOldFasta.Location = new System.Drawing.Point(12, 31);
-            this.lblOldFasta.Name = "lblOldFasta";
-            this.lblOldFasta.Size = new System.Drawing.Size(95, 16);
-            this.lblOldFasta.TabIndex = 0;
-            this.lblOldFasta.Text = "Fasta Workspace";
+            lblOldFasta.AutoSize = true;
+            lblOldFasta.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            lblOldFasta.Location = new Point(14, 36);
+            lblOldFasta.Margin = new Padding(4, 0, 4, 0);
+            lblOldFasta.Name = "lblOldFasta";
+            lblOldFasta.Size = new Size(95, 16);
+            lblOldFasta.TabIndex = 0;
+            lblOldFasta.Text = "Fasta Workspace";
             // 
             // lblNewFasta
             // 
-            this.lblNewFasta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblNewFasta.AutoSize = true;
-            this.lblNewFasta.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNewFasta.Location = new System.Drawing.Point(12, 226);
-            this.lblNewFasta.Name = "lblNewFasta";
-            this.lblNewFasta.Size = new System.Drawing.Size(210, 16);
-            this.lblNewFasta.TabIndex = 1;
-            this.lblNewFasta.Text = "New Sequences in Fasta or Seq Format";
+            lblNewFasta.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            lblNewFasta.AutoSize = true;
+            lblNewFasta.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            lblNewFasta.Location = new Point(14, 261);
+            lblNewFasta.Margin = new Padding(4, 0, 4, 0);
+            lblNewFasta.Name = "lblNewFasta";
+            lblNewFasta.Size = new Size(210, 16);
+            lblNewFasta.TabIndex = 1;
+            lblNewFasta.Text = "New Sequences in Fasta or Seq Format";
             // 
             // txtOldFasta
             // 
-            this.txtOldFasta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOldFasta.Location = new System.Drawing.Point(12, 50);
-            this.txtOldFasta.MaxLength = 0;
-            this.txtOldFasta.Multiline = true;
-            this.txtOldFasta.Name = "txtOldFasta";
-            this.txtOldFasta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOldFasta.Size = new System.Drawing.Size(569, 170);
-            this.txtOldFasta.TabIndex = 2;
-            this.txtOldFasta.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            txtOldFasta.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtOldFasta.Location = new Point(14, 58);
+            txtOldFasta.Margin = new Padding(4, 3, 4, 3);
+            txtOldFasta.MaxLength = 0;
+            txtOldFasta.Multiline = true;
+            txtOldFasta.Name = "txtOldFasta";
+            txtOldFasta.ScrollBars = ScrollBars.Vertical;
+            txtOldFasta.Size = new Size(663, 196);
+            txtOldFasta.TabIndex = 2;
+            txtOldFasta.TextChanged += TextBox1_TextChanged;
             // 
             // txtNewFasta
             // 
-            this.txtNewFasta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNewFasta.Location = new System.Drawing.Point(12, 245);
-            this.txtNewFasta.MaxLength = 0;
-            this.txtNewFasta.Multiline = true;
-            this.txtNewFasta.Name = "txtNewFasta";
-            this.txtNewFasta.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtNewFasta.Size = new System.Drawing.Size(569, 170);
-            this.txtNewFasta.TabIndex = 3;
-            this.txtNewFasta.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            txtNewFasta.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtNewFasta.Location = new Point(14, 283);
+            txtNewFasta.Margin = new Padding(4, 3, 4, 3);
+            txtNewFasta.MaxLength = 0;
+            txtNewFasta.Multiline = true;
+            txtNewFasta.Name = "txtNewFasta";
+            txtNewFasta.ScrollBars = ScrollBars.Vertical;
+            txtNewFasta.Size = new Size(663, 196);
+            txtNewFasta.TabIndex = 3;
+            txtNewFasta.TextChanged += TextBox2_TextChanged;
             // 
             // btnAppend
             // 
-            this.btnAppend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAppend.Font = new System.Drawing.Font("Gadugi", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAppend.Location = new System.Drawing.Point(15, 421);
-            this.btnAppend.Name = "btnAppend";
-            this.btnAppend.Size = new System.Drawing.Size(75, 23);
-            this.btnAppend.TabIndex = 5;
-            this.btnAppend.Text = "Append";
-            this.btnAppend.UseVisualStyleBackColor = true;
-            this.btnAppend.Click += new System.EventHandler(this.btnAppend_Click);
+            btnAppend.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnAppend.Font = new Font("Gadugi", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnAppend.Location = new Point(18, 486);
+            btnAppend.Margin = new Padding(4, 3, 4, 3);
+            btnAppend.Name = "btnAppend";
+            btnAppend.Size = new Size(88, 27);
+            btnAppend.TabIndex = 5;
+            btnAppend.Text = "Append";
+            btnAppend.UseVisualStyleBackColor = true;
+            btnAppend.Click += btnAppend_Click;
             // 
             // btnSave
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Font = new System.Drawing.Font("Gadugi", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(96, 421);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 6;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSave.Font = new Font("Gadugi", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSave.Location = new Point(112, 486);
+            btnSave.Margin = new Padding(4, 3, 4, 3);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(88, 27);
+            btnSave.TabIndex = 6;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // mnuStrip
             // 
-            this.mnuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFile,
-            this.mnuDendrogram,
-            this.mnuHomology,
-            this.mnuHelp});
-            this.mnuStrip.Location = new System.Drawing.Point(0, 0);
-            this.mnuStrip.Name = "mnuStrip";
-            this.mnuStrip.Size = new System.Drawing.Size(784, 24);
-            this.mnuStrip.TabIndex = 7;
-            this.mnuStrip.Text = "menuStrip";
+            mnuStrip.Items.AddRange(new ToolStripItem[] { mnuFile, mnuDendrogram, mnuHomology, mnuHelp });
+            mnuStrip.Location = new Point(0, 0);
+            mnuStrip.Name = "mnuStrip";
+            mnuStrip.Padding = new Padding(7, 2, 0, 2);
+            mnuStrip.Size = new Size(915, 24);
+            mnuStrip.TabIndex = 7;
+            mnuStrip.Text = "menuStrip";
             // 
             // mnuFile
             // 
-            this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFileOpen,
-            this.toolStripMenuItem1,
-            this.MnuFileSaveFasta,
-            this.toolStripMenuItem2,
-            this.mnuCreateAttach,
-            this.toolStripMenuItem3,
-            this.mnuFileExit});
-            this.mnuFile.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mnuFile.Name = "mnuFile";
-            this.mnuFile.Size = new System.Drawing.Size(37, 20);
-            this.mnuFile.Text = "File";
+            mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuFileOpen, toolStripMenuItem1, MnuFileSaveFasta, toolStripMenuItem2, mnuCreateAttach, toolStripMenuItem3, mnuFileExit });
+            mnuFile.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            mnuFile.Name = "mnuFile";
+            mnuFile.Size = new Size(37, 20);
+            mnuFile.Text = "File";
             // 
             // mnuFileOpen
             // 
-            this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(184, 22);
-            this.mnuFileOpen.Text = "Open";
-            this.mnuFileOpen.Click += new System.EventHandler(this.MnuFileOpen_Click);
+            mnuFileOpen.Name = "mnuFileOpen";
+            mnuFileOpen.Size = new Size(184, 22);
+            mnuFileOpen.Text = "Open";
+            mnuFileOpen.Click += MnuFileOpen_Click;
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(181, 6);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(181, 6);
             // 
             // MnuFileSaveFasta
             // 
-            this.MnuFileSaveFasta.Name = "MnuFileSaveFasta";
-            this.MnuFileSaveFasta.Size = new System.Drawing.Size(184, 22);
-            this.MnuFileSaveFasta.Text = "Save Fasta";
-            this.MnuFileSaveFasta.Click += new System.EventHandler(this.MnuFileSaveFasta_Click);
+            MnuFileSaveFasta.Name = "MnuFileSaveFasta";
+            MnuFileSaveFasta.Size = new Size(184, 22);
+            MnuFileSaveFasta.Text = "Save Fasta";
+            MnuFileSaveFasta.Click += MnuFileSaveFasta_Click;
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 6);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(181, 6);
             // 
             // mnuCreateAttach
             // 
-            this.mnuCreateAttach.Name = "mnuCreateAttach";
-            this.mnuCreateAttach.Size = new System.Drawing.Size(184, 22);
-            this.mnuCreateAttach.Text = "Save New Sequences";
+            mnuCreateAttach.Name = "mnuCreateAttach";
+            mnuCreateAttach.Size = new Size(184, 22);
+            mnuCreateAttach.Text = "Save New Sequences";
             // 
             // toolStripMenuItem3
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 6);
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(181, 6);
             // 
             // mnuFileExit
             // 
-            this.mnuFileExit.Name = "mnuFileExit";
-            this.mnuFileExit.Size = new System.Drawing.Size(184, 22);
-            this.mnuFileExit.Text = "Exit";
-            this.mnuFileExit.Click += new System.EventHandler(this.MnuFileExit_Click);
+            mnuFileExit.Name = "mnuFileExit";
+            mnuFileExit.Size = new Size(184, 22);
+            mnuFileExit.Text = "Exit";
+            mnuFileExit.Click += MnuFileExit_Click;
             // 
             // mnuDendrogram
             // 
-            this.mnuDendrogram.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuAlign,
-            this.toolStripMenuItem5,
-            this.mnuTreefile,
-            this.createDendrogramToolStripMenuItem,
-            this.mnuTreeDendrogram});
-            this.mnuDendrogram.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mnuDendrogram.Name = "mnuDendrogram";
-            this.mnuDendrogram.Size = new System.Drawing.Size(86, 20);
-            this.mnuDendrogram.Text = "Dendrogram";
+            mnuDendrogram.DropDownItems.AddRange(new ToolStripItem[] { mnuAlign, toolStripMenuItem5, mnuTreefile, createDendrogramToolStripMenuItem, mnuTreeDendrogram });
+            mnuDendrogram.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            mnuDendrogram.Name = "mnuDendrogram";
+            mnuDendrogram.Size = new Size(86, 20);
+            mnuDendrogram.Text = "Dendrogram";
             // 
             // mnuAlign
             // 
-            this.mnuAlign.Name = "mnuAlign";
-            this.mnuAlign.Size = new System.Drawing.Size(178, 22);
-            this.mnuAlign.Text = "Align Fasta";
-            this.mnuAlign.Click += new System.EventHandler(this.mnuAlign_Click);
+            mnuAlign.Name = "mnuAlign";
+            mnuAlign.Size = new Size(178, 22);
+            mnuAlign.Text = "Align Fasta";
+            mnuAlign.Click += mnuAlign_Click;
             // 
             // toolStripMenuItem5
             // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(175, 6);
+            toolStripMenuItem5.Name = "toolStripMenuItem5";
+            toolStripMenuItem5.Size = new Size(175, 6);
             // 
             // mnuTreefile
             // 
-            this.mnuTreefile.Name = "mnuTreefile";
-            this.mnuTreefile.Size = new System.Drawing.Size(178, 22);
-            this.mnuTreefile.Text = "Create Treefile";
-            this.mnuTreefile.Click += new System.EventHandler(this.MnuTreefile_Click);
+            mnuTreefile.Name = "mnuTreefile";
+            mnuTreefile.Size = new Size(178, 22);
+            mnuTreefile.Text = "Create Treefile";
+            mnuTreefile.Click += MnuTreefile_Click;
             // 
             // createDendrogramToolStripMenuItem
             // 
-            this.createDendrogramToolStripMenuItem.Name = "createDendrogramToolStripMenuItem";
-            this.createDendrogramToolStripMenuItem.Size = new System.Drawing.Size(175, 6);
+            createDendrogramToolStripMenuItem.Name = "createDendrogramToolStripMenuItem";
+            createDendrogramToolStripMenuItem.Size = new Size(175, 6);
             // 
             // mnuTreeDendrogram
             // 
-            this.mnuTreeDendrogram.Name = "mnuTreeDendrogram";
-            this.mnuTreeDendrogram.Size = new System.Drawing.Size(178, 22);
-            this.mnuTreeDendrogram.Text = "Create Dendrogram";
-            this.mnuTreeDendrogram.Click += new System.EventHandler(this.MnuTreeDendrogram_Click);
+            mnuTreeDendrogram.Name = "mnuTreeDendrogram";
+            mnuTreeDendrogram.Size = new Size(178, 22);
+            mnuTreeDendrogram.Text = "Create Dendrogram";
+            mnuTreeDendrogram.Click += MnuTreeDendrogram_Click;
             // 
             // mnuHomology
             // 
-            this.mnuHomology.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuHomologyTable,
-            this.toolStripMenuItem4,
-            this.createAminoAcidTableToolStripMenuItem});
-            this.mnuHomology.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mnuHomology.Name = "mnuHomology";
-            this.mnuHomology.Size = new System.Drawing.Size(76, 20);
-            this.mnuHomology.Text = "Homology";
+            mnuHomology.DropDownItems.AddRange(new ToolStripItem[] { mnuHomologyTable, toolStripMenuItem4, createAminoAcidTableToolStripMenuItem });
+            mnuHomology.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            mnuHomology.Name = "mnuHomology";
+            mnuHomology.Size = new Size(76, 20);
+            mnuHomology.Text = "Homology";
             // 
             // mnuHomologyTable
             // 
-            this.mnuHomologyTable.Name = "mnuHomologyTable";
-            this.mnuHomologyTable.Size = new System.Drawing.Size(206, 22);
-            this.mnuHomologyTable.Text = "Create Nucleotide Table";
-            this.mnuHomologyTable.Click += new System.EventHandler(this.MnuHomologyTable_Click);
+            mnuHomologyTable.Name = "mnuHomologyTable";
+            mnuHomologyTable.Size = new Size(206, 22);
+            mnuHomologyTable.Text = "Create Nucleotide Table";
+            mnuHomologyTable.Click += MnuHomologyTable_Click;
             // 
             // toolStripMenuItem4
             // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(203, 6);
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new Size(203, 6);
             // 
             // createAminoAcidTableToolStripMenuItem
             // 
-            this.createAminoAcidTableToolStripMenuItem.Name = "createAminoAcidTableToolStripMenuItem";
-            this.createAminoAcidTableToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.createAminoAcidTableToolStripMenuItem.Text = "Create Amino Acid Table";
-            this.createAminoAcidTableToolStripMenuItem.Click += new System.EventHandler(this.createAminoAcidTableToolStripMenuItem_Click);
+            createAminoAcidTableToolStripMenuItem.Name = "createAminoAcidTableToolStripMenuItem";
+            createAminoAcidTableToolStripMenuItem.Size = new Size(206, 22);
+            createAminoAcidTableToolStripMenuItem.Text = "Create Amino Acid Table";
+            createAminoAcidTableToolStripMenuItem.Click += createAminoAcidTableToolStripMenuItem_Click;
             // 
             // mnuHelp
             // 
-            this.mnuHelp.Name = "mnuHelp";
-            this.mnuHelp.Size = new System.Drawing.Size(44, 20);
-            this.mnuHelp.Text = "Help";
-            this.mnuHelp.Click += new System.EventHandler(this.MnuHelp_Click);
+            mnuHelp.DropDownItems.AddRange(new ToolStripItem[] { instructionsToolStripMenuItem, toolStripMenuItem7, intermediateFileToggleToolStripMenuItem });
+            mnuHelp.Name = "mnuHelp";
+            mnuHelp.Size = new Size(44, 20);
+            mnuHelp.Text = "Help";
+            // 
+            // instructionsToolStripMenuItem
+            // 
+            instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
+            instructionsToolStripMenuItem.Size = new Size(200, 22);
+            instructionsToolStripMenuItem.Text = "Instructions";
+            instructionsToolStripMenuItem.Click += instructionsToolStripMenuItem_Click_1;
+            // 
+            // toolStripMenuItem7
+            // 
+            toolStripMenuItem7.Name = "toolStripMenuItem7";
+            toolStripMenuItem7.Size = new Size(197, 6);
+            // 
+            // intermediateFileToggleToolStripMenuItem
+            // 
+            intermediateFileToggleToolStripMenuItem.Name = "intermediateFileToggleToolStripMenuItem";
+            intermediateFileToggleToolStripMenuItem.Size = new Size(200, 22);
+            intermediateFileToggleToolStripMenuItem.Text = "Intermediate File Toggle";
+            intermediateFileToggleToolStripMenuItem.Click += intermediateFileToggleToolStripMenuItem_Click_1;
             // 
             // lblNewSequences
             // 
-            this.lblNewSequences.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNewSequences.AutoSize = true;
-            this.lblNewSequences.Font = new System.Drawing.Font("Gadugi", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNewSequences.Location = new System.Drawing.Point(594, 34);
-            this.lblNewSequences.Name = "lblNewSequences";
-            this.lblNewSequences.Size = new System.Drawing.Size(178, 16);
-            this.lblNewSequences.TabIndex = 9;
-            this.lblNewSequences.Text = "New Sequences for Dendrogram";
+            lblNewSequences.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblNewSequences.AutoSize = true;
+            lblNewSequences.Font = new Font("Gadugi", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            lblNewSequences.Location = new Point(693, 39);
+            lblNewSequences.Margin = new Padding(4, 0, 4, 0);
+            lblNewSequences.Name = "lblNewSequences";
+            lblNewSequences.Size = new Size(178, 16);
+            lblNewSequences.TabIndex = 9;
+            lblNewSequences.Text = "New Sequences for Dendrogram";
             // 
             // cbxNewSequences
             // 
-            this.cbxNewSequences.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxNewSequences.Font = new System.Drawing.Font("Gadugi", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxNewSequences.FormattingEnabled = true;
-            this.cbxNewSequences.IntegralHeight = false;
-            this.cbxNewSequences.Location = new System.Drawing.Point(597, 50);
-            this.cbxNewSequences.Name = "cbxNewSequences";
-            this.cbxNewSequences.Size = new System.Drawing.Size(175, 365);
-            this.cbxNewSequences.TabIndex = 10;
-            this.cbxNewSequences.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            cbxNewSequences.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cbxNewSequences.Font = new Font("Gadugi", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            cbxNewSequences.FormattingEnabled = true;
+            cbxNewSequences.IntegralHeight = false;
+            cbxNewSequences.Location = new Point(696, 58);
+            cbxNewSequences.Margin = new Padding(4, 3, 4, 3);
+            cbxNewSequences.Name = "cbxNewSequences";
+            cbxNewSequences.Size = new Size(204, 421);
+            cbxNewSequences.TabIndex = 10;
+            cbxNewSequences.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             // 
             // btnAllInOne
             // 
-            this.btnAllInOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAllInOne.Font = new System.Drawing.Font("Gadugi", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAllInOne.Location = new System.Drawing.Point(177, 421);
-            this.btnAllInOne.Name = "btnAllInOne";
-            this.btnAllInOne.Size = new System.Drawing.Size(95, 23);
-            this.btnAllInOne.TabIndex = 11;
-            this.btnAllInOne.Text = "Run All";
-            this.btnAllInOne.UseVisualStyleBackColor = true;
-            this.btnAllInOne.Click += new System.EventHandler(this.btnAllInOne_Click);
+            btnAllInOne.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnAllInOne.Font = new Font("Gadugi", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            btnAllInOne.Location = new Point(206, 486);
+            btnAllInOne.Margin = new Padding(4, 3, 4, 3);
+            btnAllInOne.Name = "btnAllInOne";
+            btnAllInOne.Size = new Size(111, 27);
+            btnAllInOne.TabIndex = 11;
+            btnAllInOne.Text = "Run All";
+            btnAllInOne.UseVisualStyleBackColor = true;
+            btnAllInOne.Click += btnAllInOne_Click;
             // 
             // formMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.txtOldFasta);
-            this.Controls.Add(this.btnAllInOne);
-            this.Controls.Add(this.cbxNewSequences);
-            this.Controls.Add(this.lblNewSequences);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnAppend);
-            this.Controls.Add(this.txtNewFasta);
-            this.Controls.Add(this.lblNewFasta);
-            this.Controls.Add(this.lblOldFasta);
-            this.Controls.Add(this.mnuStrip);
-            this.MainMenuStrip = this.mnuStrip;
-            this.Name = "formMain";
-            this.Text = "Magical Magical Dendrogram Maker";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.mnuStrip.ResumeLayout(false);
-            this.mnuStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(915, 532);
+            Controls.Add(txtOldFasta);
+            Controls.Add(btnAllInOne);
+            Controls.Add(cbxNewSequences);
+            Controls.Add(lblNewSequences);
+            Controls.Add(btnSave);
+            Controls.Add(btnAppend);
+            Controls.Add(txtNewFasta);
+            Controls.Add(lblNewFasta);
+            Controls.Add(lblOldFasta);
+            Controls.Add(mnuStrip);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = mnuStrip;
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "formMain";
+            Text = "Magical Magical Dendrogram Maker";
+            Load += Form1_Load;
+            mnuStrip.ResumeLayout(false);
+            mnuStrip.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -376,6 +390,9 @@
         private System.Windows.Forms.ToolStripMenuItem mnuAlign;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem createAminoAcidTableToolStripMenuItem;
+        private ToolStripMenuItem instructionsToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem7;
+        private ToolStripMenuItem intermediateFileToggleToolStripMenuItem;
     }
 }
 

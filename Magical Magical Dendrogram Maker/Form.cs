@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +11,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using ClosedXML.Excel;
 
 
 namespace Magical_Magical_Dendrogram_Maker
@@ -48,6 +49,7 @@ namespace Magical_Magical_Dendrogram_Maker
         // save fasta location for pipeline
         string fastaPath = "";
         string seqText = "";
+        bool deleteIntermediateFile = true;
 
         private void CheckDragEnter(object sender, DragEventArgs e)
         {
@@ -74,8 +76,8 @@ namespace Magical_Magical_Dendrogram_Maker
                     {
                         MessageBox.Show($"Selected file: {paths[0]}");
                     }
-                    fastaPath = paths[0];
                     txtOldFasta.Text = File.ReadAllText(fastaPath).Trim();
+                    cbxNewSequences.Items.Clear();
                 }
                 else
                 {
@@ -218,41 +220,45 @@ namespace Magical_Magical_Dendrogram_Maker
 
             if (!mafftExists)
             {
-                    MessageBox.Show("MAFFT not found. Please install MAFFT and place it in the application directory.",
-                    "Missing Tool",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("MAFFT not found. Please install MAFFT and place it in the application directory.",
+                "Missing Tool",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+            else
             {
                 Console.WriteLine("MAFFT found: " + mafftPath);
             }
             if (!iqtreeExists)
             {
-                    MessageBox.Show("IQ-TREE not found. Please install IQ-TREE and place it in the application directory.",
-                    "Missing Tool",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("IQ-TREE not found. Please install IQ-TREE and place it in the application directory.",
+                "Missing Tool",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+            else
             {
                 Console.WriteLine("IQ-TREE found: " + iqtreePath);
             }
             if (!psScriptExists)
             {
-                    MessageBox.Show("PowerShell wrapper script for IQ-TREE not found. Please ensure it is in the iqtree directory.",
-                    "Missing Tool",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("PowerShell wrapper script for IQ-TREE not found. Please ensure it is in the iqtree directory.",
+                "Missing Tool",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+            else
             {
                 Console.WriteLine("PowerShell wrapper script found: " + psScript);
             }
             if (!treeviewerExists)
             {
-                    MessageBox.Show("TreeViewer not found. Please install TreeViewer and place it in the application directory.",
-                    "Missing Tool",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            } else
+                MessageBox.Show("TreeViewer not found. Please install TreeViewer and place it in the application directory.",
+                "Missing Tool",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+            else
             {
                 Console.WriteLine("TreeViewer found: " + treeviewerPath);
             }
@@ -268,9 +274,9 @@ namespace Magical_Magical_Dendrogram_Maker
             int boxHeight = (height - 460) / (500 / 180);
 
             // Resize boxes, reponsition label
-            txtOldFasta.Height = 170 + boxHeight;
-            txtNewFasta.Height = 170 + boxHeight;
-            cbxNewSequences.Height = 365 + boxHeight * 2;
+            txtOldFasta.Height = 160 + boxHeight;
+            txtNewFasta.Height = 160 + boxHeight;
+            cbxNewSequences.Height = 350 + boxHeight * 2;
             lblNewFasta.Top = 226 - change;
         }
 
@@ -288,39 +294,69 @@ namespace Magical_Magical_Dendrogram_Maker
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     txtOldFasta.Text = File.ReadAllText(ofd.FileName);
+                    cbxNewSequences.Items.Clear();
                 }
             }
         }
 
         private void SaveMethod()
         {
+            // Checks if there is text to save
             if (!string.IsNullOrEmpty(txtOldFasta.Text))
             {
-                // preparing to put new fasta in location of old fasta, and find location for archive
-                string fastaDir = Path.GetDirectoryName(fastaPath);
-                string archiveDir = Path.Combine(fastaDir, "archive");
-
-                // Create archive directory
-                Directory.CreateDirectory(archiveDir);
-
-                // archive old fasta
-                string fastaName = Path.GetFileName(fastaPath);
-                string archivedName = $"old_{fastaName}";
-                string archivedPath = Path.Combine(archiveDir, archivedName);
-                // handle archive filename conflicts
-                int count = 1;
-                string archivedNameNoExt = Path.GetFileNameWithoutExtension(archivedName);
-                while (File.Exists(archivedPath))
+                // Checks if a file path is already set
+                if (!string.IsNullOrEmpty(fastaPath))
                 {
-                    archivedPath = Path.Combine(archiveDir, archivedNameNoExt + " (" + count + ").fasta");
-                    count++;
+                    // preparing to put new fasta in location of old fasta, and find location for archive
+                    string fastaDir = Path.GetDirectoryName(fastaPath);
+                    string archiveDir = Directory.EnumerateDirectories(fastaDir, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(d => string.Equals(Path.GetFileName(d), "archive", StringComparison.OrdinalIgnoreCase));
+
+                    // Create if not found
+                    if (archiveDir == null)
+                    {
+                        archiveDir = Path.Combine(fastaDir, "archive");
+                        Directory.CreateDirectory(archiveDir);
+                    }
+
+                    // archive old fasta
+                    string fastaName = Path.GetFileName(fastaPath);
+                    string archivedPath = Path.Combine(archiveDir, fastaName);
+                    // handle archive filename conflicts
+                    int count = 1;
+                    string archivedNameNoExt = Path.GetFileNameWithoutExtension(fastaName);
+                    while (File.Exists(archivedPath))
+                    {
+                        archivedPath = Path.Combine(archiveDir, archivedNameNoExt + " (" + count + ").fasta");
+                        count++;
+                    }
+                    File.Move(fastaPath, archivedPath);
                 }
-                File.Move(fastaPath, archivedPath);
+                //prompt for save location
+                SaveFileDialog sfd = new SaveFileDialog()
+                {
+                    Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
+                    Title = "Save location for fasta",
+                    FileName = Path.GetFileName(fastaPath),
+                    DefaultExt = "fasta",
+                    RestoreDirectory = true
+                };
+
+                using (sfd)
+                {
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        fastaPath = sfd.FileName;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
 
                 // Build new FASTA
                 StringBuilder fastaBuilder = new StringBuilder();
 
-                fastaBuilder.AppendLine(txtOldFasta.Text+"\r\n");
+                fastaBuilder.AppendLine(txtOldFasta.Text + "\r\n");
 
                 // Save new file
                 File.WriteAllText(fastaPath, fastaBuilder.ToString());
@@ -356,14 +392,16 @@ namespace Magical_Magical_Dendrogram_Maker
 
             // Format paths and commands for process
             string alnFile = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + "_aligned.fasta");
-            //string command = $"/C call \"{mafft}\" --auto --out \"{alnFile}\" \"{file}\"";
-            string command = $"/C call \"{mafft}\" --localpair --out \"{alnFile}\" \"{file}\"";
+            string command = $"--auto \"{file}\"";
+            var mafftDir = Path.GetDirectoryName(mafft);
 
             // mafft process settings
             ProcessStartInfo psi = new ProcessStartInfo
             {
-                FileName = "cmd.exe",
+                FileName = mafft,
                 Arguments = command,
+                WorkingDirectory = mafftDir,
+                RedirectStandardInput = false,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
@@ -371,19 +409,24 @@ namespace Magical_Magical_Dendrogram_Maker
             };
 
             // begin mafft process
-            using (Process proc = new Process { StartInfo = psi })
+            using var proc = Process.Start(psi);
+
+            var stderrTask = proc.StandardError.ReadToEndAsync(); //prevent mafft block by draining
+
+            // write file
+            using (var fs = File.Create(alnFile))
             {
-                proc.Start();
-                string stdout = proc.StandardOutput.ReadToEnd();
-                string stderr = proc.StandardError.ReadToEnd();
-
-                proc.WaitForExit();
-
-                if (proc.ExitCode != 0)
-                {
-                    ShowErrorForm("MAFFT failed: \n\nSTDOUT:\n" + stdout + "\n\nSTDERR:\n" + stderr);
-                }
+                proc.StandardOutput.BaseStream.CopyTo(fs);
             }
+
+            proc.WaitForExit();
+            string stderr = stderrTask.Result;
+
+            if (proc.ExitCode != 0)
+            {
+                throw new Exception("MAFFT failed:\n" + stderr);
+            }
+
             return alnFile;
         }
 
@@ -516,6 +559,12 @@ namespace Magical_Magical_Dendrogram_Maker
 
             if (foundFiles.Length > 0)
             {
+                foreach (var dir in Directory.GetDirectories(
+                             fastaDir,
+                             "tmp_" + Path.GetFileNameWithoutExtension(file)))
+                {
+                    Directory.Delete(dir, recursive: true);
+                }
                 return foundFiles[0];
             }
             else
@@ -665,7 +714,28 @@ namespace Magical_Magical_Dendrogram_Maker
                 return null;
             }
 
-            string outputImage = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + "_tree.png");
+            // increment 10 per extra 50 sequences from here
+            int imgHeight = 1200;
+            int imgWidth = 1200;
+            int seqCount = 0;
+            if (!string.IsNullOrEmpty(fastaPath))
+            {
+                foreach (var line in File.ReadLines(fastaPath))
+                {
+                    if (line.Length > 0 && line[0] == '>')
+                        seqCount++;
+                }
+
+                imgHeight += (seqCount - 50) * 15;
+                imgWidth += (seqCount - 50) * 2;
+                if (seqCount <= 50)
+                {
+                    imgHeight = 1200;
+                    imgWidth = 1200;
+                }
+            }
+
+            string outputImage = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + "_tree.pdf");
 
             string[] commands = new[]
             {
@@ -686,14 +756,14 @@ namespace Magical_Magical_Dendrogram_Maker
     "module enable Rectangular",
     "module select Rectangular",
     "option select Width",
-    "option set 1200",
+    $"option set {imgWidth}",
     "option select Height",
-    "option set 1200",
+    $"option set {imgHeight}",
     "update all",
     "module enable Scale tree",
     "module select Scale tree",
     "option select Scaling factor",
-    "option set 1000",
+    "option set 1",
     "update all",
     "module enable Branches",
     "module select Branches",
@@ -715,7 +785,7 @@ namespace Magical_Magical_Dendrogram_Maker
     "option select #9",
     "option set true",
     "update all",
-    $"png {outputImage}",
+    $"pdf {outputImage}",
     "exit"
 };
 
@@ -771,7 +841,7 @@ namespace Magical_Magical_Dendrogram_Maker
                     string dendrogramPath = ofd.FileName;
                     // Ask user for attachment file
                     string attachmentPath = "";
-                    /*
+
                     using (OpenFileDialog dialog = new OpenFileDialog())
                     {
                         dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
@@ -787,7 +857,7 @@ namespace Magical_Magical_Dendrogram_Maker
                             MessageBox.Show("No attachment file selected");
                         }
                     }
-                    */
+
                     await LoadingForm.RunWithLoading(this, "Creating Dendrogram with TREEVIEWER...", async () =>
                     {
                         await Task.Run(() =>
@@ -805,8 +875,8 @@ namespace Magical_Magical_Dendrogram_Maker
             }
         }
 
-
-        /*private void MnuTreeDendrogram_Click(object sender, EventArgs e)
+        /*
+        private void MnuTreeDendrogram_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -950,16 +1020,22 @@ namespace Magical_Magical_Dendrogram_Maker
                         if (i == j)
                             output = "--";
                         else if (value == 100.00)
-                            output = "100%";
+                            output = "100";
                         else
-                            output = value.ToString("F2") + "%";
+                        {
+                            output = value.ToString("0.0");
+                        }
 
                         writer.Write(output);
                         if (j < sequences.Count - 1)
                             writer.Write(",");
                     }
+                    writer.Write(",");
+                    writer.Write(sequences[i].Header);
                     writer.WriteLine();
                 }
+                writer.Write(",");
+                writer.WriteLine(string.Join(",", sequences.Select(s => s.Header)));
             }
 
             return outputFile;
@@ -1008,8 +1084,9 @@ namespace Magical_Magical_Dendrogram_Maker
                 return fileName + " is not a valid fasta file.";
             }
 
+            // read fasta info
             var fasta = new List<(string Header, string Seq)>();
-            string header = null;
+            string header = "";
             var sb = new StringBuilder();
 
             // format fasta
@@ -1017,7 +1094,7 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 if (line.StartsWith(">"))
                 {
-                    if (header != null)
+                    if (!string.IsNullOrEmpty(header))
                     {
                         fasta.Add((header, sb.ToString()));
                     }
@@ -1030,10 +1107,10 @@ namespace Magical_Magical_Dendrogram_Maker
                     sb.Append(line.Trim());
                 }
             }
-            if (header != null)
+            if (string.IsNullOrEmpty(header))
             {
                 fasta.Add((header, sb.ToString()));
-
+                sb.Clear();
             }
 
             // Translate sequences to amino acids
@@ -1053,7 +1130,7 @@ namespace Magical_Magical_Dendrogram_Maker
             }
 
             // Location for aligned AAfasta to go
-            string fastaDir = Path.GetDirectoryName(fileName);
+            var fastaDir = Path.GetDirectoryName(fileName);
             string fastaName = Path.GetFileNameWithoutExtension(fileName);
             string fullPath = Path.Combine(fastaDir, fastaName + "_amino_acid.fasta");
             File.WriteAllText(fullPath, fastaBuilder.ToString());
@@ -1062,13 +1139,15 @@ namespace Magical_Magical_Dendrogram_Maker
             string alnFile = RunMafft(fullPath, ResolveToolPath("mafft-win", "mafft.bat"));
 
             // format aligned fasta
+            var alnFasta = new List<(string Header, string Seq)>();
+            header = "";
             foreach (var line in File.ReadLines(alnFile))
             {
                 if (line.StartsWith(">"))
                 {
-                    if (header != null)
+                    if (!string.IsNullOrEmpty(header))
                     {
-                        fasta.Add((header, sb.ToString()));
+                        alnFasta.Add((header, sb.ToString()));
                     }
 
                     header = line.Substring(1).Trim();
@@ -1079,13 +1158,13 @@ namespace Magical_Magical_Dendrogram_Maker
                     sb.Append(line.Trim());
                 }
             }
-            if (header != null)
+            if (string.IsNullOrEmpty(header))
             {
-                fasta.Add((header, sb.ToString()));
+                alnFasta.Add((header, sb.ToString()));
             }
 
             // Create similarity matrix
-            string[] seqArray = aminoAcidSeq.Select(s => s.Sequence).ToArray();
+            string[] seqArray = alnFasta.Select(s => s.Seq).ToArray();
 
             double[,] matrix = MatrixInterop.ComputeMatrix(seqArray);
 
@@ -1094,12 +1173,12 @@ namespace Magical_Magical_Dendrogram_Maker
             using (var writer = new StreamWriter(outputFile))
             {
                 writer.Write(",");
-                writer.WriteLine(string.Join(",", aminoAcidSeq.Select(s => s.Header)));
+                writer.WriteLine(string.Join(",", alnFasta.Select(s => s.Header)));
 
-                for (int i = 0; i < aminoAcidSeq.Count; i++)
+                for (int i = 0; i < alnFasta.Count; i++)
                 {
-                    writer.Write(aminoAcidSeq[i].Header + ",");
-                    for (int j = 0; j < aminoAcidSeq.Count; j++)
+                    writer.Write(alnFasta[i].Header + ",");
+                    for (int j = 0; j < alnFasta.Count; j++)
                     {
                         double value = matrix[i, j];
                         string output;
@@ -1107,16 +1186,28 @@ namespace Magical_Magical_Dendrogram_Maker
                         if (i == j)
                             output = "--";
                         else if (value == 100.00)
-                            output = "100%";
+                            output = "100";
                         else
-                            output = value.ToString("F2") + "%";
+                        {
+                            output = value.ToString("0.0");
+                        }
 
                         writer.Write(output);
-                        if (j < aminoAcidSeq.Count - 1)
+                        if (j < alnFasta.Count - 1)
                             writer.Write(",");
                     }
+                    writer.Write(",");
+                    writer.Write(alnFasta[i].Header);
                     writer.WriteLine();
                 }
+                writer.Write(",");
+                writer.WriteLine(string.Join(",", alnFasta.Select(s => s.Header)));
+            }
+            // clean up temp files
+            if (deleteIntermediateFile)
+            {
+                File.Delete(fullPath);
+                File.Delete(alnFile);
             }
 
             return outputFile;
@@ -1137,18 +1228,31 @@ namespace Magical_Magical_Dendrogram_Maker
             // Check whether fasta is currently in use; if not, use file dialog
             if (string.IsNullOrEmpty(fastaPath))
             {
-                OpenFileDialog ofd = new OpenFileDialog
+                DialogResult result = MessageBox.Show(
+                    "New sequences were not added to the fasta. Continue with processes?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                    );
+                if (result == DialogResult.No)
                 {
-                    Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
-                    Title = "Select a fasta file"
-                };
-                using (ofd)
+                    return;
+                }
+                else
                 {
-                    if (ofd.ShowDialog() == DialogResult.OK)
+                    OpenFileDialog ofd = new OpenFileDialog
                     {
-                        if (ValidateFasta(ofd.FileName))
+                        Filter = "Fasta files (*.fasta)|*.fasta|All files (*.*)|*.*",
+                        Title = "Select a fasta file"
+                    };
+                    using (ofd)
+                    {
+                        if (ofd.ShowDialog() == DialogResult.OK)
                         {
-                            fastaPath = ofd.FileName;
+                            if (ValidateFasta(ofd.FileName))
+                            {
+                                fastaPath = ofd.FileName;
+                            }
                         }
                     }
                 }
@@ -1157,6 +1261,7 @@ namespace Magical_Magical_Dendrogram_Maker
             // Checks that a fasta was actually selected; ensures cancellations don't create errors
             if (!string.IsNullOrEmpty(fastaPath))
             {
+
                 //run mafft
                 string mafftPath = ResolveToolPath("mafft-win", "mafft.bat");
                 await LoadingForm.RunWithLoading(this, "Aligning sequences with MAFFT...", async () =>
@@ -1254,39 +1359,22 @@ namespace Magical_Magical_Dendrogram_Maker
                     }
                 });
 
-                // clear extra csvs
+                // clear temporary files
                 if (new FileInfo(workbookPath).Length > 100)
                 {
                     File.Delete(homologyPath);
                     File.Delete(aminoacidPath);
                 }
+                if (new FileInfo(dendrogramPath).Length > 100 && deleteIntermediateFile)
+                {
+                    File.Delete(alnPath);
+                    File.Delete(treePath);
+                }
+
                 fastaPath = "";
                 txtOldFasta.Text = "";
                 MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + workbookStatus);
             }
-        }
-
-        // Instructions
-        private void MnuHelp_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Main Function:\n" +
-                "   Append -> Add new sequences onto the selected fasta. \r\n" +
-                "   Save -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
-                "   Run All -> Drag a fasta and click \"Run All\" button to create both a dendrogram image and a homology table.\n\n" +
-                "File:\n" +
-                "   Open -> Opens fasta for modification or examination\n" +
-                "   Save Fasta -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
-                "Dendrogram:\n" +
-                "   Align Fasta -> Uses mafft to align fasta for treefile creation\n" +
-                "   Create Treefile -> Uses IQ-TREE to create treefile from aligned fasta\n" +
-                "   Create Dendrogram -> Uses TreeViewer to create dendrogram image from treefile\n\n" +
-                "Homology:\n" +
-                "   Create Homology Table -> Creates a homology table CSV from\n\n",
-                "Help",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1307,8 +1395,8 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 {"TTT",'F'}, {"TTC",'F'}, {"TTA",'L'}, {"TTG",'L'},
                 {"TCT",'S'}, {"TCC",'S'}, {"TCA",'S'}, {"TCG",'S'},
-                {"TAT",'Y'}, {"TAC",'Y'}, {"TAA",'*'}, {"TAG",'*'},
-                {"TGT",'C'}, {"TGC",'C'}, {"TGA",'*'}, {"TGG",'W'},
+                {"TAT",'Y'}, {"TAC",'Y'}, {"TAA",'X'}, {"TAG",'X'},
+                {"TGT",'C'}, {"TGC",'C'}, {"TGA",'X'}, {"TGG",'W'},
 
                 {"CTT",'L'}, {"CTC",'L'}, {"CTA",'L'}, {"CTG",'L'},
                 {"CCT",'P'}, {"CCC",'P'}, {"CCA",'P'}, {"CCG",'P'},
@@ -1579,6 +1667,42 @@ namespace Magical_Magical_Dendrogram_Maker
                         matrix[i, j] = flat[i * count + j];
 
                 return matrix;
+            }
+        }
+
+        private void instructionsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Main Function:\n" +
+                "   Append -> Add new sequences onto the selected fasta. \r\n" +
+                "   Save -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
+                "   Run All -> Drag a fasta and click \"Run All\" button to create both a dendrogram image and a homology table.\n\n" +
+                "File:\n" +
+                "   Open -> Opens fasta for modification or examination\n" +
+                "   Save Fasta -> Save the current version of the selected fasta, putting the previous version into an archive folder in the same directory.\r\n" +
+                "Dendrogram:\n" +
+                "   Align Fasta -> Uses mafft to align fasta for treefile creation\n" +
+                "   Create Treefile -> Uses IQ-TREE to create treefile from aligned fasta\n" +
+                "   Create Dendrogram -> Uses TreeViewer to create dendrogram image from treefile\n\n" +
+                "Homology:\n" +
+                "   Create Homology Table -> Creates a homology table CSV from\n\n",
+                "Help",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+
+        private void intermediateFileToggleToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (deleteIntermediateFile)
+            {
+                deleteIntermediateFile = false;
+                MessageBox.Show("Intermediate files will be kept.");
+            }
+            else
+            {
+                deleteIntermediateFile = true;
+                MessageBox.Show("Intermediate files will be deleted.");
             }
         }
     }
