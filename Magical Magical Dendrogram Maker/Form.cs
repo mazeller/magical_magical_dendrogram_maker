@@ -1274,8 +1274,8 @@ namespace Magical_Magical_Dendrogram_Maker
                             txtOldFasta.Text = File.ReadAllText(alnPath).Replace("\n", "\r\n").ToUpper();
                         }));
                     });
-                    mafftStatus = "Aligned file created at: " + alnPath;
-                    if (mafftStatus == "Aligned file created at: ")
+                    mafftStatus = "Aligned file created successfully";
+                    if (string.IsNullOrEmpty(alnPath))
                     {
                         mafftStatus = "MAFFT ran but failed to produce aligned fasta";
                     }
@@ -1290,8 +1290,8 @@ namespace Magical_Magical_Dendrogram_Maker
                     {
                         treePath = RunSafeIqtree(alnPath, safeIqtreePath);
                     });
-                    iqtreeStatus = "Treefile created at: " + treePath;
-                    if (iqtreeStatus == "Treefile created at: ")
+                    iqtreeStatus = "Treefile created successfully";
+                    if (string.IsNullOrEmpty(treePath))
                     {
                         iqtreeStatus = "IQTREE ran but failed to produce new treefile";
                     }
@@ -1307,7 +1307,7 @@ namespace Magical_Magical_Dendrogram_Maker
                         dendrogramPath = RunDendrogramRedirected(treePath, treeViewerPath, attachPath);
                     });
                     treeViewerStatus = "Dendrogram created at: " + dendrogramPath;
-                    if (treeViewerStatus == "Dendrogram created at: ")
+                    if (string.IsNullOrEmpty(dendrogramPath))
                     {
                         treeViewerStatus = "TREEVIEWER ran but failed to produce dendrogram";
                     }
@@ -1321,8 +1321,8 @@ namespace Magical_Magical_Dendrogram_Maker
                     {
                         homologyPath = RunHomology(fastaPath);
                     });
-                    homologyStatus = "Table created at: " + homologyPath;
-                    if (homologyStatus == "Table created at: ")
+                    homologyStatus = "Nucleotide table created successfully";
+                    if (string.IsNullOrEmpty(homologyPath))
                     {
                         homologyStatus = "Nucleotide Homology ran but failed to produce new Table";
                     }
@@ -1336,8 +1336,8 @@ namespace Magical_Magical_Dendrogram_Maker
                     {
                         aminoacidPath = RunAminoAcidHomology(fastaPath);
                     });
-                    aminoacidStatus = " Table created at: " + aminoacidPath;
-                    if (aminoacidStatus == "Table created at: ")
+                    aminoacidStatus = "Amino Acid table created successfully";
+                    if (string.IsNullOrEmpty(aminoacidPath))
                     {
                         aminoacidStatus = "Amino Acid Homology ran but failed to produce new Table";
                     }
@@ -1373,7 +1373,7 @@ namespace Magical_Magical_Dendrogram_Maker
 
                 fastaPath = "";
                 txtOldFasta.Text = "";
-                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + workbookStatus);
+                MessageBox.Show("All done" + "\n" + mafftStatus + "\n" + iqtreeStatus + "\n" + treeViewerStatus + "\n" + homologyStatus + "\n" + aminoacidStatus + "\n" + workbookStatus);
             }
         }
 
