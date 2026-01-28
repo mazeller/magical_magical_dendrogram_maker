@@ -624,8 +624,17 @@ namespace Magical_Magical_Dendrogram_Maker
                 return null;
             }
 
-            string outputImage = Path.Combine(Path.GetDirectoryName(file),
-                Path.GetFileNameWithoutExtension(file) + "_tree.png");
+            string outputDir = Path.GetDirectoryName(file);
+            string outputFile = Path.GetFileNameWithoutExtension(file);
+            if (outputFile.EndsWith("_aligned_restored"))
+            {
+                outputFile = outputFile.Substring(0, outputFile.Length - "_aligned_restored".Length);
+            }
+            string outputImage = Path.Combine(outputDir + outputFile);
+
+
+			Path.Combine(Path.GetDirectoryName(file),
+            Path.GetFileNameWithoutExtension(file) + "_tree.png");
 
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -735,9 +744,15 @@ namespace Magical_Magical_Dendrogram_Maker
                 }
             }
 
-            string outputImage = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file) + "_tree.pdf");
+			string outputDir = Path.GetDirectoryName(file);
+			string outputFile = Path.GetFileNameWithoutExtension(file);
+			if (outputFile.EndsWith("_aligned_restored"))
+			{
+				outputFile = outputFile.Substring(0, outputFile.Length - "_aligned_restored".Length);
+			}
+			string outputImage = Path.Combine(outputDir, outputFile + ".pdf");
 
-            string[] commands = new[]
+			string[] commands = new[]
             {
     $"file {file}",
     "open",
@@ -1573,7 +1588,16 @@ namespace Magical_Magical_Dendrogram_Maker
                 {
                     var cells = lines1[r].Split(',');
                     for (int c = 0; c < cells.Length; c++)
-                        ws1.Cell(r + 1, c + 1).Value = cells[c];
+                    {
+                        if (double.TryParse(cells[c], out double num))
+                        {
+                            ws1.Cell(r + 1, c + 1).Value = num;
+                        }
+                        else
+                        {
+							ws1.Cell(r + 1, c + 1).Value = cells[c];
+						}
+					}
                 }
 
                 // Sheet 2
@@ -1583,8 +1607,17 @@ namespace Magical_Magical_Dendrogram_Maker
                 {
                     var cells = lines2[r].Split(',');
                     for (int c = 0; c < cells.Length; c++)
-                        ws2.Cell(r + 1, c + 1).Value = cells[c];
-                }
+					{
+						if (double.TryParse(cells[c], out double num))
+						{
+							ws2.Cell(r + 1, c + 1).Value = num;
+						}
+						else
+						{
+							ws2.Cell(r + 1, c + 1).Value = cells[c];
+						}
+					}
+				}
 
                 wb.SaveAs(outputXlsx);
             }

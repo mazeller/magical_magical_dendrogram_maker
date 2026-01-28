@@ -53,6 +53,20 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
+		<None Update="homology\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="mafft-win\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="iqtree\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="TreeViewer\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
 	  <Compile Remove="TreeViewer\cs\**" />
 	  <Compile Remove="TreeViewer\de\**" />
 	  <Compile Remove="TreeViewer\es\**" />
@@ -109,6 +123,9 @@
 	  <None Remove="TreeViewer\tr\**" />
 	  <None Remove="TreeViewer\zh-Hans\**" />
 	  <None Remove="TreeViewer\zh-Hant\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="mafft-win\tmp\" />
 	</ItemGroup>
 
 </Project>
