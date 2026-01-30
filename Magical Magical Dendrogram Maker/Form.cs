@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
@@ -1122,7 +1123,7 @@ namespace Magical_Magical_Dendrogram_Maker
                     sb.Append(line.Trim());
                 }
             }
-            if (string.IsNullOrEmpty(header))
+            if (!string.IsNullOrEmpty(header))
             {
                 fasta.Add((header, sb.ToString()));
                 sb.Clear();
@@ -1134,9 +1135,11 @@ namespace Magical_Magical_Dendrogram_Maker
             {
                 aminoAcidSeq.Add((line.Header, GetAminoAcidSeq(line.Seq)));
             }
+			var message = string.Join(Environment.NewLine, aminoAcidSeq);
+            ShowErrorForm(message);
 
-            // create amino acid file to align
-            var fastaBuilder = new StringBuilder();
+			// create amino acid file to align
+			var fastaBuilder = new StringBuilder();
 
             foreach (var line in aminoAcidSeq)
             {
@@ -1173,7 +1176,7 @@ namespace Magical_Magical_Dendrogram_Maker
                     sb.Append(line.Trim());
                 }
             }
-            if (string.IsNullOrEmpty(header))
+            if (!string.IsNullOrEmpty(header))
             {
                 alnFasta.Add((header, sb.ToString()));
             }
